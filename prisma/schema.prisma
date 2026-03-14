@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String   @id
+  name           String
+  campany        String?
+  industry       String?
+  city           String?
+  country        String?
+  totalBranches  String?
+  chatVolume     String?  @db.VarChar(10)
+  aiConnect      String?
+  aiIntegration  String?  @db.VarChar(3)
+  services       String[] @default([])
+  campanySize    String?  @db.VarChar(10)
+  comment        String?
+  isTrial        Boolean  @default(false)
+  website        String?
+  phone          String?
+  email          String   @unique
+  crNo           String?
+  password       String
+  generatedToken String   @unique
+  role           String   @default("User") @db.VarChar(10)
+  createdAt      DateTime @default(now())
+  whatsapp       String?
+  confirmed      Boolean  @default(false)
+  plan           String?
+}
+
+model Visit {
+  id                  String   @id
+  residentFullName    String
+  residentUnit        String
+  residentPhone       String
+  visitorFullName     String
+  visitorCarType      String
+  visitorLicensePlate String
+  visitDate           DateTime
+  visitTime           String
+  pdfUrl              String?
+  qrCode              String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime
+  isExpired           Boolean  @default(false)
+}
+
+model customers {
+  customer_id  Int      @id @default(autoincrement())
+  first_name   String   @db.VarChar(100)
+  last_name    String   @db.VarChar(100)
+  email        String   @unique @db.VarChar(255)
+  phone_number String?  @db.VarChar(20)
+  address      String?
+  city         String?  @db.VarChar(100)
+  country      String?  @db.VarChar(100)
+  postal_code  String?  @db.VarChar(20)
+  landbot_id   String?  @unique @db.VarChar(100)
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime @default(now()) @db.Timestamptz(6)
+}
+
+model dashborad_Insights {
+  id        Int       @id @default(autoincrement())
+  Instagram String?
+  Whatsapp  String?
+  Tiktok    String?
+  Twitter   String?
+  Created   DateTime? @db.Timestamptz(6)
+}
+
+model dashborad_data_q_r_ {
+  id                  Int       @id @default(autoincrement())
+  index_number_       Int?      @map("index_number ")
+  tiktok_question_    String?   @map("tiktok_question ")
+  tiktok_request_     String?   @map("tiktok_request ")
+  instagram_question_ String?   @map("instagram_question ")
+  instagram_request_  String?   @map("instagram_request ")
+  whatsapp_question_  String?   @map("whatsapp_question ")
+  whatsapp_request_   String?   @map("whatsapp_request ")
+  twitter_question_   String?   @map("twitter_question ")
+  twitter_request_    String?   @map("twitter_request ")
+  created_at_         DateTime? @map("created_at ") @db.Timestamptz(6)
+
+  @@map("dashborad_data_q_r ")
+}
+
+model n8n_chat_histories {
+  id         Int    @id @default(autoincrement())
+  session_id String @db.VarChar(255)
+  message    Json
+}
+
+model payment_events {
+  id          BigInt   @id @default(autoincrement())
+  payment_id  String   @db.Uuid
+  event_type  String
+  raw         Json?
+  result_code String?
+  result_desc String?
+  occurred_at DateTime @default(now()) @db.Timestamptz(6)
+  payments    payments @relation(fields: [payment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([payment_id], map: "idx_payment_events_payment_id")
+}
+
+model payments {
+  id                      String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  environment             String           @default("prod")
+  order_ref               String
+  merchant_transaction_id String?
+  checkout_id             String?
+  gateway_payment_id      String?
+  integrity_sri           String?
+  amount                  Decimal          @db.Decimal(12, 2)
+  currency                String
+  entity_id               String
+  return_token            String
+  status                  String           @default("pending")
+  result_code             String?
+  result_desc             String?
+  customer_email          String?
+  customer_given_name     String?
+  customer_surname        String?
+  billing_street1         String?
+  billing_city            String?
+  billing_state           String?
+  billing_country         String?
+  billing_postcode        String?
+  csp_nonce_used          String?
+  created_at              DateTime         @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime         @default(now()) @db.Timestamptz(6)
+  customer_phone          String?
+  payment_events          payment_events[]
+
+  @@index([checkout_id], map: "idx_payments_checkout_id")
+  @@index([customer_phone], map: "idx_payments_customer_phone")
+  @@index([order_ref, environment], map: "idx_payments_order_env")
+}
+
+model requests {
+  id                       BigInt            @id @default(autoincrement())
+  whatsapp_message_id      BigInt
+  request_text             String
+  assigned_to              String?
+  tg_chat_id               BigInt?
+  tg_initial_message_id    BigInt?
+  tg_assignment_message_id BigInt?
+  created_at               DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_at               DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_by_id            String?
+  updated_by               String?
+  status                   String?
+  room                     String?
+  whatsapp_messages        whatsapp_messages @relation(fields: [whatsapp_message_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model template_sent {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(255)
+  room_number  String?   @db.VarChar(50)
+  phone        String    @db.VarChar(20)
+  within24h    String?   @db.VarChar(10)
+  outin24h     String?   @db.VarChar(10)
+  template_id  Int?
+  customer_id  Int?
+  opt_in       String?   @db.VarChar(10)
+  row_number   Int?
+  execution_id String?   @db.VarChar(50)
+  node_status  String?   @db.VarChar(20)
+  inserted_at  DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model tiktok_messages {
+  id                Int       @id @default(autoincrement())
+  tiktok_name       String?
+  message           String?
+  response          String?
+  created_date_time DateTime? @db.Timestamp(6)
+  client            String?
+  message_type      String?
+}
+
+model whatsapp_messages {
+  Name           String?
+  phone_number   BigInt?
+  gpt_content    String?
+  message_object String?
+  user_text      String?
+  client         String?
+  message_type   String?
+  timestamp      DateTime?  @db.Timestamp(6)
+  id             BigInt     @id @default(autoincrement())
+  guest          Boolean?
+  requests       requests[]
+}
+
+model n8n_vectors {
+  id        String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  text      String?
+  metadata  Json?
+  embedding Unsupported("vector")?
+}
+
+model n8n_vectors_v2 {
+  id        String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  text      String?
+  metadata  Json?
+  embedding Unsupported("vector")?
+}
+
+model srs {
+  id               Int       @id @default(autoincrement())
+  resname          String?   @db.VarChar(100)
+  resphone         String?   @db.VarChar(20)
+  resemail         String?   @db.VarChar(100)
+  compound         String?   @db.VarChar(100)
+  unit             String?   @db.VarChar(50)
+  propertycode     String?   @db.VarChar(50)
+  priority         String?   @db.VarChar(20)
+  leasename        String?   @db.VarChar(100)
+  leasecode        String?   @db.VarChar(50)
+  category         String?   @db.VarChar(100)
+  subcategory      String?   @db.VarChar(100)
+  breifdescription String?
+  timetoenter      DateTime? @db.Time(6)
+  datetime         DateTime? @default(now()) @db.Timestamp(6)
+  status           String?   @default("Open") @db.VarChar(20)
+}
