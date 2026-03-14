@@ -6,6 +6,7 @@ import helmet from "helmet";
 import cors from "cors";
 import hpp from "hpp";
 import rateLimit from "express-rate-limit";
+import swaggerUi from "swagger-ui-express";
 import { createAuthRouter } from "./auth/auth.router";
 import { createQrCodeRouter } from "./qr-code/qr-code.router";
 import { createAnalyticsRouter } from "./analytics/analytics.router";
@@ -14,6 +15,7 @@ import { createContactRouter } from "./contact/contact.router";
 import { createPdfRouter } from "./pdf/pdf.router";
 import { startVisitCleanupCron } from "./qr-code/visit-cleanup.service";
 import { errorHandler } from "./middleware/error-handler";
+import { swaggerSpec } from "./swagger";
 
 const pool = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter: pool });
@@ -43,6 +45,14 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { message: "Too many auth requests, please try again later." },
 });
+
+// ── Documentation ─────────────────────────────────────────────────────────────
+app.use(
+  "/documentation",
+  helmet({ contentSecurityPolicy: false }),
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec),
+);
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.use("/api/v1/auth", authLimiter, createAuthRouter(prisma));
