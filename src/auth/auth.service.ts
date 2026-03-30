@@ -83,7 +83,7 @@ export async function register(prisma: PrismaClient, dto: RegisterDto) {
   }
 
   const confirmToken = jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '60m' });
-  const confirmationLink = `${process.env.PUBLIC_URL}/auth/confirm-register/${confirmToken}`;
+  const confirmationLink = `${process.env.PUBLIC_URL}/confirm-register/${confirmToken}`;
 
   const emailResult = await sendEmail({
     to: email,
