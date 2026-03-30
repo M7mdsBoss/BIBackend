@@ -8,31 +8,34 @@ datasource db {
 }
 
 model User {
-  id             String   @id
-  name           String
-  campany        String?
-  industry       String?
-  city           String?
-  country        String?
-  totalBranches  String?
-  chatVolume     String?  @db.VarChar(10)
-  aiConnect      String?
-  aiIntegration  String?  @db.VarChar(3)
-  services       String[] @default([])
-  campanySize    String?  @db.VarChar(10)
-  comment        String?
-  isTrial        Boolean  @default(false)
-  website        String?
-  phone          String?
-  email          String   @unique
-  crNo           String?
-  password       String
-  generatedToken String   @unique
-  role           String   @default("User") @db.VarChar(10)
-  createdAt      DateTime @default(now())
-  whatsapp       String?
-  confirmed      Boolean  @default(false)
-  plan           String?
+  id                String   @id
+  name              String
+  campany           String?
+  industry          String?
+  city              String?
+  country           String?
+  totalBranches     String?
+  chatVolume        String?  @db.VarChar(10)
+  aiConnect         String?
+  aiIntegration     String?  @db.VarChar(3)
+  services          String[] @default([])
+  campanySize       String?  @db.VarChar(10)
+  campanyRole       String?
+  comment           String?
+  isTrial           Boolean  @default(false)
+  website           String?
+  phone             String?
+  email             String   @unique
+  crNo              String?
+  password          String
+  generatedToken    String   @unique
+  role              String   @default("User") @db.VarChar(10)
+  createdAt         DateTime @default(now())
+  whatsapp          String?
+  confirmed         Boolean  @default(false)
+  acceptedTerms     Boolean  @default(false)
+  acceptedAuthorize Boolean  @default(false)
+  plan              String?
 }
 
 model Visit {
@@ -233,4 +236,10 @@ model srs {
   timetoenter      DateTime? @db.Time(6)
   datetime         DateTime? @default(now()) @db.Timestamp(6)
   status           String?   @default("Open") @db.VarChar(20)
+  yardi_wo_code    String?   @db.VarChar(50)
+  closed_at        DateTime? @db.Timestamp(6)
+  is_closed        Boolean?  @default(false)
+  updated_at       DateTime? @db.Timestamp(6)
+
+  @@index([yardi_wo_code], map: "idx_srs_yardi_wo_code")
 }

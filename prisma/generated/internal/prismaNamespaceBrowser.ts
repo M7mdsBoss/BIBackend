@@ -97,6 +97,7 @@ export const UserScalarFieldEnum = {
   aiIntegration: 'aiIntegration',
   services: 'services',
   campanySize: 'campanySize',
+  campanyRole: 'campanyRole',
   comment: 'comment',
   isTrial: 'isTrial',
   website: 'website',
@@ -109,6 +110,8 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   whatsapp: 'whatsapp',
   confirmed: 'confirmed',
+  acceptedTerms: 'acceptedTerms',
+  acceptedAuthorize: 'acceptedAuthorize',
   plan: 'plan'
 } as const
 
@@ -337,7 +340,11 @@ export const SrsScalarFieldEnum = {
   breifdescription: 'breifdescription',
   timetoenter: 'timetoenter',
   datetime: 'datetime',
-  status: 'status'
+  status: 'status',
+  yardi_wo_code: 'yardi_wo_code',
+  closed_at: 'closed_at',
+  is_closed: 'is_closed',
+  updated_at: 'updated_at'
 } as const
 
 export type SrsScalarFieldEnum = (typeof SrsScalarFieldEnum)[keyof typeof SrsScalarFieldEnum]

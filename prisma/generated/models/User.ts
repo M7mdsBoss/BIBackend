@@ -36,6 +36,7 @@ export type UserMinAggregateOutputType = {
   aiConnect: string | null
   aiIntegration: string | null
   campanySize: string | null
+  campanyRole: string | null
   comment: string | null
   isTrial: boolean | null
   website: string | null
@@ -48,6 +49,8 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   whatsapp: string | null
   confirmed: boolean | null
+  acceptedTerms: boolean | null
+  acceptedAuthorize: boolean | null
   plan: string | null
 }
 
@@ -63,6 +66,7 @@ export type UserMaxAggregateOutputType = {
   aiConnect: string | null
   aiIntegration: string | null
   campanySize: string | null
+  campanyRole: string | null
   comment: string | null
   isTrial: boolean | null
   website: string | null
@@ -75,6 +79,8 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   whatsapp: string | null
   confirmed: boolean | null
+  acceptedTerms: boolean | null
+  acceptedAuthorize: boolean | null
   plan: string | null
 }
 
@@ -91,6 +97,7 @@ export type UserCountAggregateOutputType = {
   aiIntegration: number
   services: number
   campanySize: number
+  campanyRole: number
   comment: number
   isTrial: number
   website: number
@@ -103,6 +110,8 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   whatsapp: number
   confirmed: number
+  acceptedTerms: number
+  acceptedAuthorize: number
   plan: number
   _all: number
 }
@@ -120,6 +129,7 @@ export type UserMinAggregateInputType = {
   aiConnect?: true
   aiIntegration?: true
   campanySize?: true
+  campanyRole?: true
   comment?: true
   isTrial?: true
   website?: true
@@ -132,6 +142,8 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   whatsapp?: true
   confirmed?: true
+  acceptedTerms?: true
+  acceptedAuthorize?: true
   plan?: true
 }
 
@@ -147,6 +159,7 @@ export type UserMaxAggregateInputType = {
   aiConnect?: true
   aiIntegration?: true
   campanySize?: true
+  campanyRole?: true
   comment?: true
   isTrial?: true
   website?: true
@@ -159,6 +172,8 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   whatsapp?: true
   confirmed?: true
+  acceptedTerms?: true
+  acceptedAuthorize?: true
   plan?: true
 }
 
@@ -175,6 +190,7 @@ export type UserCountAggregateInputType = {
   aiIntegration?: true
   services?: true
   campanySize?: true
+  campanyRole?: true
   comment?: true
   isTrial?: true
   website?: true
@@ -187,6 +203,8 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   whatsapp?: true
   confirmed?: true
+  acceptedTerms?: true
+  acceptedAuthorize?: true
   plan?: true
   _all?: true
 }
@@ -276,6 +294,7 @@ export type UserGroupByOutputType = {
   aiIntegration: string | null
   services: string[]
   campanySize: string | null
+  campanyRole: string | null
   comment: string | null
   isTrial: boolean
   website: string | null
@@ -288,6 +307,8 @@ export type UserGroupByOutputType = {
   createdAt: Date
   whatsapp: string | null
   confirmed: boolean
+  acceptedTerms: boolean
+  acceptedAuthorize: boolean
   plan: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -325,6 +346,7 @@ export type UserWhereInput = {
   aiIntegration?: Prisma.StringNullableFilter<"User"> | string | null
   services?: Prisma.StringNullableListFilter<"User">
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   comment?: Prisma.StringNullableFilter<"User"> | string | null
   isTrial?: Prisma.BoolFilter<"User"> | boolean
   website?: Prisma.StringNullableFilter<"User"> | string | null
@@ -337,6 +359,8 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   whatsapp?: Prisma.StringNullableFilter<"User"> | string | null
   confirmed?: Prisma.BoolFilter<"User"> | boolean
+  acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
+  acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   plan?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
@@ -353,6 +377,7 @@ export type UserOrderByWithRelationInput = {
   aiIntegration?: Prisma.SortOrderInput | Prisma.SortOrder
   services?: Prisma.SortOrder
   campanySize?: Prisma.SortOrderInput | Prisma.SortOrder
+  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   isTrial?: Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -365,6 +390,8 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   whatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
   confirmed?: Prisma.SortOrder
+  acceptedTerms?: Prisma.SortOrder
+  acceptedAuthorize?: Prisma.SortOrder
   plan?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
@@ -386,6 +413,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   aiIntegration?: Prisma.StringNullableFilter<"User"> | string | null
   services?: Prisma.StringNullableListFilter<"User">
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   comment?: Prisma.StringNullableFilter<"User"> | string | null
   isTrial?: Prisma.BoolFilter<"User"> | boolean
   website?: Prisma.StringNullableFilter<"User"> | string | null
@@ -396,6 +424,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   whatsapp?: Prisma.StringNullableFilter<"User"> | string | null
   confirmed?: Prisma.BoolFilter<"User"> | boolean
+  acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
+  acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   plan?: Prisma.StringNullableFilter<"User"> | string | null
 }, "id" | "email" | "generatedToken">
 
@@ -412,6 +442,7 @@ export type UserOrderByWithAggregationInput = {
   aiIntegration?: Prisma.SortOrderInput | Prisma.SortOrder
   services?: Prisma.SortOrder
   campanySize?: Prisma.SortOrderInput | Prisma.SortOrder
+  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   comment?: Prisma.SortOrderInput | Prisma.SortOrder
   isTrial?: Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -424,6 +455,8 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   whatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
   confirmed?: Prisma.SortOrder
+  acceptedTerms?: Prisma.SortOrder
+  acceptedAuthorize?: Prisma.SortOrder
   plan?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -446,6 +479,7 @@ export type UserScalarWhereWithAggregatesInput = {
   aiIntegration?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   services?: Prisma.StringNullableListFilter<"User">
   campanySize?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  campanyRole?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   comment?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isTrial?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -458,6 +492,8 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   whatsapp?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   confirmed?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  acceptedTerms?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  acceptedAuthorize?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   plan?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
@@ -474,6 +510,7 @@ export type UserCreateInput = {
   aiIntegration?: string | null
   services?: Prisma.UserCreateservicesInput | string[]
   campanySize?: string | null
+  campanyRole?: string | null
   comment?: string | null
   isTrial?: boolean
   website?: string | null
@@ -486,6 +523,8 @@ export type UserCreateInput = {
   createdAt?: Date | string
   whatsapp?: string | null
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: string | null
 }
 
@@ -502,6 +541,7 @@ export type UserUncheckedCreateInput = {
   aiIntegration?: string | null
   services?: Prisma.UserCreateservicesInput | string[]
   campanySize?: string | null
+  campanyRole?: string | null
   comment?: string | null
   isTrial?: boolean
   website?: string | null
@@ -514,6 +554,8 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   whatsapp?: string | null
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: string | null
 }
 
@@ -530,6 +572,7 @@ export type UserUpdateInput = {
   aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -542,6 +585,8 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -558,6 +603,7 @@ export type UserUncheckedUpdateInput = {
   aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -570,6 +616,8 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -586,6 +634,7 @@ export type UserCreateManyInput = {
   aiIntegration?: string | null
   services?: Prisma.UserCreateservicesInput | string[]
   campanySize?: string | null
+  campanyRole?: string | null
   comment?: string | null
   isTrial?: boolean
   website?: string | null
@@ -598,6 +647,8 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   whatsapp?: string | null
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: string | null
 }
 
@@ -614,6 +665,7 @@ export type UserUpdateManyMutationInput = {
   aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -626,6 +678,8 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -642,6 +696,7 @@ export type UserUncheckedUpdateManyInput = {
   aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -654,6 +709,8 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -678,6 +735,7 @@ export type UserCountOrderByAggregateInput = {
   aiIntegration?: Prisma.SortOrder
   services?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   isTrial?: Prisma.SortOrder
   website?: Prisma.SortOrder
@@ -690,6 +748,8 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   whatsapp?: Prisma.SortOrder
   confirmed?: Prisma.SortOrder
+  acceptedTerms?: Prisma.SortOrder
+  acceptedAuthorize?: Prisma.SortOrder
   plan?: Prisma.SortOrder
 }
 
@@ -705,6 +765,7 @@ export type UserMaxOrderByAggregateInput = {
   aiConnect?: Prisma.SortOrder
   aiIntegration?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   isTrial?: Prisma.SortOrder
   website?: Prisma.SortOrder
@@ -717,6 +778,8 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   whatsapp?: Prisma.SortOrder
   confirmed?: Prisma.SortOrder
+  acceptedTerms?: Prisma.SortOrder
+  acceptedAuthorize?: Prisma.SortOrder
   plan?: Prisma.SortOrder
 }
 
@@ -732,6 +795,7 @@ export type UserMinOrderByAggregateInput = {
   aiConnect?: Prisma.SortOrder
   aiIntegration?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   comment?: Prisma.SortOrder
   isTrial?: Prisma.SortOrder
   website?: Prisma.SortOrder
@@ -744,6 +808,8 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   whatsapp?: Prisma.SortOrder
   confirmed?: Prisma.SortOrder
+  acceptedTerms?: Prisma.SortOrder
+  acceptedAuthorize?: Prisma.SortOrder
   plan?: Prisma.SortOrder
 }
 
@@ -787,6 +853,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   aiIntegration?: boolean
   services?: boolean
   campanySize?: boolean
+  campanyRole?: boolean
   comment?: boolean
   isTrial?: boolean
   website?: boolean
@@ -799,6 +866,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   whatsapp?: boolean
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -815,6 +884,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   aiIntegration?: boolean
   services?: boolean
   campanySize?: boolean
+  campanyRole?: boolean
   comment?: boolean
   isTrial?: boolean
   website?: boolean
@@ -827,6 +897,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   whatsapp?: boolean
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -843,6 +915,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   aiIntegration?: boolean
   services?: boolean
   campanySize?: boolean
+  campanyRole?: boolean
   comment?: boolean
   isTrial?: boolean
   website?: boolean
@@ -855,6 +928,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   whatsapp?: boolean
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -871,6 +946,7 @@ export type UserSelectScalar = {
   aiIntegration?: boolean
   services?: boolean
   campanySize?: boolean
+  campanyRole?: boolean
   comment?: boolean
   isTrial?: boolean
   website?: boolean
@@ -883,10 +959,12 @@ export type UserSelectScalar = {
   createdAt?: boolean
   whatsapp?: boolean
   confirmed?: boolean
+  acceptedTerms?: boolean
+  acceptedAuthorize?: boolean
   plan?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "campany" | "industry" | "city" | "country" | "totalBranches" | "chatVolume" | "aiConnect" | "aiIntegration" | "services" | "campanySize" | "comment" | "isTrial" | "website" | "phone" | "email" | "crNo" | "password" | "generatedToken" | "role" | "createdAt" | "whatsapp" | "confirmed" | "plan", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "campany" | "industry" | "city" | "country" | "totalBranches" | "chatVolume" | "aiConnect" | "aiIntegration" | "services" | "campanySize" | "campanyRole" | "comment" | "isTrial" | "website" | "phone" | "email" | "crNo" | "password" | "generatedToken" | "role" | "createdAt" | "whatsapp" | "confirmed" | "acceptedTerms" | "acceptedAuthorize" | "plan", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -904,6 +982,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     aiIntegration: string | null
     services: string[]
     campanySize: string | null
+    campanyRole: string | null
     comment: string | null
     isTrial: boolean
     website: string | null
@@ -916,6 +995,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     whatsapp: string | null
     confirmed: boolean
+    acceptedTerms: boolean
+    acceptedAuthorize: boolean
     plan: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1352,6 +1433,7 @@ export interface UserFieldRefs {
   readonly aiIntegration: Prisma.FieldRef<"User", 'String'>
   readonly services: Prisma.FieldRef<"User", 'String[]'>
   readonly campanySize: Prisma.FieldRef<"User", 'String'>
+  readonly campanyRole: Prisma.FieldRef<"User", 'String'>
   readonly comment: Prisma.FieldRef<"User", 'String'>
   readonly isTrial: Prisma.FieldRef<"User", 'Boolean'>
   readonly website: Prisma.FieldRef<"User", 'String'>
@@ -1364,6 +1446,8 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly whatsapp: Prisma.FieldRef<"User", 'String'>
   readonly confirmed: Prisma.FieldRef<"User", 'Boolean'>
+  readonly acceptedTerms: Prisma.FieldRef<"User", 'Boolean'>
+  readonly acceptedAuthorize: Prisma.FieldRef<"User", 'Boolean'>
   readonly plan: Prisma.FieldRef<"User", 'String'>
 }
     

@@ -51,6 +51,10 @@ export type SrsMinAggregateOutputType = {
   timetoenter: Date | null
   datetime: Date | null
   status: string | null
+  yardi_wo_code: string | null
+  closed_at: Date | null
+  is_closed: boolean | null
+  updated_at: Date | null
 }
 
 export type SrsMaxAggregateOutputType = {
@@ -70,6 +74,10 @@ export type SrsMaxAggregateOutputType = {
   timetoenter: Date | null
   datetime: Date | null
   status: string | null
+  yardi_wo_code: string | null
+  closed_at: Date | null
+  is_closed: boolean | null
+  updated_at: Date | null
 }
 
 export type SrsCountAggregateOutputType = {
@@ -89,6 +97,10 @@ export type SrsCountAggregateOutputType = {
   timetoenter: number
   datetime: number
   status: number
+  yardi_wo_code: number
+  closed_at: number
+  is_closed: number
+  updated_at: number
   _all: number
 }
 
@@ -118,6 +130,10 @@ export type SrsMinAggregateInputType = {
   timetoenter?: true
   datetime?: true
   status?: true
+  yardi_wo_code?: true
+  closed_at?: true
+  is_closed?: true
+  updated_at?: true
 }
 
 export type SrsMaxAggregateInputType = {
@@ -137,6 +153,10 @@ export type SrsMaxAggregateInputType = {
   timetoenter?: true
   datetime?: true
   status?: true
+  yardi_wo_code?: true
+  closed_at?: true
+  is_closed?: true
+  updated_at?: true
 }
 
 export type SrsCountAggregateInputType = {
@@ -156,6 +176,10 @@ export type SrsCountAggregateInputType = {
   timetoenter?: true
   datetime?: true
   status?: true
+  yardi_wo_code?: true
+  closed_at?: true
+  is_closed?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -262,6 +286,10 @@ export type SrsGroupByOutputType = {
   timetoenter: Date | null
   datetime: Date | null
   status: string | null
+  yardi_wo_code: string | null
+  closed_at: Date | null
+  is_closed: boolean | null
+  updated_at: Date | null
   _count: SrsCountAggregateOutputType | null
   _avg: SrsAvgAggregateOutputType | null
   _sum: SrsSumAggregateOutputType | null
@@ -304,6 +332,10 @@ export type srsWhereInput = {
   timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableFilter<"srs"> | string | null
+  yardi_wo_code?: Prisma.StringNullableFilter<"srs"> | string | null
+  closed_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
+  is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
+  updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
 }
 
 export type srsOrderByWithRelationInput = {
@@ -323,6 +355,10 @@ export type srsOrderByWithRelationInput = {
   timetoenter?: Prisma.SortOrderInput | Prisma.SortOrder
   datetime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  yardi_wo_code?: Prisma.SortOrderInput | Prisma.SortOrder
+  closed_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_closed?: Prisma.SortOrderInput | Prisma.SortOrder
+  updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
 export type srsWhereUniqueInput = Prisma.AtLeast<{
@@ -345,6 +381,10 @@ export type srsWhereUniqueInput = Prisma.AtLeast<{
   timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableFilter<"srs"> | string | null
+  yardi_wo_code?: Prisma.StringNullableFilter<"srs"> | string | null
+  closed_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
+  is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
+  updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
 }, "id">
 
 export type srsOrderByWithAggregationInput = {
@@ -364,6 +404,10 @@ export type srsOrderByWithAggregationInput = {
   timetoenter?: Prisma.SortOrderInput | Prisma.SortOrder
   datetime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  yardi_wo_code?: Prisma.SortOrderInput | Prisma.SortOrder
+  closed_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_closed?: Prisma.SortOrderInput | Prisma.SortOrder
+  updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.srsCountOrderByAggregateInput
   _avg?: Prisma.srsAvgOrderByAggregateInput
   _max?: Prisma.srsMaxOrderByAggregateInput
@@ -391,6 +435,10 @@ export type srsScalarWhereWithAggregatesInput = {
   timetoenter?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
+  yardi_wo_code?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
+  closed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
+  is_closed?: Prisma.BoolNullableWithAggregatesFilter<"srs"> | boolean | null
+  updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
 }
 
 export type srsCreateInput = {
@@ -409,6 +457,10 @@ export type srsCreateInput = {
   timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
+  yardi_wo_code?: string | null
+  closed_at?: Date | string | null
+  is_closed?: boolean | null
+  updated_at?: Date | string | null
 }
 
 export type srsUncheckedCreateInput = {
@@ -428,6 +480,10 @@ export type srsUncheckedCreateInput = {
   timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
+  yardi_wo_code?: string | null
+  closed_at?: Date | string | null
+  is_closed?: boolean | null
+  updated_at?: Date | string | null
 }
 
 export type srsUpdateInput = {
@@ -446,6 +502,10 @@ export type srsUpdateInput = {
   timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsUncheckedUpdateInput = {
@@ -465,6 +525,10 @@ export type srsUncheckedUpdateInput = {
   timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsCreateManyInput = {
@@ -484,6 +548,10 @@ export type srsCreateManyInput = {
   timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
+  yardi_wo_code?: string | null
+  closed_at?: Date | string | null
+  is_closed?: boolean | null
+  updated_at?: Date | string | null
 }
 
 export type srsUpdateManyMutationInput = {
@@ -502,6 +570,10 @@ export type srsUpdateManyMutationInput = {
   timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsUncheckedUpdateManyInput = {
@@ -521,6 +593,10 @@ export type srsUncheckedUpdateManyInput = {
   timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsCountOrderByAggregateInput = {
@@ -540,6 +616,10 @@ export type srsCountOrderByAggregateInput = {
   timetoenter?: Prisma.SortOrder
   datetime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  yardi_wo_code?: Prisma.SortOrder
+  closed_at?: Prisma.SortOrder
+  is_closed?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type srsAvgOrderByAggregateInput = {
@@ -563,6 +643,10 @@ export type srsMaxOrderByAggregateInput = {
   timetoenter?: Prisma.SortOrder
   datetime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  yardi_wo_code?: Prisma.SortOrder
+  closed_at?: Prisma.SortOrder
+  is_closed?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type srsMinOrderByAggregateInput = {
@@ -582,6 +666,10 @@ export type srsMinOrderByAggregateInput = {
   timetoenter?: Prisma.SortOrder
   datetime?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  yardi_wo_code?: Prisma.SortOrder
+  closed_at?: Prisma.SortOrder
+  is_closed?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type srsSumOrderByAggregateInput = {
@@ -607,6 +695,10 @@ export type srsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   timetoenter?: boolean
   datetime?: boolean
   status?: boolean
+  yardi_wo_code?: boolean
+  closed_at?: boolean
+  is_closed?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["srs"]>
 
 export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -626,6 +718,10 @@ export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   timetoenter?: boolean
   datetime?: boolean
   status?: boolean
+  yardi_wo_code?: boolean
+  closed_at?: boolean
+  is_closed?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["srs"]>
 
 export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -645,6 +741,10 @@ export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   timetoenter?: boolean
   datetime?: boolean
   status?: boolean
+  yardi_wo_code?: boolean
+  closed_at?: boolean
+  is_closed?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["srs"]>
 
 export type srsSelectScalar = {
@@ -664,9 +764,13 @@ export type srsSelectScalar = {
   timetoenter?: boolean
   datetime?: boolean
   status?: boolean
+  yardi_wo_code?: boolean
+  closed_at?: boolean
+  is_closed?: boolean
+  updated_at?: boolean
 }
 
-export type srsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "resname" | "resphone" | "resemail" | "compound" | "unit" | "propertycode" | "priority" | "leasename" | "leasecode" | "category" | "subcategory" | "breifdescription" | "timetoenter" | "datetime" | "status", ExtArgs["result"]["srs"]>
+export type srsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "resname" | "resphone" | "resemail" | "compound" | "unit" | "propertycode" | "priority" | "leasename" | "leasecode" | "category" | "subcategory" | "breifdescription" | "timetoenter" | "datetime" | "status" | "yardi_wo_code" | "closed_at" | "is_closed" | "updated_at", ExtArgs["result"]["srs"]>
 
 export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "srs"
@@ -688,6 +792,10 @@ export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     timetoenter: Date | null
     datetime: Date | null
     status: string | null
+    yardi_wo_code: string | null
+    closed_at: Date | null
+    is_closed: boolean | null
+    updated_at: Date | null
   }, ExtArgs["result"]["srs"]>
   composites: {}
 }
@@ -1127,6 +1235,10 @@ export interface srsFieldRefs {
   readonly timetoenter: Prisma.FieldRef<"srs", 'DateTime'>
   readonly datetime: Prisma.FieldRef<"srs", 'DateTime'>
   readonly status: Prisma.FieldRef<"srs", 'String'>
+  readonly yardi_wo_code: Prisma.FieldRef<"srs", 'String'>
+  readonly closed_at: Prisma.FieldRef<"srs", 'DateTime'>
+  readonly is_closed: Prisma.FieldRef<"srs", 'Boolean'>
+  readonly updated_at: Prisma.FieldRef<"srs", 'DateTime'>
 }
     
 

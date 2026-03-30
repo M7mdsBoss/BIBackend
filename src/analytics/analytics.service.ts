@@ -58,6 +58,32 @@ export async function getRequestsStatus(prisma: PrismaClient) {
   return { status: result, lastStatus: lastResult };
 }
 
+// ── Status SRS (all-time + last 24 h) ─────────────────────────────────────
+export async function getRequestsStatusV2(prisma: PrismaClient) {
+  const statusCounts = await prisma.srs.groupBy({
+    by: ['status'],
+    _count: { status: true },
+  });
+
+  const result: Record<string, number> = { Closed: 0, Open: 0, Cancelled: 0, 'Work Completed': 0 };
+  for (const item of statusCounts) {
+    if (item.status) result[item.status] = item._count.status;
+  }
+
+  const lastStatusCount = await prisma.srs.groupBy({
+    by: ['status'],
+    _count: { status: true },
+    where: { updated_at: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } },
+  });
+
+  const lastResult: Record<string, number> = { Closed: 0, Open: 0, Cancelled: 0, 'Work Completed': 0 };
+  for (const item of lastStatusCount) {
+    if (item.status) lastResult[item.status] = item._count.status;
+  }
+
+  return { status: result, lastStatus: lastResult };
+}
+
 // ── Paginated requests list ────────────────────────────────────────────────────
 export interface ListRequestsQuery {
   page: number;

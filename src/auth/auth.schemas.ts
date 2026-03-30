@@ -10,6 +10,9 @@ export const registerSchema = z.object({
   campany: z.string().max(150).optional(),
   industry: z.string().max(100).optional(),
   campanySize: z.string().max(10).optional(),
+  campanyRole: z.string().max(20).optional(),
+  acceptedAuthorize: z.boolean(),
+  acceptedTerms: z.boolean()
 });
 
 export const confirmRegisterSchema = z.object({

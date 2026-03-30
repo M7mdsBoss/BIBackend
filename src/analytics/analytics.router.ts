@@ -2,7 +2,7 @@ import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
 import { AuthRequest, requireAdmin } from '../middleware/auth.middleware';
-import { getRequestsByAgent, getRequestsStatus, listRequests } from './analytics.service';
+import { getRequestsByAgent, getRequestsStatus, getRequestsStatusV2, listRequests } from './analytics.service';
 
 const listQuerySchema = z.object({
   page:        z.coerce.number().int().min(1).default(1),
@@ -29,7 +29,7 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
   // GET /analytics/requests/status
   router.get('/requests/status', async (_req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getRequestsStatus(prisma));
+      res.json(await getRequestsStatusV2(prisma));
     } catch (err) {
       next(err);
     }

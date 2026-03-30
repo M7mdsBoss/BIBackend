@@ -29,10 +29,13 @@ export interface RegisterDto {
   campany?: string;
   industry?: string;
   campanySize?: string;
+  campanyRole?: string;
+  acceptedTerms: boolean
+  acceptedAuthorize: boolean
 }
 
 export async function register(prisma: PrismaClient, dto: RegisterDto) {
-  const { name, email, password, phone, website, chatVolume, campany, industry, campanySize } = dto;
+  const { name, email, password, phone, website, chatVolume, campany, industry, campanySize, campanyRole, acceptedAuthorize, acceptedTerms } = dto;
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
   if (existingUser?.confirmed) {
@@ -60,6 +63,9 @@ export async function register(prisma: PrismaClient, dto: RegisterDto) {
         campanySize,
         generatedToken,
         confirmed: false,
+        campanyRole,
+        acceptedAuthorize,
+        acceptedTerms
       },
     });
     userId = user.id;
