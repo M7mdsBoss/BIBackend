@@ -50,6 +50,7 @@ model Visit {
   visitTime           String
   pdfUrl              String?
   qrCode              String?
+  compound            String
   createdAt           DateTime @default(now())
   updatedAt           DateTime
   isExpired           Boolean  @default(false)

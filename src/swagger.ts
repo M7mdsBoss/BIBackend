@@ -244,6 +244,39 @@ export const swaggerSpec = {
     },
 
     // ── User ──────────────────────────────────────────────────────────────────
+    '/api/v1/user': {
+      get: {
+        tags: ['User'],
+        summary: 'List all users with pagination (Admin only)',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { in: 'query', name: 'page',  schema: { type: 'integer', default: 1 } },
+          { in: 'query', name: 'limit', schema: { type: 'integer', default: 10, maximum: 100 } },
+        ],
+        responses: {
+          200: { description: 'Paginated list of users (password excluded)' },
+          400: { description: 'Invalid query parameters' },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – Admin only' },
+        },
+      },
+    },
+    '/api/v1/user/{id}': {
+      get: {
+        tags: ['User'],
+        summary: 'Get a user by ID (Admin only)',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string' }, description: 'User ID' },
+        ],
+        responses: {
+          200: { description: 'User object (password excluded)' },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – Admin only' },
+          404: { description: 'User not found' },
+        },
+      },
+    },
     '/api/v1/user/search': {
       get: {
         tags: ['User'],
@@ -255,6 +288,92 @@ export const swaggerSpec = {
         responses: {
           200: { description: 'List of matching users (max 5)' },
           401: { description: 'Unauthorized' },
+        },
+      },
+    },
+
+    // ── Visitors ──────────────────────────────────────────────────────────────
+    '/api/v1/visitors': {
+      get: {
+        tags: ['Visitors'],
+        summary: 'List all visits with pagination',
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { in: 'query', name: 'page',  schema: { type: 'integer', default: 1 } },
+          { in: 'query', name: 'limit', schema: { type: 'integer', default: 10, maximum: 100 } },
+          { in: 'query', name: 'unit',  schema: { type: 'string' }, description: 'Filter by resident unit (partial match)' },
+        ],
+        responses: {
+          200: { description: 'Paginated list of visits' },
+          400: { description: 'Invalid query parameters' },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – Admin only' },
+        },
+      },
+    },
+    '/api/v1/visitors/stats': {
+      get: {
+        tags: ['Visitors'],
+        summary: 'Get visitor statistics (total, per compound, last 7 days, today)',
+        security: [{ bearerAuth: [] }],
+        responses: {
+          200: {
+            description: 'Visitor statistics',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    total: { type: 'integer', example: 320 },
+                    perCompound: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          unit:  { type: 'string', example: 'B-204' },
+                          count: { type: 'integer', example: 45 },
+                        },
+                      },
+                    },
+                    last7Days: {
+                      type: 'object',
+                      properties: {
+                        total: { type: 'integer', example: 58 },
+                        perCompound: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              unit:  { type: 'string', example: 'B-204' },
+                              count: { type: 'integer', example: 12 },
+                            },
+                          },
+                        },
+                      },
+                    },
+                    today: {
+                      type: 'object',
+                      properties: {
+                        total: { type: 'integer', example: 9 },
+                        perCompound: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              unit:  { type: 'string', example: 'A-101' },
+                              count: { type: 'integer', example: 3 },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – Admin only' },
         },
       },
     },

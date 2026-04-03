@@ -13,6 +13,7 @@ import { createAnalyticsRouter } from "./analytics/analytics.router";
 import { createUserRouter } from "./user/user.router";
 import { createContactRouter } from "./contact/contact.router";
 import { createPdfRouter } from "./pdf/pdf.router";
+import { createVisitorsRouter } from "./visitors/visitors.router";
 import { startVisitCleanupCron } from "./qr-code/visit-cleanup.service";
 import { errorHandler } from "./middleware/error-handler";
 import { swaggerSpec } from "./swagger";
@@ -61,6 +62,7 @@ app.use("/pdf", createPdfRouter());
 app.use("/api/v1/analytics", createAnalyticsRouter(prisma));
 app.use("/api/v1/user", createUserRouter(prisma));
 app.use("/api/v1/contact", createContactRouter());
+app.use("/api/v1/visitors", createVisitorsRouter(prisma));
 
 // ── Global error handler (must be last) ───────────────────────────────────────
 app.use(errorHandler);
