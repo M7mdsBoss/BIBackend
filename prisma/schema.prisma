@@ -20,7 +20,6 @@ model User {
   aiIntegration     String?  @db.VarChar(3)
   services          String[] @default([])
   campanySize       String?  @db.VarChar(10)
-  campanyRole       String?
   comment           String?
   isTrial           Boolean  @default(false)
   website           String?
@@ -33,9 +32,10 @@ model User {
   createdAt         DateTime @default(now())
   whatsapp          String?
   confirmed         Boolean  @default(false)
-  acceptedTerms     Boolean  @default(false)
-  acceptedAuthorize Boolean  @default(false)
   plan              String?
+  acceptedAuthorize Boolean  @default(false)
+  acceptedTerms     Boolean  @default(false)
+  campanyRole       String?
 }
 
 model Visit {
@@ -202,6 +202,7 @@ model whatsapp_messages {
   timestamp      DateTime?  @db.Timestamp(6)
   id             BigInt     @id @default(autoincrement())
   guest          Boolean?
+  az_bs          String?
   requests       requests[]
 }
 
