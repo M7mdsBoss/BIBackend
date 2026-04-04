@@ -6,6 +6,13 @@ function startOfToday(): Date {
   return d;
 }
 
+function startOfTomorrow(): Date {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 1);
+  return d;
+}
+
 function sevenDaysAgo(): Date {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -42,32 +49,51 @@ export async function listVisits(prisma: PrismaClient, query: ListVisitsQuery) {
 
 export async function getVisitorStats(prisma: PrismaClient) {
   const todayStart = startOfToday();
+  const todayEnd = startOfTomorrow();
   const weekStart = sevenDaysAgo();
 
   const [
     total,
     perCompound,
+    perUnit,
     last7DaysTotal,
     last7DaysPerCompound,
+    last7DaysPerUnit,
     todayTotal,
     todayPerCompound,
+    todayPerUnit
   ] = await Promise.all([
     // 1. Total visitors
     prisma.visit.count(),
 
     // 2. Total per compound
     prisma.visit.groupBy({
+      by: ['compound'],
+      _count: { _all: true },
+      orderBy: { _count: { compound: 'desc' } },
+    }),
+
+    // 3. Total per unit
+    prisma.visit.groupBy({
       by: ['residentUnit'],
       _count: { _all: true },
       orderBy: { _count: { residentUnit: 'desc' } },
     }),
 
-    // 3. Last 7 days total
+    // 4. Last 7 days total
     prisma.visit.count({
       where: { visitDate: { gte: weekStart } },
     }),
 
-    // 4. Last 7 days per compound
+    // 5. Last 7 days per compound
+    prisma.visit.groupBy({
+      by: ['compound'],
+      _count: { _all: true },
+      where: { visitDate: { gte: weekStart } },
+      orderBy: { _count: { compound: 'desc' } },
+    }),
+
+    // 6. Last 7 days per unit
     prisma.visit.groupBy({
       by: ['residentUnit'],
       _count: { _all: true },
@@ -75,30 +101,42 @@ export async function getVisitorStats(prisma: PrismaClient) {
       orderBy: { _count: { residentUnit: 'desc' } },
     }),
 
-    // 5. Today total
+    // 7. Today total
     prisma.visit.count({
-      where: { visitDate: { gte: todayStart } },
+      where: { visitDate: { gte: todayStart, lt: todayEnd } },
     }),
 
-    // 6. Today per compound
+    // 8. Today per compound
+    prisma.visit.groupBy({
+      by: ['compound'],
+      _count: { _all: true },
+      where: { visitDate: { gte: todayStart, lt: todayEnd } },
+      orderBy: { _count: { compound: 'desc' } },
+    }),
+
+    // 9. Today per unit
     prisma.visit.groupBy({
       by: ['residentUnit'],
       _count: { _all: true },
-      where: { visitDate: { gte: todayStart } },
+      where: { visitDate: { gte: todayStart, lt: todayEnd } },
       orderBy: { _count: { residentUnit: 'desc' } },
     }),
+
   ]);
 
   return {
     total,
-    perCompound: perCompound.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
+    perCompound: perCompound.map((r) => ({ compound: r.compound, count: r._count._all })),
+    perUnit: perUnit.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
     last7Days: {
       total: last7DaysTotal,
-      perCompound: last7DaysPerCompound.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
+      perCompound: last7DaysPerCompound.map((r) => ({ compound: r.compound, count: r._count._all })),
+      perUnit: last7DaysPerUnit.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
     },
     today: {
       total: todayTotal,
-      perCompound: todayPerCompound.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
+      perCompound: todayPerCompound.map((r) => ({ compound: r.compound, count: r._count._all })),
+      perUnit: todayPerUnit.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
     },
   };
 }

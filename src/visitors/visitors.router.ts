@@ -1,7 +1,7 @@
 import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
-import { AuthRequest, requireAdmin } from '../middleware/auth.middleware';
+import { AuthRequest, authMiddleware } from '../middleware/auth.middleware';
 import { getVisitorStats, listVisits } from './visitors.service';
 
 const listQuerySchema = z.object({
@@ -13,7 +13,7 @@ const listQuerySchema = z.object({
 export function createVisitorsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  router.use(requireAdmin);
+  router.use(authMiddleware);
 
   // GET /api/v1/visitors/stats
   router.get('/stats', async (_req: AuthRequest, res: Response, next: NextFunction) => {

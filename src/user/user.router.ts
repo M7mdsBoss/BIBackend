@@ -4,7 +4,7 @@ import { PrismaClient } from '../../prisma/generated/client';
 import { AuthRequest, requireAdmin } from '../middleware/auth.middleware';
 
 const listQuerySchema = z.object({
-  page:  z.coerce.number().int().min(1).default(1),
+  page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
 });
 
@@ -18,13 +18,13 @@ export function createUserRouter(prisma: PrismaClient) {
 
       const where = query
         ? {
-            role: 'User',
-            OR: [
-              { name: { contains: query, mode: 'insensitive' as const } },
-              { email: { contains: query, mode: 'insensitive' as const } },
-              { generatedToken: { contains: query, mode: 'insensitive' as const } },
-            ],
-          }
+          role: 'User',
+          OR: [
+            { name: { contains: query, mode: 'insensitive' as const } },
+            { email: { contains: query, mode: 'insensitive' as const } },
+            { generatedToken: { contains: query, mode: 'insensitive' as const } },
+          ],
+        }
         : { role: 'User' };
 
       const rawUsers = await prisma.user.findMany({ where, take: 5 });
@@ -53,12 +53,12 @@ export function createUserRouter(prisma: PrismaClient) {
 
       const [rawUsers, total] = await Promise.all([
         prisma.user.findMany({
-          where: { role: 'User' },
+          where: { role: 'User', confirmed: true },
           skip,
           take: limit,
           orderBy: { createdAt: 'desc' },
         }),
-        prisma.user.count({ where: { role: 'User' } }),
+        prisma.user.count({ where: { role: 'User', confirmed: true } }),
       ]);
 
       const data = rawUsers.map(({ password, ...rest }) => rest);
@@ -71,7 +71,7 @@ export function createUserRouter(prisma: PrismaClient) {
   // GET /api/v1/user/:id
   router.get('/:id', requireAdmin, async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const user = await prisma.user.findUnique({ where: { id: req.params.id } });
+      const user = await prisma.user.findUnique({ where: { id: req.params.id as string } });
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;

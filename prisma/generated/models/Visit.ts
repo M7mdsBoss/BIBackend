@@ -36,6 +36,7 @@ export type VisitMinAggregateOutputType = {
   visitTime: string | null
   pdfUrl: string | null
   qrCode: string | null
+  compound: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isExpired: boolean | null
@@ -53,6 +54,7 @@ export type VisitMaxAggregateOutputType = {
   visitTime: string | null
   pdfUrl: string | null
   qrCode: string | null
+  compound: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isExpired: boolean | null
@@ -70,6 +72,7 @@ export type VisitCountAggregateOutputType = {
   visitTime: number
   pdfUrl: number
   qrCode: number
+  compound: number
   createdAt: number
   updatedAt: number
   isExpired: number
@@ -89,6 +92,7 @@ export type VisitMinAggregateInputType = {
   visitTime?: true
   pdfUrl?: true
   qrCode?: true
+  compound?: true
   createdAt?: true
   updatedAt?: true
   isExpired?: true
@@ -106,6 +110,7 @@ export type VisitMaxAggregateInputType = {
   visitTime?: true
   pdfUrl?: true
   qrCode?: true
+  compound?: true
   createdAt?: true
   updatedAt?: true
   isExpired?: true
@@ -123,6 +128,7 @@ export type VisitCountAggregateInputType = {
   visitTime?: true
   pdfUrl?: true
   qrCode?: true
+  compound?: true
   createdAt?: true
   updatedAt?: true
   isExpired?: true
@@ -213,6 +219,7 @@ export type VisitGroupByOutputType = {
   visitTime: string
   pdfUrl: string | null
   qrCode: string | null
+  compound: string | null
   createdAt: Date
   updatedAt: Date
   isExpired: boolean
@@ -251,6 +258,7 @@ export type VisitWhereInput = {
   visitTime?: Prisma.StringFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableFilter<"Visit"> | string | null
+  compound?: Prisma.StringNullableFilter<"Visit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolFilter<"Visit"> | boolean
@@ -268,6 +276,7 @@ export type VisitOrderByWithRelationInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   qrCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  compound?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
@@ -288,6 +297,7 @@ export type VisitWhereUniqueInput = Prisma.AtLeast<{
   visitTime?: Prisma.StringFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableFilter<"Visit"> | string | null
+  compound?: Prisma.StringNullableFilter<"Visit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolFilter<"Visit"> | boolean
@@ -305,6 +315,7 @@ export type VisitOrderByWithAggregationInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   qrCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  compound?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
@@ -328,6 +339,7 @@ export type VisitScalarWhereWithAggregatesInput = {
   visitTime?: Prisma.StringWithAggregatesFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
+  compound?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolWithAggregatesFilter<"Visit"> | boolean
@@ -345,6 +357,7 @@ export type VisitCreateInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
+  compound?: string | null
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
@@ -362,6 +375,7 @@ export type VisitUncheckedCreateInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
+  compound?: string | null
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
@@ -379,6 +393,7 @@ export type VisitUpdateInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -396,6 +411,7 @@ export type VisitUncheckedUpdateInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -413,6 +429,7 @@ export type VisitCreateManyInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
+  compound?: string | null
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
@@ -430,6 +447,7 @@ export type VisitUpdateManyMutationInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -447,6 +465,7 @@ export type VisitUncheckedUpdateManyInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -464,6 +483,7 @@ export type VisitCountOrderByAggregateInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
+  compound?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
@@ -481,6 +501,7 @@ export type VisitMaxOrderByAggregateInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
+  compound?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
@@ -498,6 +519,7 @@ export type VisitMinOrderByAggregateInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
+  compound?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
@@ -517,6 +539,7 @@ export type VisitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
+  compound?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
@@ -534,6 +557,7 @@ export type VisitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
+  compound?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
@@ -551,6 +575,7 @@ export type VisitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
+  compound?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
@@ -568,12 +593,13 @@ export type VisitSelectScalar = {
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
+  compound?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
 }
 
-export type VisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "residentFullName" | "residentUnit" | "residentPhone" | "visitorFullName" | "visitorCarType" | "visitorLicensePlate" | "visitDate" | "visitTime" | "pdfUrl" | "qrCode" | "createdAt" | "updatedAt" | "isExpired", ExtArgs["result"]["visit"]>
+export type VisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "residentFullName" | "residentUnit" | "residentPhone" | "visitorFullName" | "visitorCarType" | "visitorLicensePlate" | "visitDate" | "visitTime" | "pdfUrl" | "qrCode" | "compound" | "createdAt" | "updatedAt" | "isExpired", ExtArgs["result"]["visit"]>
 
 export type $VisitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Visit"
@@ -590,6 +616,7 @@ export type $VisitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     visitTime: string
     pdfUrl: string | null
     qrCode: string | null
+    compound: string | null
     createdAt: Date
     updatedAt: Date
     isExpired: boolean
@@ -1027,6 +1054,7 @@ export interface VisitFieldRefs {
   readonly visitTime: Prisma.FieldRef<"Visit", 'String'>
   readonly pdfUrl: Prisma.FieldRef<"Visit", 'String'>
   readonly qrCode: Prisma.FieldRef<"Visit", 'String'>
+  readonly compound: Prisma.FieldRef<"Visit", 'String'>
   readonly createdAt: Prisma.FieldRef<"Visit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Visit", 'DateTime'>
   readonly isExpired: Prisma.FieldRef<"Visit", 'Boolean'>

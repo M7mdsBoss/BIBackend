@@ -243,6 +243,33 @@ export const swaggerSpec = {
       },
     },
 
+    // ── Check Email ───────────────────────────────────────────────────────────
+    '/api/v1/check-email': {
+      get: {
+        tags: ['User'],
+        summary: 'Check if an email address is already registered',
+        parameters: [
+          { in: 'query', name: 'email', required: true, schema: { type: 'string', format: 'email' }, description: 'Email address to check' },
+        ],
+        responses: {
+          200: {
+            description: 'Email availability result',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    available: { type: 'boolean', example: true, description: 'true if email is not in use' },
+                  },
+                },
+              },
+            },
+          },
+          400: { description: 'Missing email query parameter' },
+        },
+      },
+    },
+
     // ── User ──────────────────────────────────────────────────────────────────
     '/api/v1/user': {
       get: {

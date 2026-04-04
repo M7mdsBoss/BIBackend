@@ -56,6 +56,16 @@ app.use(
 );
 
 // ── Routes ────────────────────────────────────────────────────────────────────
+app.get("/api/v1/check-email", async (req, res) => {
+  const email = (req.query.email as string)?.trim().toLowerCase();
+  if (!email) {
+    res.status(400).json({ message: "email query parameter is required" });
+    return;
+  }
+  const user = await prisma.user.findUnique({ where: { email }, select: { id: true } });
+  res.json({ available: !user });
+});
+
 app.use("/api/v1/auth", authLimiter, createAuthRouter(prisma));
 app.use("/api/v1/qr-code", createQrCodeRouter(prisma));
 app.use("/pdf", createPdfRouter());

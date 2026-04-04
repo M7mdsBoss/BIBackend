@@ -1,7 +1,7 @@
 import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
-import { AuthRequest, requireAdmin } from '../middleware/auth.middleware';
+import { AuthRequest, authMiddleware } from '../middleware/auth.middleware';
 import { getRequestsByAgent, getRequestsStatus, getRequestsStatusV2, listRequests } from './analytics.service';
 
 const listQuerySchema = z.object({
@@ -14,8 +14,7 @@ const listQuerySchema = z.object({
 export function createAnalyticsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  // All analytics routes require Admin role
-  router.use(requireAdmin);
+  router.use(authMiddleware);
 
   // GET /analytics/requests/by-agent
   router.get('/requests/by-agent', async (_req: AuthRequest, res: Response, next: NextFunction) => {

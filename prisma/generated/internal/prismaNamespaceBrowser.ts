@@ -97,7 +97,6 @@ export const UserScalarFieldEnum = {
   aiIntegration: 'aiIntegration',
   services: 'services',
   campanySize: 'campanySize',
-  campanyRole: 'campanyRole',
   comment: 'comment',
   isTrial: 'isTrial',
   website: 'website',
@@ -110,9 +109,10 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   whatsapp: 'whatsapp',
   confirmed: 'confirmed',
-  acceptedTerms: 'acceptedTerms',
+  plan: 'plan',
   acceptedAuthorize: 'acceptedAuthorize',
-  plan: 'plan'
+  acceptedTerms: 'acceptedTerms',
+  campanyRole: 'campanyRole'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -130,6 +130,7 @@ export const VisitScalarFieldEnum = {
   visitTime: 'visitTime',
   pdfUrl: 'pdfUrl',
   qrCode: 'qrCode',
+  compound: 'compound',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isExpired: 'isExpired'
@@ -300,7 +301,8 @@ export const Whatsapp_messagesScalarFieldEnum = {
   message_type: 'message_type',
   timestamp: 'timestamp',
   id: 'id',
-  guest: 'guest'
+  guest: 'guest',
+  az_bs: 'az_bs'
 } as const
 
 export type Whatsapp_messagesScalarFieldEnum = (typeof Whatsapp_messagesScalarFieldEnum)[keyof typeof Whatsapp_messagesScalarFieldEnum]
