@@ -11,6 +11,7 @@ export interface CreateVisitDto {
   visitorLicensePlate: string;
   visitDate: string;
   visitTime: string;
+  compound?: string;
 }
 
 export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
@@ -26,6 +27,7 @@ export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
       visitorLicensePlate: dto.visitorLicensePlate,
       visitDate: new Date(dto.visitDate),
       visitTime: dto.visitTime,
+      compound: dto.compound,
       updatedAt: now,
     },
   });

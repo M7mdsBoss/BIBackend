@@ -9,4 +9,5 @@ export const createVisitSchema = z.object({
   visitorLicensePlate: z.string().min(1).max(20),
   visitDate: z.string().datetime({ offset: true }).or(z.string().date()),
   visitTime: z.string().regex(/^\d{2}:\d{2}$/, 'visitTime must be HH:MM'),
+  compound: z.string().min(1).max(150).optional(),
 });

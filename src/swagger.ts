@@ -161,6 +161,7 @@ export const swaggerSpec = {
                   visitorLicensePlate: { type: 'string', example: 'ABC 1234' },
                   visitDate:           { type: 'string', format: 'date', example: '2026-03-20' },
                   visitTime:           { type: 'string', pattern: '^\\d{2}:\\d{2}$', example: '14:30' },
+                  compound:            { type: 'string', example: 'Al-Nakheel Compound' },
                 },
               },
             },
