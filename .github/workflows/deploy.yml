@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Add known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.BI_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -20,7 +26,6 @@ jobs:
           username: ${{ secrets.BI_SSH_USER }}
           port: ${{ secrets.BI_SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.BI_SSH_KNOWN_HOSTS }}
           script: |
             cd /var/www/webroot/ROOT
             git pull origin main
