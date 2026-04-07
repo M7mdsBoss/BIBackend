@@ -13,22 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Add known hosts
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           echo "${{ secrets.BI_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.BI_SSH_HOST }}
-          username: ${{ secrets.BI_SSH_USER }}
-          port: ${{ secrets.BI_SSH_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/webroot/ROOT
-            git pull origin main
-            npm install
-            npx prisma generate
-            pm2 restart backend
+        run: |
+          ssh -i ~/.ssh/id_rsa \
+            -p ${{ secrets.BI_SSH_PORT }} \
+            ${{ secrets.BI_SSH_USER }}@${{ secrets.BI_SSH_HOST }} \
+            "cd /var/www/webroot/ROOT && git pull origin main && npm install && npx prisma generate && pm2 restart backend"
