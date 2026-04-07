@@ -26,4 +26,4 @@ jobs:
           ssh -i ~/.ssh/id_rsa \
             -p ${{ secrets.BI_SSH_PORT }} \
             ${{ secrets.BI_SSH_USER }}@${{ secrets.BI_SSH_HOST }} \
-            "cd /var/www/webroot/ROOT && git pull origin main && npm install && npx prisma generate && pm2 restart backend"
+            "cd /home/jelastic/ROOT && git pull origin main && npm install && npx prisma generate && pm2 restart backend"
