@@ -26,14 +26,12 @@ const app = express();
 app.set("trust proxy", 1);
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
-app.use(
-  cors({
-    origin: process.env.ALLOWED_ORIGINS?.split(",") ?? false,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }),
-);
+app.use(cors({
+  origin: 'https://dashboard.theblueinnovation.com',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 
 app.use(helmet());
 app.use(express.json({ limit: "10kb" }));
