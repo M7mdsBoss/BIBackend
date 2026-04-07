@@ -20,6 +20,7 @@ jobs:
           username: ${{ secrets.BI_SSH_USER }}
           port: ${{ secrets.BI_SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          debug: true
           script: |
             cd /var/www/webroot/ROOT
             git pull origin main
