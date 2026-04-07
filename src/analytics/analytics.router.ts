@@ -2,13 +2,13 @@ import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
 import { AuthRequest, authMiddleware } from '../middleware/auth.middleware';
-import { getRequestsByAgent, getRequestsStatus, getRequestsStatusV2, listRequests } from './analytics.service';
+import { getSrsByCategory, GetSrsByCompound, GetSrsByUnit, getSrsStatus, listSrsRequests } from './analytics.service';
 
 const listQuerySchema = z.object({
-  page:        z.coerce.number().int().min(1).default(1),
-  limit:       z.coerce.number().int().min(1).max(100).default(10),
-  status:      z.enum(['new', 'in_progress', 'completed', 'canceled']).optional(),
-  assigned_to: z.string().min(1).optional(),
+  page:     z.coerce.number().int().min(1).default(1),
+  limit:    z.coerce.number().int().min(1).max(100).default(10),
+  status:   z.enum(['Open', 'Closed', 'Work Completed', 'Cancelled']).optional(),
+  category: z.string().min(1).optional(),
 });
 
 export function createAnalyticsRouter(prisma: PrismaClient) {
@@ -19,7 +19,12 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
   // GET /analytics/requests/by-agent
   router.get('/requests/by-agent', async (_req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getRequestsByAgent(prisma));
+      const [byCategory, byCompound, byUnit] = await Promise.all([
+        getSrsByCategory(prisma),
+        GetSrsByCompound(prisma),
+        GetSrsByUnit(prisma),
+      ]);
+      res.json({ byCategory, byCompound, byUnit });
     } catch (err) {
       next(err);
     }
@@ -28,7 +33,7 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
   // GET /analytics/requests/status
   router.get('/requests/status', async (_req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getRequestsStatusV2(prisma));
+      res.json(await getSrsStatus(prisma));
     } catch (err) {
       next(err);
     }
@@ -45,7 +50,7 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
         });
         return;
       }
-      res.json(await listRequests(prisma, parsed.data));
+      res.json(await listSrsRequests(prisma, parsed.data));
     } catch (err) {
       next(err);
     }

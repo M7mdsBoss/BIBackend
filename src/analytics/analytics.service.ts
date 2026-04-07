@@ -1,35 +1,68 @@
 import { PrismaClient } from '../../prisma/generated/client';
 
-// ── By-agent breakdown ─────────────────────────────────────────────────────────
-export async function getRequestsByAgent(prisma: PrismaClient) {
-  const rawResults = await prisma.requests.groupBy({
-    by: ['assigned_to', 'status'],
+type SrsGroupField = 'category' | 'compound' | 'unit';
+
+type SrsRow = { name: string; value: number; Open: number; Closed: number; 'Work Completed': number; Cancelled: number };
+
+function startOfToday(): Date {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+async function groupSrsByField(
+  prisma: PrismaClient,
+  field: SrsGroupField,
+  since?: Date,
+): Promise<SrsRow[]> {
+  const rawResults = await prisma.srs.groupBy({
+    by: [field, 'status'],
     _count: { _all: true },
+    orderBy: { _count: { status: 'desc' } },
+    where: since ? { datetime: { gte: since } } : undefined,
   });
 
-  const map: Record<string, {
-    name: string;
-    value: number;
-    Completed: number;
-    New: number;
-    'In progress': number;
-    Canceled: number;
-  }> = {};
+  const map: Record<string, SrsRow> = {};
 
   for (const item of rawResults) {
-    const assigned = item.assigned_to ?? 'Unassigned';
-    if (!map[assigned]) {
-      map[assigned] = { name: assigned, value: 0, Completed: 0, New: 0, 'In progress': 0, Canceled: 0 };
+    const key = (item[field] as string | null) ?? 'Unassigned';
+    if (!map[key]) {
+      map[key] = { name: key, value: 0, Open: 0, Closed: 0, 'Work Completed': 0, Cancelled: 0 };
     }
-    const count = item._count._all;
-    map[assigned].value += count;
-    if (item.status === 'completed')  map[assigned].Completed   += count;
-    if (item.status === 'new')        map[assigned].New          += count;
-    if (item.status === 'in_progress') map[assigned]['In progress'] += count;
-    if (item.status === 'canceled')   map[assigned].Canceled    += count;
+    const count = (item._count as { _all: number })._all;
+    map[key].value += count;
+    if (item.status === 'Closed') map[key].Closed += count;
+    if (item.status === 'Open') map[key].Open += count;
+    if (item.status === 'Work Completed') map[key]['Work Completed'] += count;
+    if (item.status === 'Cancelled') map[key].Cancelled += count;
   }
 
-  return { data: Object.values(map) };
+  return Object.values(map);
+}
+
+async function getSrsByFieldWithRanges(prisma: PrismaClient, field: SrsGroupField) {
+  const last7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const [allTime, last7DaysData, todayData] = await Promise.all([
+    groupSrsByField(prisma, field),
+    groupSrsByField(prisma, field, last7Days),
+    groupSrsByField(prisma, field, startOfToday()),
+  ]);
+  return { allTime, last7Days: last7DaysData, today: todayData };
+}
+
+// ── By-Category breakdown ─────────────────────────────────────────────────────────
+export async function getSrsByCategory(prisma: PrismaClient) {
+  return getSrsByFieldWithRanges(prisma, 'category');
+}
+
+// ── By-Compound breakdown ─────────────────────────────────────────────────────────
+export async function GetSrsByCompound(prisma: PrismaClient) {
+  return getSrsByFieldWithRanges(prisma, 'compound');
+}
+
+// ── By-Unit breakdown ─────────────────────────────────────────────────────────────
+export async function GetSrsByUnit(prisma: PrismaClient) {
+  return getSrsByFieldWithRanges(prisma, 'unit');
 }
 
 // ── Status summary (all-time + last 24 h) ─────────────────────────────────────
@@ -59,7 +92,7 @@ export async function getRequestsStatus(prisma: PrismaClient) {
 }
 
 // ── Status SRS (all-time + last 24 h) ─────────────────────────────────────
-export async function getRequestsStatusV2(prisma: PrismaClient) {
+export async function getSrsStatus(prisma: PrismaClient) {
   const statusCounts = await prisma.srs.groupBy({
     by: ['status'],
     _count: { status: true },
@@ -89,36 +122,36 @@ export interface ListRequestsQuery {
   page: number;
   limit: number;
   status?: string;
-  assigned_to?: string;
+  category?: string;
 }
 
-export async function listRequests(prisma: PrismaClient, query: ListRequestsQuery) {
-  const { page, limit, status, assigned_to } = query;
+export async function listSrsRequests(prisma: PrismaClient, query: ListRequestsQuery) {
+  const { page, limit, status, category } = query;
   const skip = (page - 1) * limit;
 
-  const where: { status?: string; assigned_to?: string } = {};
-  if (status)      where.status      = status;
-  if (assigned_to) where.assigned_to = assigned_to;
+  const where: { status?: string; category?: string } = {};
+  if (status) where.status = status;
+  if (category) where.category = category;
 
-  const departments = await prisma.requests.findMany({
-    select: { assigned_to: true },
-    distinct: ['assigned_to'],
-    where: { assigned_to: { not: null } },
+  const categories = await prisma.srs.findMany({
+    select: { category: true },
+    distinct: ['category'],
+    where: { category: { not: null } },
   });
 
   const [data, total] = await Promise.all([
-    prisma.requests.findMany({
-      select: { request_text: true, assigned_to: true, status: true, created_at: true, updated_at: true },
+    prisma.srs.findMany({
+      select: { breifdescription: true, category: true, status: true, datetime: true, unit: true, compound: true },
       where,
       skip,
       take: limit,
-      orderBy: { created_at: 'desc' },
+      orderBy: { datetime: 'desc' },
     }),
-    prisma.requests.count({ where }),
+    prisma.srs.count({ where }),
   ]);
 
   return {
-    departments: departments.map((r) => r.assigned_to as string),
+    categories: categories.map((r) => r.category as string),
     data,
     pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
   };

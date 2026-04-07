@@ -13,6 +13,27 @@ export const swaggerSpec = {
         bearerFormat: 'JWT',
       },
     },
+    schemas: {
+      SrsRow: {
+        type: 'object',
+        properties: {
+          name:            { type: 'string', example: 'Plumbing' },
+          value:           { type: 'integer', example: 42, description: 'Total count' },
+          Open:            { type: 'integer', example: 10 },
+          Closed:          { type: 'integer', example: 20 },
+          'Work Completed': { type: 'integer', example: 8 },
+          Cancelled:       { type: 'integer', example: 4 },
+        },
+      },
+      SrsBreakdown: {
+        type: 'object',
+        properties: {
+          allTime:  { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
+          last7Days: { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
+          today:    { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
+        },
+      },
+    },
   },
   paths: {
     // ── Auth ──────────────────────────────────────────────────────────────────
@@ -206,10 +227,24 @@ export const swaggerSpec = {
     '/api/v1/analytics/requests/by-agent': {
       get: {
         tags: ['Analytics'],
-        summary: 'Get request counts grouped by agent',
+        summary: 'SRS statistics grouped by category, compound, and unit — all-time, last 7 days, and today',
         security: [{ bearerAuth: [] }],
         responses: {
-          200: { description: 'Requests by agent' },
+          200: {
+            description: 'SRS breakdown by category, compound, and unit across three time ranges',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    byCategory: { $ref: '#/components/schemas/SrsBreakdown' },
+                    byCompound: { $ref: '#/components/schemas/SrsBreakdown' },
+                    byUnit:     { $ref: '#/components/schemas/SrsBreakdown' },
+                  },
+                },
+              },
+            },
+          },
           401: { description: 'Unauthorized' },
         },
       },
@@ -228,16 +263,51 @@ export const swaggerSpec = {
     '/api/v1/analytics/requests/list': {
       get: {
         tags: ['Analytics'],
-        summary: 'List requests with pagination and filters',
+        summary: 'List SRS records with pagination and filters',
         security: [{ bearerAuth: [] }],
         parameters: [
-          { in: 'query', name: 'page',        schema: { type: 'integer', default: 1 } },
-          { in: 'query', name: 'limit',       schema: { type: 'integer', default: 10, maximum: 100 } },
-          { in: 'query', name: 'status',      schema: { type: 'string', enum: ['new', 'in_progress', 'completed', 'canceled'] } },
-          { in: 'query', name: 'assigned_to', schema: { type: 'string' } },
+          { in: 'query', name: 'page',     schema: { type: 'integer', default: 1 } },
+          { in: 'query', name: 'limit',    schema: { type: 'integer', default: 10, maximum: 100 } },
+          { in: 'query', name: 'status',   schema: { type: 'string', enum: ['Open', 'Closed', 'Work Completed', 'Cancelled'] }, description: 'Filter by SRS status' },
+          { in: 'query', name: 'category', schema: { type: 'string' }, description: 'Filter by category' },
         ],
         responses: {
-          200: { description: 'Paginated request list' },
+          200: {
+            description: 'Paginated SRS list',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    categories: { type: 'array', items: { type: 'string' }, description: 'All distinct categories (for filter dropdowns)' },
+                    data: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          breifdescription: { type: 'string' },
+                          category:         { type: 'string' },
+                          status:           { type: 'string' },
+                          datetime:         { type: 'string', format: 'date-time' },
+                          unit:             { type: 'string' },
+                          compound:         { type: 'string' },
+                        },
+                      },
+                    },
+                    pagination: {
+                      type: 'object',
+                      properties: {
+                        page:       { type: 'integer' },
+                        limit:      { type: 'integer' },
+                        total:      { type: 'integer' },
+                        totalPages: { type: 'integer' },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           400: { description: 'Invalid query parameters' },
           401: { description: 'Unauthorized' },
         },
