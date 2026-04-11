@@ -59,7 +59,7 @@ async function getLogoDataUrl(): Promise<string | null> {
 }
 
 async function generateQRCode(visitId: string) {
-  const verifyUrl = `${process.env.PUBLIC_URL}/qr-code/${visitId}`;
+  const verifyUrl = `${process.env.PUBLIC_URL}/scan/qr-code/${visitId}`;
   const qrBuffer = await QRCode.toBuffer(verifyUrl, {
     width: 150,
     margin: 2,

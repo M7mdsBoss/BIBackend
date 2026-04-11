@@ -40,7 +40,7 @@ export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
     where: { id: visit.id },
     data: {
       pdfUrl,
-      qrCode: `${process.env.PUBLIC_URL}/qr-code/${visit.id}`,
+      qrCode: `${process.env.PUBLIC_URL}/scan/qr-code/${visit.id}`,
       updatedAt: new Date(),
     },
   });

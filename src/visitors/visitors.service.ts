@@ -95,7 +95,7 @@ export async function createVisit(
   await generateVisitPDF(visit);
 
   const pdfUrl = `${process.env.BASE_URL}/pdf/${visit.id}`;
-  const qrCode = `${process.env.PUBLIC_URL}/qr-code/${visit.id}`;
+  const qrCode = `${process.env.PUBLIC_URL}/scan/qr-code/${visit.id}`;
 
   const updated = await prisma.visit.update({
     where: { id: visit.id },
