@@ -1,8 +1,15 @@
 import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
-import { AuthRequest, authMiddleware } from '../middleware/auth.middleware';
-import { getSrsByCategory, GetSrsByCompound, GetSrsByUnit, getSrsStatus, listSrsRequests } from './analytics.service';
+import { AuthRequest, guard } from '../middleware/auth.middleware';
+import {
+  getSrsByCategory,
+  GetSrsByCompound,
+  GetSrsByUnit,
+  getSrsStatus,
+  listSrsRequests,
+  resolveSrsWhere,
+} from './analytics.service';
 
 const listQuerySchema = z.object({
   page:     z.coerce.number().int().min(1).default(1),
@@ -14,15 +21,16 @@ const listQuerySchema = z.object({
 export function createAnalyticsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  router.use(authMiddleware);
+  router.use(guard('OWNER', 'OPERATION'));
 
   // GET /analytics/requests/by-agent
-  router.get('/requests/by-agent', async (_req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/requests/by-agent', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
+      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role);
       const [byCategory, byCompound, byUnit] = await Promise.all([
-        getSrsByCategory(prisma),
-        GetSrsByCompound(prisma),
-        GetSrsByUnit(prisma),
+        getSrsByCategory(prisma, scopedWhere),
+        GetSrsByCompound(prisma, scopedWhere),
+        GetSrsByUnit(prisma, scopedWhere),
       ]);
       res.json({ byCategory, byCompound, byUnit });
     } catch (err) {
@@ -31,15 +39,16 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
   });
 
   // GET /analytics/requests/status
-  router.get('/requests/status', async (_req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/requests/status', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getSrsStatus(prisma));
+      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role);
+      res.json(await getSrsStatus(prisma, scopedWhere));
     } catch (err) {
       next(err);
     }
   });
 
-  // GET /analytics/requests/list?page=1&limit=10&status=new&assigned_to=Alice
+  // GET /analytics/requests/list?page=1&limit=10&status=Open&category=Plumbing
   router.get('/requests/list', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const parsed = listQuerySchema.safeParse(req.query);
@@ -50,7 +59,8 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
         });
         return;
       }
-      res.json(await listSrsRequests(prisma, parsed.data));
+      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role);
+      res.json(await listSrsRequests(prisma, parsed.data, scopedWhere));
     } catch (err) {
       next(err);
     }

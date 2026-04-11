@@ -142,11 +142,58 @@ export async function confirmRegister(prisma: PrismaClient, token: string) {
     htmlBody: buildWelcomeEmail(user.name),
   }).catch((err) => console.error('Welcome email error:', err));
 
-  const loginToken = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET);
+  const loginToken = jwt.sign(
+    { id: user.id, role: user.role, ownerId: (user as any).ownerId ?? null },
+    JWT_SECRET,
+  );
   return {
     token: loginToken,
     user: { id: user.id, name: user.name, email: user.email },
   };
+}
+
+async function fetchScopedData(prisma: PrismaClient, user: any) {
+  const role: string = user.role;
+
+  if (role === 'OWNER') {
+    // Get all compound slugs owned by this user
+    const compounds = await (prisma.compound as any).findMany({
+      where: { ownerId: user.id },
+      select: { slug: true },
+    });
+    const slugs: string[] = compounds.map((c: any) => c.slug);
+
+    const [srs, visits] = await Promise.all([
+      prisma.srs.findMany({
+        where: { compound: { in: slugs } },
+        orderBy: { datetime: 'desc' },
+      }),
+      prisma.visit.findMany({
+        where: { compound: { in: slugs } },
+        orderBy: { visitDate: 'desc' },
+      }),
+    ]);
+
+    return { srs, visits };
+  }
+
+  if (role === 'GUARD') {
+    // Get compound slugs assigned to this guard
+    const assignments = await (prisma.assignedCompound as any).findMany({
+      where: { guardId: user.id },
+      include: { compound: { select: { slug: true } } },
+    });
+    const slugs: string[] = assignments.map((a: any) => a.compound.slug);
+
+    const visits = await prisma.visit.findMany({
+      where: { compound: { in: slugs } },
+      orderBy: { visitDate: 'desc' },
+    });
+
+    return { visits };
+  }
+
+  return {};
 }
 
 export async function login(prisma: PrismaClient, dto: { email: string; password: string }) {
@@ -170,10 +217,17 @@ export async function login(prisma: PrismaClient, dto: { email: string; password
     throw err;
   }
 
-  const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET);
+  const token = jwt.sign(
+    { id: user.id, role: user.role, ownerId: (user as any).ownerId ?? null },
+    JWT_SECRET,
+  );
+
+  const data = await fetchScopedData(prisma, user);
+
   return {
     token,
     user: { id: user.id, name: user.name, email: user.email, role: user.role },
+    ...data,
   };
 }
 

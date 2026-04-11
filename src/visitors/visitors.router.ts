@@ -1,8 +1,23 @@
 import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
-import { AuthRequest, authMiddleware } from '../middleware/auth.middleware';
-import { getVisitorStats, listVisits } from './visitors.service';
+import { AuthRequest, guard } from '../middleware/auth.middleware';
+import { createVisit, getVisitById, getVisitorStats, listVisits } from './visitors.service';
+
+const createVisitSchema = z.object({
+  residentFullName:    z.string().min(1),
+  residentUnit:        z.string().min(1),   // Unit.slug  → UNIT_*
+  residentPhone:       z.string().min(1),
+  visitorFullName:     z.string().min(1),
+  visitorCarType:      z.string().min(1),
+  visitorLicensePlate: z.string().min(1),
+  visitDate:           z.coerce.date(),
+  visitTime:           z.string().min(1),
+  compound:            z.string().min(1),              // Compound.slug → COMP_*
+  userToken:           z.string().min(1),              // User.generatedToken
+  pdfUrl:              z.url().optional(),
+  qrCode:              z.string().optional(),
+});
 
 const listQuerySchema = z.object({
   page:  z.coerce.number().int().min(1).default(1),
@@ -13,19 +28,47 @@ const listQuerySchema = z.object({
 export function createVisitorsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  router.use(authMiddleware);
-
-  // GET /api/v1/visitors/stats
-  router.get('/stats', async (_req: AuthRequest, res: Response, next: NextFunction) => {
+  // POST /api/v1/visitors  (public)
+  router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getVisitorStats(prisma));
+      const parsed = createVisitSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.status(400).json({
+          message: 'Validation failed',
+          errors: parsed.error.issues.map((e) => ({ field: e.path.join('.'), message: e.message })),
+        });
+        return;
+      }
+      const result = await createVisit(prisma, parsed.data);
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }
   });
 
-  // GET /api/v1/visitors?page=1&limit=10&unit=B-204
-  router.get('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
+  // GET /api/v1/visitors/stats
+  router.get('/stats', guard('OWNER', 'GUARD'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      res.json(await getVisitorStats(prisma, { id: req.user!.id, role: req.user!.role }));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // GET /api/v1/visitors/:id
+  router.get('/:id', guard('OWNER', 'GUARD'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      console.log("get visit by id")
+      const visitId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+      res.json(await getVisitById(prisma, visitId));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // GET /api/v1/visitors?page=1&limit=10&unit=UNIT_*
+  // OWNER → their own visits (by userToken) | GUARD → visits for their assigned compounds
+  router.get('/', guard('OWNER', 'GUARD'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const parsed = listQuerySchema.safeParse(req.query);
       if (!parsed.success) {
@@ -35,7 +78,7 @@ export function createVisitorsRouter(prisma: PrismaClient) {
         });
         return;
       }
-      res.json(await listVisits(prisma, parsed.data));
+      res.json(await listVisits(prisma, parsed.data, { id: req.user!.id, role: req.user!.role }));
     } catch (err) {
       next(err);
     }

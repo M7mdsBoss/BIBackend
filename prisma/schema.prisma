@@ -8,34 +8,109 @@ datasource db {
 }
 
 model User {
-  id                String   @id
+  id                String    @id
   name              String
   campany           String?
   industry          String?
-  city              String?
-  country           String?
-  totalBranches     String?
-  chatVolume        String?  @db.VarChar(10)
-  aiConnect         String?
-  aiIntegration     String?  @db.VarChar(3)
-  services          String[] @default([])
-  campanySize       String?  @db.VarChar(10)
-  comment           String?
-  isTrial           Boolean  @default(false)
+  campanySize       String?   @db.VarChar(10)
+  campanyRole       String?
   website           String?
   phone             String?
-  email             String   @unique
-  crNo              String?
+  email             String    @unique
   password          String
-  generatedToken    String   @unique
-  role              String   @default("User") @db.VarChar(10)
-  createdAt         DateTime @default(now())
-  whatsapp          String?
-  confirmed         Boolean  @default(false)
-  plan              String?
-  acceptedAuthorize Boolean  @default(false)
-  acceptedTerms     Boolean  @default(false)
-  campanyRole       String?
+  generatedToken    String    @unique
+  role              String  @default("OWNER")
+  createdAt         DateTime  @default(now())
+  confirmed         Boolean   @default(false)
+  acceptedAuthorize Boolean   @default(false)
+  acceptedTerms     Boolean   @default(false)
+
+  // Self-referential: OWNER → members (GUARD, etc.)
+  ownerId           String?
+  owner             User?           @relation("OrgMembers", fields: [ownerId], references: [id], onDelete: SetNull)
+  members           User[]          @relation("OrgMembers")
+
+  // OWNER → Compounds they own
+  compounds         Compound[]      @relation("OwnerCompounds")
+
+  // OPERATION/GUARD → Compounds they are assigned to
+  assignedCompounds AssignedCompound[]
+
+  // SRS and Visit records linked via generatedToken
+  srsRecords        srs[]   @relation("UserSrs")
+  visits            Visit[] @relation("UserVisit")
+}
+
+// ── Compound & Unit ───────────────────────────────────────────────────────────
+
+model Compound {
+  id        String   @id
+  name      String
+  slug      String   @unique // COMP_{normalized_name}
+  createdAt DateTime @default(now())
+
+  ownerId String
+  owner   User   @relation("OwnerCompounds", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  units      Unit[]
+  assignedMembers AssignedCompound[]
+  srsRecords srs[]   @relation("CompoundSrs")
+  visits     Visit[] @relation("CompoundVisit")
+}
+
+model Unit {
+  id        String   @id
+  name      String
+  slug      String   @unique // UNIT_{normalized_name}
+  createdAt DateTime @default(now())
+
+  compoundId String
+  compound   Compound @relation(fields: [compoundId], references: [id], onDelete: Cascade)
+
+  srsRecords srs[]   @relation("UnitSrs")
+  visits     Visit[] @relation("UnitVisit")
+}
+
+// Junction: Member ↔ Compound (many-to-many, scoped to the same Owner)
+model AssignedCompound {
+  assignedAt DateTime @default(now())
+
+  guardId String
+  guard   User   @relation(fields: [guardId], references: [id], onDelete: Cascade)
+
+  compoundId String
+  compound   Compound @relation(fields: [compoundId], references: [id], onDelete: Cascade)
+
+  @@id([guardId, compoundId])
+}
+
+// ── SubscriptionRequest ───────────────────────────────────────────────────────
+
+model SubscriptionRequest {
+  id              String   @id
+  name            String
+  campany         String?
+  industry        String?
+  city            String?
+  country         String?
+  totalBranches   String?
+  chatVolume      String?  @db.VarChar(10)
+  aiIntegration   String?  @db.VarChar(3)
+  campanySize     String?
+  website         String?
+  phone           String?
+  email           String   @unique
+  password        String
+  generatedToken  String   @unique
+  role            String   @default("User") @db.VarChar(10)
+  createdAt       DateTime @default(now())
+  whatsapp        String?
+  confirmed       Boolean  @default(false)
+  acceptedAuthorize Boolean @default(false)
+  acceptedTerms     Boolean @default(false)
+  campanyRole     String
+  plan              String
+ 
 }
 
 model Visit {
@@ -50,10 +125,15 @@ model Visit {
   visitTime           String
   pdfUrl              String?
   qrCode              String?
-  compound            String?
+  scanned             Boolean @default(false)
   createdAt           DateTime @default(now())
   updatedAt           DateTime
   isExpired           Boolean  @default(false)
+  compound            String?
+  compoundRef         Compound? @relation("CompoundVisit", fields: [compound], references: [slug])
+  residentUnitRef     Unit?     @relation("UnitVisit", fields: [residentUnit], references: [slug])
+  userToken           String?
+  userRef             User?     @relation("UserVisit", fields: [userToken], references: [generatedToken])
 }
 
 model customers {
@@ -193,18 +273,24 @@ model tiktok_messages {
 }
 
 model whatsapp_messages {
-  Name           String?
-  phone_number   BigInt?
-  gpt_content    String?
-  message_object String?
-  user_text      String?
-  client         String?
-  message_type   String?
-  timestamp      DateTime?  @db.Timestamp(6)
-  id             BigInt     @id @default(autoincrement())
-  guest          Boolean?
-  az_bs          String?
-  requests       requests[]
+  Name                  String?
+  phone_number          BigInt?
+  gpt_content           String?
+  message_object        String?
+  user_text             String?
+  client                String?
+  message_type          String?
+  timestamp             DateTime?  @db.Timestamp(6)
+  id                    BigInt     @id @default(autoincrement())
+  guest                 Boolean?
+  az_bs                 String?
+  wo_category           String?
+  wo_priority           String?
+  wo_subcategory        String?
+  wo_code               String?
+  wo_statusmessage      String?
+  wo_status_last_update String?
+  requests              requests[]
 }
 
 model n8n_vectors {
@@ -227,7 +313,11 @@ model srs {
   resphone         String?   @db.VarChar(20)
   resemail         String?   @db.VarChar(100)
   compound         String?   @db.VarChar(100)
+  compoundRef      Compound? @relation("CompoundSrs", fields: [compound], references: [slug])
   unit             String?   @db.VarChar(50)
+  unitRef          Unit?     @relation("UnitSrs", fields: [unit], references: [slug])
+  userToken        String?   @db.VarChar(12)
+  userRef          User?     @relation("UserSrs", fields: [userToken], references: [generatedToken])
   propertycode     String?   @db.VarChar(50)
   priority         String?   @db.VarChar(20)
   leasename        String?   @db.VarChar(100)

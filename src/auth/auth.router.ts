@@ -4,8 +4,9 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaClient } from '../../prisma/generated/client';
 import { register, confirmRegister, login, generateUniqueToken } from './auth.service';
+import { confirmMember } from '../member/member.service';
 import { validate } from '../middleware/validate';
-import { registerSchema, confirmRegisterSchema, loginSchema } from './auth.schemas';
+import { registerSchema, confirmRegisterSchema, loginSchema, confirmMemberSchema } from './auth.schemas';
 import { sendEmail } from '../shared/mail.service';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,6 +34,16 @@ export function createAuthRouter(prisma: PrismaClient) {
       const result = await confirmRegister(prisma, req.body.token);
       res.json(result);
     } catch (err) {
+      next(err);
+    }
+  });
+
+  router.post('/confirm-member', validate(confirmMemberSchema), async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await confirmMember(prisma, req.body.token, req.body.password);
+      res.json(result);
+    } catch (err) {
+      console.log(err)
       next(err);
     }
   });

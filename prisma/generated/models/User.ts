@@ -29,29 +29,19 @@ export type UserMinAggregateOutputType = {
   name: string | null
   campany: string | null
   industry: string | null
-  city: string | null
-  country: string | null
-  totalBranches: string | null
-  chatVolume: string | null
-  aiConnect: string | null
-  aiIntegration: string | null
   campanySize: string | null
-  comment: string | null
-  isTrial: boolean | null
+  campanyRole: string | null
   website: string | null
   phone: string | null
   email: string | null
-  crNo: string | null
   password: string | null
   generatedToken: string | null
   role: string | null
   createdAt: Date | null
-  whatsapp: string | null
   confirmed: boolean | null
-  plan: string | null
   acceptedAuthorize: boolean | null
   acceptedTerms: boolean | null
-  campanyRole: string | null
+  ownerId: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -59,29 +49,19 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   campany: string | null
   industry: string | null
-  city: string | null
-  country: string | null
-  totalBranches: string | null
-  chatVolume: string | null
-  aiConnect: string | null
-  aiIntegration: string | null
   campanySize: string | null
-  comment: string | null
-  isTrial: boolean | null
+  campanyRole: string | null
   website: string | null
   phone: string | null
   email: string | null
-  crNo: string | null
   password: string | null
   generatedToken: string | null
   role: string | null
   createdAt: Date | null
-  whatsapp: string | null
   confirmed: boolean | null
-  plan: string | null
   acceptedAuthorize: boolean | null
   acceptedTerms: boolean | null
-  campanyRole: string | null
+  ownerId: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -89,30 +69,19 @@ export type UserCountAggregateOutputType = {
   name: number
   campany: number
   industry: number
-  city: number
-  country: number
-  totalBranches: number
-  chatVolume: number
-  aiConnect: number
-  aiIntegration: number
-  services: number
   campanySize: number
-  comment: number
-  isTrial: number
+  campanyRole: number
   website: number
   phone: number
   email: number
-  crNo: number
   password: number
   generatedToken: number
   role: number
   createdAt: number
-  whatsapp: number
   confirmed: number
-  plan: number
   acceptedAuthorize: number
   acceptedTerms: number
-  campanyRole: number
+  ownerId: number
   _all: number
 }
 
@@ -122,29 +91,19 @@ export type UserMinAggregateInputType = {
   name?: true
   campany?: true
   industry?: true
-  city?: true
-  country?: true
-  totalBranches?: true
-  chatVolume?: true
-  aiConnect?: true
-  aiIntegration?: true
   campanySize?: true
-  comment?: true
-  isTrial?: true
+  campanyRole?: true
   website?: true
   phone?: true
   email?: true
-  crNo?: true
   password?: true
   generatedToken?: true
   role?: true
   createdAt?: true
-  whatsapp?: true
   confirmed?: true
-  plan?: true
   acceptedAuthorize?: true
   acceptedTerms?: true
-  campanyRole?: true
+  ownerId?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -152,29 +111,19 @@ export type UserMaxAggregateInputType = {
   name?: true
   campany?: true
   industry?: true
-  city?: true
-  country?: true
-  totalBranches?: true
-  chatVolume?: true
-  aiConnect?: true
-  aiIntegration?: true
   campanySize?: true
-  comment?: true
-  isTrial?: true
+  campanyRole?: true
   website?: true
   phone?: true
   email?: true
-  crNo?: true
   password?: true
   generatedToken?: true
   role?: true
   createdAt?: true
-  whatsapp?: true
   confirmed?: true
-  plan?: true
   acceptedAuthorize?: true
   acceptedTerms?: true
-  campanyRole?: true
+  ownerId?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -182,30 +131,19 @@ export type UserCountAggregateInputType = {
   name?: true
   campany?: true
   industry?: true
-  city?: true
-  country?: true
-  totalBranches?: true
-  chatVolume?: true
-  aiConnect?: true
-  aiIntegration?: true
-  services?: true
   campanySize?: true
-  comment?: true
-  isTrial?: true
+  campanyRole?: true
   website?: true
   phone?: true
   email?: true
-  crNo?: true
   password?: true
   generatedToken?: true
   role?: true
   createdAt?: true
-  whatsapp?: true
   confirmed?: true
-  plan?: true
   acceptedAuthorize?: true
   acceptedTerms?: true
-  campanyRole?: true
+  ownerId?: true
   _all?: true
 }
 
@@ -286,30 +224,19 @@ export type UserGroupByOutputType = {
   name: string
   campany: string | null
   industry: string | null
-  city: string | null
-  country: string | null
-  totalBranches: string | null
-  chatVolume: string | null
-  aiConnect: string | null
-  aiIntegration: string | null
-  services: string[]
   campanySize: string | null
-  comment: string | null
-  isTrial: boolean
+  campanyRole: string | null
   website: string | null
   phone: string | null
   email: string
-  crNo: string | null
   password: string
   generatedToken: string
   role: string
   createdAt: Date
-  whatsapp: string | null
   confirmed: boolean
-  plan: string | null
   acceptedAuthorize: boolean
   acceptedTerms: boolean
-  campanyRole: string | null
+  ownerId: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -338,30 +265,25 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   campany?: Prisma.StringNullableFilter<"User"> | string | null
   industry?: Prisma.StringNullableFilter<"User"> | string | null
-  city?: Prisma.StringNullableFilter<"User"> | string | null
-  country?: Prisma.StringNullableFilter<"User"> | string | null
-  totalBranches?: Prisma.StringNullableFilter<"User"> | string | null
-  chatVolume?: Prisma.StringNullableFilter<"User"> | string | null
-  aiConnect?: Prisma.StringNullableFilter<"User"> | string | null
-  aiIntegration?: Prisma.StringNullableFilter<"User"> | string | null
-  services?: Prisma.StringNullableListFilter<"User">
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
-  comment?: Prisma.StringNullableFilter<"User"> | string | null
-  isTrial?: Prisma.BoolFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
-  crNo?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringFilter<"User"> | string
   generatedToken?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  whatsapp?: Prisma.StringNullableFilter<"User"> | string | null
   confirmed?: Prisma.BoolFilter<"User"> | boolean
-  plan?: Prisma.StringNullableFilter<"User"> | string | null
   acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
-  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"User"> | string | null
+  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  members?: Prisma.UserListRelationFilter
+  compounds?: Prisma.CompoundListRelationFilter
+  assignedCompounds?: Prisma.AssignedCompoundListRelationFilter
+  srsRecords?: Prisma.SrsListRelationFilter
+  visits?: Prisma.VisitListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -369,30 +291,25 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   campany?: Prisma.SortOrderInput | Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrderInput | Prisma.SortOrder
-  country?: Prisma.SortOrderInput | Prisma.SortOrder
-  totalBranches?: Prisma.SortOrderInput | Prisma.SortOrder
-  chatVolume?: Prisma.SortOrderInput | Prisma.SortOrder
-  aiConnect?: Prisma.SortOrderInput | Prisma.SortOrder
-  aiIntegration?: Prisma.SortOrderInput | Prisma.SortOrder
-  services?: Prisma.SortOrder
   campanySize?: Prisma.SortOrderInput | Prisma.SortOrder
-  comment?: Prisma.SortOrderInput | Prisma.SortOrder
-  isTrial?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
-  crNo?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
   generatedToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  whatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
   confirmed?: Prisma.SortOrder
-  plan?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  owner?: Prisma.UserOrderByWithRelationInput
+  members?: Prisma.UserOrderByRelationAggregateInput
+  compounds?: Prisma.CompoundOrderByRelationAggregateInput
+  assignedCompounds?: Prisma.AssignedCompoundOrderByRelationAggregateInput
+  srsRecords?: Prisma.srsOrderByRelationAggregateInput
+  visits?: Prisma.VisitOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -405,28 +322,23 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   campany?: Prisma.StringNullableFilter<"User"> | string | null
   industry?: Prisma.StringNullableFilter<"User"> | string | null
-  city?: Prisma.StringNullableFilter<"User"> | string | null
-  country?: Prisma.StringNullableFilter<"User"> | string | null
-  totalBranches?: Prisma.StringNullableFilter<"User"> | string | null
-  chatVolume?: Prisma.StringNullableFilter<"User"> | string | null
-  aiConnect?: Prisma.StringNullableFilter<"User"> | string | null
-  aiIntegration?: Prisma.StringNullableFilter<"User"> | string | null
-  services?: Prisma.StringNullableListFilter<"User">
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
-  comment?: Prisma.StringNullableFilter<"User"> | string | null
-  isTrial?: Prisma.BoolFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
-  crNo?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  whatsapp?: Prisma.StringNullableFilter<"User"> | string | null
   confirmed?: Prisma.BoolFilter<"User"> | boolean
-  plan?: Prisma.StringNullableFilter<"User"> | string | null
   acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
-  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
+  ownerId?: Prisma.StringNullableFilter<"User"> | string | null
+  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  members?: Prisma.UserListRelationFilter
+  compounds?: Prisma.CompoundListRelationFilter
+  assignedCompounds?: Prisma.AssignedCompoundListRelationFilter
+  srsRecords?: Prisma.SrsListRelationFilter
+  visits?: Prisma.VisitListRelationFilter
 }, "id" | "email" | "generatedToken">
 
 export type UserOrderByWithAggregationInput = {
@@ -434,30 +346,19 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   campany?: Prisma.SortOrderInput | Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrderInput | Prisma.SortOrder
-  country?: Prisma.SortOrderInput | Prisma.SortOrder
-  totalBranches?: Prisma.SortOrderInput | Prisma.SortOrder
-  chatVolume?: Prisma.SortOrderInput | Prisma.SortOrder
-  aiConnect?: Prisma.SortOrderInput | Prisma.SortOrder
-  aiIntegration?: Prisma.SortOrderInput | Prisma.SortOrder
-  services?: Prisma.SortOrder
   campanySize?: Prisma.SortOrderInput | Prisma.SortOrder
-  comment?: Prisma.SortOrderInput | Prisma.SortOrder
-  isTrial?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
-  crNo?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
   generatedToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  whatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
   confirmed?: Prisma.SortOrder
-  plan?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -471,30 +372,19 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   campany?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   industry?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  city?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  totalBranches?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  chatVolume?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  aiConnect?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  aiIntegration?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  services?: Prisma.StringNullableListFilter<"User">
   campanySize?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  comment?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  isTrial?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  crNo?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   generatedToken?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  whatsapp?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   confirmed?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  plan?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   acceptedAuthorize?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  campanyRole?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  ownerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -502,30 +392,24 @@ export type UserCreateInput = {
   name: string
   campany?: string | null
   industry?: string | null
-  city?: string | null
-  country?: string | null
-  totalBranches?: string | null
-  chatVolume?: string | null
-  aiConnect?: string | null
-  aiIntegration?: string | null
-  services?: Prisma.UserCreateservicesInput | string[]
   campanySize?: string | null
-  comment?: string | null
-  isTrial?: boolean
+  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
-  crNo?: string | null
   password: string
   generatedToken: string
   role?: string
   createdAt?: Date | string
-  whatsapp?: string | null
   confirmed?: boolean
-  plan?: string | null
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: string | null
+  owner?: Prisma.UserCreateNestedOneWithoutMembersInput
+  members?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitCreateNestedManyWithoutUserRefInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -533,30 +417,24 @@ export type UserUncheckedCreateInput = {
   name: string
   campany?: string | null
   industry?: string | null
-  city?: string | null
-  country?: string | null
-  totalBranches?: string | null
-  chatVolume?: string | null
-  aiConnect?: string | null
-  aiIntegration?: string | null
-  services?: Prisma.UserCreateservicesInput | string[]
   campanySize?: string | null
-  comment?: string | null
-  isTrial?: boolean
+  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
-  crNo?: string | null
   password: string
   generatedToken: string
   role?: string
   createdAt?: Date | string
-  whatsapp?: string | null
   confirmed?: boolean
-  plan?: string | null
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: string | null
+  ownerId?: string | null
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutUserRefInput
 }
 
 export type UserUpdateInput = {
@@ -564,30 +442,24 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  totalBranches?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  chatVolume?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiConnect?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  crNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  owner?: Prisma.UserUpdateOneWithoutMembersNestedInput
+  members?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutUserRefNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -595,30 +467,24 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  totalBranches?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  chatVolume?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiConnect?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  crNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutUserRefNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -626,30 +492,19 @@ export type UserCreateManyInput = {
   name: string
   campany?: string | null
   industry?: string | null
-  city?: string | null
-  country?: string | null
-  totalBranches?: string | null
-  chatVolume?: string | null
-  aiConnect?: string | null
-  aiIntegration?: string | null
-  services?: Prisma.UserCreateservicesInput | string[]
   campanySize?: string | null
-  comment?: string | null
-  isTrial?: boolean
+  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
-  crNo?: string | null
   password: string
   generatedToken: string
   role?: string
   createdAt?: Date | string
-  whatsapp?: string | null
   confirmed?: boolean
-  plan?: string | null
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: string | null
+  ownerId?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -657,30 +512,18 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  totalBranches?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  chatVolume?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiConnect?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  crNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -688,38 +531,34 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  totalBranches?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  chatVolume?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiConnect?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  aiIntegration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  services?: Prisma.UserUpdateservicesInput | string[]
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isTrial?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  crNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  plan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -727,30 +566,19 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   campany?: Prisma.SortOrder
   industry?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
-  totalBranches?: Prisma.SortOrder
-  chatVolume?: Prisma.SortOrder
-  aiConnect?: Prisma.SortOrder
-  aiIntegration?: Prisma.SortOrder
-  services?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
-  comment?: Prisma.SortOrder
-  isTrial?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   website?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  crNo?: Prisma.SortOrder
   password?: Prisma.SortOrder
   generatedToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  whatsapp?: Prisma.SortOrder
   confirmed?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -758,29 +586,19 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   campany?: Prisma.SortOrder
   industry?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
-  totalBranches?: Prisma.SortOrder
-  chatVolume?: Prisma.SortOrder
-  aiConnect?: Prisma.SortOrder
-  aiIntegration?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
-  comment?: Prisma.SortOrder
-  isTrial?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   website?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  crNo?: Prisma.SortOrder
   password?: Prisma.SortOrder
   generatedToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  whatsapp?: Prisma.SortOrder
   confirmed?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -788,33 +606,44 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   campany?: Prisma.SortOrder
   industry?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  country?: Prisma.SortOrder
-  totalBranches?: Prisma.SortOrder
-  chatVolume?: Prisma.SortOrder
-  aiConnect?: Prisma.SortOrder
-  aiIntegration?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
-  comment?: Prisma.SortOrder
-  isTrial?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   website?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  crNo?: Prisma.SortOrder
   password?: Prisma.SortOrder
   generatedToken?: Prisma.SortOrder
   role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  whatsapp?: Prisma.SortOrder
   confirmed?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrder
+  ownerId?: Prisma.SortOrder
 }
 
-export type UserCreateservicesInput = {
-  set: string[]
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
+export type UserCreateNestedOneWithoutMembersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutOwnerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -825,19 +654,920 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type UserUpdateservicesInput = {
-  set?: string[]
-  push?: string | string[]
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type UserUpdateOneWithoutMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembersInput
+  upsert?: Prisma.UserUpsertWithoutMembersInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembersInput, Prisma.UserUpdateWithoutMembersInput>, Prisma.UserUncheckedUpdateWithoutMembersInput>
 }
 
+export type UserUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput | Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput | Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutOwnerInput | Prisma.UserUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutOwnerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput> | Prisma.UserCreateWithoutOwnerInput[] | Prisma.UserUncheckedCreateWithoutOwnerInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnerInput | Prisma.UserCreateOrConnectWithoutOwnerInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput | Prisma.UserUpsertWithWhereUniqueWithoutOwnerInput[]
+  createMany?: Prisma.UserCreateManyOwnerInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput | Prisma.UserUpdateWithWhereUniqueWithoutOwnerInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutOwnerInput | Prisma.UserUpdateManyWithWhereWithoutOwnerInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedOneWithoutCompoundsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCompoundsInput, Prisma.UserUncheckedCreateWithoutCompoundsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompoundsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCompoundsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCompoundsInput, Prisma.UserUncheckedCreateWithoutCompoundsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompoundsInput
+  upsert?: Prisma.UserUpsertWithoutCompoundsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCompoundsInput, Prisma.UserUpdateWithoutCompoundsInput>, Prisma.UserUncheckedUpdateWithoutCompoundsInput>
+}
+
+export type UserCreateNestedOneWithoutAssignedCompoundsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedCompoundsInput, Prisma.UserUncheckedCreateWithoutAssignedCompoundsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedCompoundsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssignedCompoundsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedCompoundsInput, Prisma.UserUncheckedCreateWithoutAssignedCompoundsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedCompoundsInput
+  upsert?: Prisma.UserUpsertWithoutAssignedCompoundsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedCompoundsInput, Prisma.UserUpdateWithoutAssignedCompoundsInput>, Prisma.UserUncheckedUpdateWithoutAssignedCompoundsInput>
+}
+
+export type UserCreateNestedOneWithoutVisitsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVisitsInput, Prisma.UserUncheckedCreateWithoutVisitsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVisitsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutVisitsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVisitsInput, Prisma.UserUncheckedCreateWithoutVisitsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVisitsInput
+  upsert?: Prisma.UserUpsertWithoutVisitsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVisitsInput, Prisma.UserUpdateWithoutVisitsInput>, Prisma.UserUncheckedUpdateWithoutVisitsInput>
+}
+
+export type UserCreateNestedOneWithoutSrsRecordsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSrsRecordsInput, Prisma.UserUncheckedCreateWithoutSrsRecordsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSrsRecordsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutSrsRecordsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSrsRecordsInput, Prisma.UserUncheckedCreateWithoutSrsRecordsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSrsRecordsInput
+  upsert?: Prisma.UserUpsertWithoutSrsRecordsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSrsRecordsInput, Prisma.UserUpdateWithoutSrsRecordsInput>, Prisma.UserUncheckedUpdateWithoutSrsRecordsInput>
+}
+
+export type UserCreateWithoutMembersInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  owner?: Prisma.UserCreateNestedOneWithoutMembersInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitCreateNestedManyWithoutUserRefInput
+}
+
+export type UserUncheckedCreateWithoutMembersInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  ownerId?: string | null
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutUserRefInput
+}
+
+export type UserCreateOrConnectWithoutMembersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
+}
+
+export type UserCreateWithoutOwnerInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  members?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitCreateNestedManyWithoutUserRefInput
+}
+
+export type UserUncheckedCreateWithoutOwnerInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutUserRefInput
+}
+
+export type UserCreateOrConnectWithoutOwnerInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput>
+}
+
+export type UserCreateManyOwnerInputEnvelope = {
+  data: Prisma.UserCreateManyOwnerInput | Prisma.UserCreateManyOwnerInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithoutMembersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMembersInput, Prisma.UserUncheckedUpdateWithoutMembersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMembersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMembersInput, Prisma.UserUncheckedUpdateWithoutMembersInput>
+}
+
+export type UserUpdateWithoutMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  owner?: Prisma.UserUpdateOneWithoutMembersNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMembersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUpsertWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOwnerInput, Prisma.UserUncheckedUpdateWithoutOwnerInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnerInput, Prisma.UserUncheckedCreateWithoutOwnerInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutOwnerInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOwnerInput, Prisma.UserUncheckedUpdateWithoutOwnerInput>
+}
+
+export type UserUpdateManyWithWhereWithoutOwnerInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutOwnerInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  campany?: Prisma.StringNullableFilter<"User"> | string | null
+  industry?: Prisma.StringNullableFilter<"User"> | string | null
+  campanySize?: Prisma.StringNullableFilter<"User"> | string | null
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
+  website?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  generatedToken?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  confirmed?: Prisma.BoolFilter<"User"> | boolean
+  acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
+  acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
+  ownerId?: Prisma.StringNullableFilter<"User"> | string | null
+}
+
+export type UserCreateWithoutCompoundsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  owner?: Prisma.UserCreateNestedOneWithoutMembersInput
+  members?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitCreateNestedManyWithoutUserRefInput
+}
+
+export type UserUncheckedCreateWithoutCompoundsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  ownerId?: string | null
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutUserRefInput
+}
+
+export type UserCreateOrConnectWithoutCompoundsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCompoundsInput, Prisma.UserUncheckedCreateWithoutCompoundsInput>
+}
+
+export type UserUpsertWithoutCompoundsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCompoundsInput, Prisma.UserUncheckedUpdateWithoutCompoundsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCompoundsInput, Prisma.UserUncheckedCreateWithoutCompoundsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCompoundsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCompoundsInput, Prisma.UserUncheckedUpdateWithoutCompoundsInput>
+}
+
+export type UserUpdateWithoutCompoundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  owner?: Prisma.UserUpdateOneWithoutMembersNestedInput
+  members?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCompoundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserCreateWithoutAssignedCompoundsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  owner?: Prisma.UserCreateNestedOneWithoutMembersInput
+  members?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutOwnerInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitCreateNestedManyWithoutUserRefInput
+}
+
+export type UserUncheckedCreateWithoutAssignedCompoundsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  ownerId?: string | null
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutOwnerInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUserRefInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutUserRefInput
+}
+
+export type UserCreateOrConnectWithoutAssignedCompoundsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedCompoundsInput, Prisma.UserUncheckedCreateWithoutAssignedCompoundsInput>
+}
+
+export type UserUpsertWithoutAssignedCompoundsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedCompoundsInput, Prisma.UserUncheckedUpdateWithoutAssignedCompoundsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedCompoundsInput, Prisma.UserUncheckedCreateWithoutAssignedCompoundsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedCompoundsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedCompoundsInput, Prisma.UserUncheckedUpdateWithoutAssignedCompoundsInput>
+}
+
+export type UserUpdateWithoutAssignedCompoundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  owner?: Prisma.UserUpdateOneWithoutMembersNestedInput
+  members?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutOwnerNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedCompoundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutOwnerNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserCreateWithoutVisitsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  owner?: Prisma.UserCreateNestedOneWithoutMembersInput
+  members?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUserRefInput
+}
+
+export type UserUncheckedCreateWithoutVisitsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  ownerId?: string | null
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUserRefInput
+}
+
+export type UserCreateOrConnectWithoutVisitsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVisitsInput, Prisma.UserUncheckedCreateWithoutVisitsInput>
+}
+
+export type UserUpsertWithoutVisitsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVisitsInput, Prisma.UserUncheckedUpdateWithoutVisitsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVisitsInput, Prisma.UserUncheckedCreateWithoutVisitsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVisitsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVisitsInput, Prisma.UserUncheckedUpdateWithoutVisitsInput>
+}
+
+export type UserUpdateWithoutVisitsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  owner?: Prisma.UserUpdateOneWithoutMembersNestedInput
+  members?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVisitsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserCreateWithoutSrsRecordsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  owner?: Prisma.UserCreateNestedOneWithoutMembersInput
+  members?: Prisma.UserCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  visits?: Prisma.VisitCreateNestedManyWithoutUserRefInput
+}
+
+export type UserUncheckedCreateWithoutSrsRecordsInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+  ownerId?: string | null
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutOwnerInput
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutOwnerInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutUserRefInput
+}
+
+export type UserCreateOrConnectWithoutSrsRecordsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSrsRecordsInput, Prisma.UserUncheckedCreateWithoutSrsRecordsInput>
+}
+
+export type UserUpsertWithoutSrsRecordsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSrsRecordsInput, Prisma.UserUncheckedUpdateWithoutSrsRecordsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSrsRecordsInput, Prisma.UserUncheckedCreateWithoutSrsRecordsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSrsRecordsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSrsRecordsInput, Prisma.UserUncheckedUpdateWithoutSrsRecordsInput>
+}
+
+export type UserUpdateWithoutSrsRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  owner?: Prisma.UserUpdateOneWithoutMembersNestedInput
+  members?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSrsRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserCreateManyOwnerInput = {
+  id: string
+  name: string
+  campany?: string | null
+  industry?: string | null
+  campanySize?: string | null
+  campanyRole?: string | null
+  website?: string | null
+  phone?: string | null
+  email: string
+  password: string
+  generatedToken: string
+  role?: string
+  createdAt?: Date | string
+  confirmed?: boolean
+  acceptedAuthorize?: boolean
+  acceptedTerms?: boolean
+}
+
+export type UserUpdateWithoutOwnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  members?: Prisma.UserUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOwnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  members?: Prisma.UserUncheckedUpdateManyWithoutOwnerNestedInput
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutOwnerNestedInput
+  assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUserRefNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutUserRefNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutOwnerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  generatedToken?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+
+/**
+ * Count Type UserCountOutputType
+ */
+
+export type UserCountOutputType = {
+  members: number
+  compounds: number
+  assignedCompounds: number
+  srsRecords: number
+  visits: number
+}
+
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  members?: boolean | UserCountOutputTypeCountMembersArgs
+  compounds?: boolean | UserCountOutputTypeCountCompoundsArgs
+  assignedCompounds?: boolean | UserCountOutputTypeCountAssignedCompoundsArgs
+  srsRecords?: boolean | UserCountOutputTypeCountSrsRecordsArgs
+  visits?: boolean | UserCountOutputTypeCountVisitsArgs
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserCountOutputType
+   */
+  select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CompoundWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssignedCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssignedCompoundWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSrsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.srsWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VisitWhereInput
+}
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -845,30 +1575,26 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   campany?: boolean
   industry?: boolean
-  city?: boolean
-  country?: boolean
-  totalBranches?: boolean
-  chatVolume?: boolean
-  aiConnect?: boolean
-  aiIntegration?: boolean
-  services?: boolean
   campanySize?: boolean
-  comment?: boolean
-  isTrial?: boolean
+  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
-  crNo?: boolean
   password?: boolean
   generatedToken?: boolean
   role?: boolean
   createdAt?: boolean
-  whatsapp?: boolean
   confirmed?: boolean
-  plan?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: boolean
+  ownerId?: boolean
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+  members?: boolean | Prisma.User$membersArgs<ExtArgs>
+  compounds?: boolean | Prisma.User$compoundsArgs<ExtArgs>
+  assignedCompounds?: boolean | Prisma.User$assignedCompoundsArgs<ExtArgs>
+  srsRecords?: boolean | Prisma.User$srsRecordsArgs<ExtArgs>
+  visits?: boolean | Prisma.User$visitsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -876,30 +1602,20 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   campany?: boolean
   industry?: boolean
-  city?: boolean
-  country?: boolean
-  totalBranches?: boolean
-  chatVolume?: boolean
-  aiConnect?: boolean
-  aiIntegration?: boolean
-  services?: boolean
   campanySize?: boolean
-  comment?: boolean
-  isTrial?: boolean
+  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
-  crNo?: boolean
   password?: boolean
   generatedToken?: boolean
   role?: boolean
   createdAt?: boolean
-  whatsapp?: boolean
   confirmed?: boolean
-  plan?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: boolean
+  ownerId?: boolean
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -907,30 +1623,20 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   campany?: boolean
   industry?: boolean
-  city?: boolean
-  country?: boolean
-  totalBranches?: boolean
-  chatVolume?: boolean
-  aiConnect?: boolean
-  aiIntegration?: boolean
-  services?: boolean
   campanySize?: boolean
-  comment?: boolean
-  isTrial?: boolean
+  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
-  crNo?: boolean
   password?: boolean
   generatedToken?: boolean
   role?: boolean
   createdAt?: boolean
-  whatsapp?: boolean
   confirmed?: boolean
-  plan?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: boolean
+  ownerId?: boolean
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -938,66 +1644,66 @@ export type UserSelectScalar = {
   name?: boolean
   campany?: boolean
   industry?: boolean
-  city?: boolean
-  country?: boolean
-  totalBranches?: boolean
-  chatVolume?: boolean
-  aiConnect?: boolean
-  aiIntegration?: boolean
-  services?: boolean
   campanySize?: boolean
-  comment?: boolean
-  isTrial?: boolean
+  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
-  crNo?: boolean
   password?: boolean
   generatedToken?: boolean
   role?: boolean
   createdAt?: boolean
-  whatsapp?: boolean
   confirmed?: boolean
-  plan?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  campanyRole?: boolean
+  ownerId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "campany" | "industry" | "city" | "country" | "totalBranches" | "chatVolume" | "aiConnect" | "aiIntegration" | "services" | "campanySize" | "comment" | "isTrial" | "website" | "phone" | "email" | "crNo" | "password" | "generatedToken" | "role" | "createdAt" | "whatsapp" | "confirmed" | "plan" | "acceptedAuthorize" | "acceptedTerms" | "campanyRole", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "campany" | "industry" | "campanySize" | "campanyRole" | "website" | "phone" | "email" | "password" | "generatedToken" | "role" | "createdAt" | "confirmed" | "acceptedAuthorize" | "acceptedTerms" | "ownerId", ExtArgs["result"]["user"]>
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+  members?: boolean | Prisma.User$membersArgs<ExtArgs>
+  compounds?: boolean | Prisma.User$compoundsArgs<ExtArgs>
+  assignedCompounds?: boolean | Prisma.User$assignedCompoundsArgs<ExtArgs>
+  srsRecords?: boolean | Prisma.User$srsRecordsArgs<ExtArgs>
+  visits?: boolean | Prisma.User$visitsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  owner?: boolean | Prisma.User$ownerArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
-  objects: {}
+  objects: {
+    owner: Prisma.$UserPayload<ExtArgs> | null
+    members: Prisma.$UserPayload<ExtArgs>[]
+    compounds: Prisma.$CompoundPayload<ExtArgs>[]
+    assignedCompounds: Prisma.$AssignedCompoundPayload<ExtArgs>[]
+    srsRecords: Prisma.$srsPayload<ExtArgs>[]
+    visits: Prisma.$VisitPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     campany: string | null
     industry: string | null
-    city: string | null
-    country: string | null
-    totalBranches: string | null
-    chatVolume: string | null
-    aiConnect: string | null
-    aiIntegration: string | null
-    services: string[]
     campanySize: string | null
-    comment: string | null
-    isTrial: boolean
+    campanyRole: string | null
     website: string | null
     phone: string | null
     email: string
-    crNo: string | null
     password: string
     generatedToken: string
     role: string
     createdAt: Date
-    whatsapp: string | null
     confirmed: boolean
-    plan: string | null
     acceptedAuthorize: boolean
     acceptedTerms: boolean
-    campanyRole: string | null
+    ownerId: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1392,6 +2098,12 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  owner<T extends Prisma.User$ownerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  members<T extends Prisma.User$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  compounds<T extends Prisma.User$compoundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$compoundsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedCompounds<T extends Prisma.User$assignedCompoundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedCompoundsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssignedCompoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  srsRecords<T extends Prisma.User$srsRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$srsRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$srsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  visits<T extends Prisma.User$visitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$visitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VisitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1425,30 +2137,19 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly campany: Prisma.FieldRef<"User", 'String'>
   readonly industry: Prisma.FieldRef<"User", 'String'>
-  readonly city: Prisma.FieldRef<"User", 'String'>
-  readonly country: Prisma.FieldRef<"User", 'String'>
-  readonly totalBranches: Prisma.FieldRef<"User", 'String'>
-  readonly chatVolume: Prisma.FieldRef<"User", 'String'>
-  readonly aiConnect: Prisma.FieldRef<"User", 'String'>
-  readonly aiIntegration: Prisma.FieldRef<"User", 'String'>
-  readonly services: Prisma.FieldRef<"User", 'String[]'>
   readonly campanySize: Prisma.FieldRef<"User", 'String'>
-  readonly comment: Prisma.FieldRef<"User", 'String'>
-  readonly isTrial: Prisma.FieldRef<"User", 'Boolean'>
+  readonly campanyRole: Prisma.FieldRef<"User", 'String'>
   readonly website: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly crNo: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly generatedToken: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly whatsapp: Prisma.FieldRef<"User", 'String'>
   readonly confirmed: Prisma.FieldRef<"User", 'Boolean'>
-  readonly plan: Prisma.FieldRef<"User", 'String'>
   readonly acceptedAuthorize: Prisma.FieldRef<"User", 'Boolean'>
   readonly acceptedTerms: Prisma.FieldRef<"User", 'Boolean'>
-  readonly campanyRole: Prisma.FieldRef<"User", 'String'>
+  readonly ownerId: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -1465,6 +2166,10 @@ export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -1484,6 +2189,10 @@ export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1501,6 +2210,10 @@ export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * Filter, which User to fetch.
    */
@@ -1550,6 +2263,10 @@ export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which User to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1598,6 +2315,10 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter, which Users to fetch.
    */
   where?: Prisma.UserWhereInput
@@ -1641,6 +2362,10 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * The data needed to create a User.
    */
   data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
@@ -1674,6 +2399,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1688,6 +2417,10 @@ export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The data needed to update a User.
    */
@@ -1740,6 +2473,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1754,6 +2491,10 @@ export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
   /**
    * The filter to search for the User to update in case it exists.
    */
@@ -1781,6 +2522,10 @@ export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  /**
    * Filter which User to delete.
    */
   where: Prisma.UserWhereUniqueInput
@@ -1801,6 +2546,145 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.owner
+ */
+export type User$ownerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * User.members
+ */
+export type User$membersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * User.compounds
+ */
+export type User$compoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Compound
+   */
+  select?: Prisma.CompoundSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Compound
+   */
+  omit?: Prisma.CompoundOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompoundInclude<ExtArgs> | null
+  where?: Prisma.CompoundWhereInput
+  orderBy?: Prisma.CompoundOrderByWithRelationInput | Prisma.CompoundOrderByWithRelationInput[]
+  cursor?: Prisma.CompoundWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CompoundScalarFieldEnum | Prisma.CompoundScalarFieldEnum[]
+}
+
+/**
+ * User.assignedCompounds
+ */
+export type User$assignedCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssignedCompound
+   */
+  select?: Prisma.AssignedCompoundSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssignedCompound
+   */
+  omit?: Prisma.AssignedCompoundOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssignedCompoundInclude<ExtArgs> | null
+  where?: Prisma.AssignedCompoundWhereInput
+  orderBy?: Prisma.AssignedCompoundOrderByWithRelationInput | Prisma.AssignedCompoundOrderByWithRelationInput[]
+  cursor?: Prisma.AssignedCompoundWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssignedCompoundScalarFieldEnum | Prisma.AssignedCompoundScalarFieldEnum[]
+}
+
+/**
+ * User.srsRecords
+ */
+export type User$srsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the srs
+   */
+  select?: Prisma.srsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the srs
+   */
+  omit?: Prisma.srsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.srsInclude<ExtArgs> | null
+  where?: Prisma.srsWhereInput
+  orderBy?: Prisma.srsOrderByWithRelationInput | Prisma.srsOrderByWithRelationInput[]
+  cursor?: Prisma.srsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SrsScalarFieldEnum | Prisma.SrsScalarFieldEnum[]
+}
+
+/**
+ * User.visits
+ */
+export type User$visitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Visit
+   */
+  select?: Prisma.VisitSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Visit
+   */
+  omit?: Prisma.VisitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VisitInclude<ExtArgs> | null
+  where?: Prisma.VisitWhereInput
+  orderBy?: Prisma.VisitOrderByWithRelationInput | Prisma.VisitOrderByWithRelationInput[]
+  cursor?: Prisma.VisitWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VisitScalarFieldEnum | Prisma.VisitScalarFieldEnum[]
+}
+
+/**
  * User without action
  */
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1812,4 +2696,8 @@ export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the User
    */
   omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
 }

@@ -385,6 +385,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  Compound: 'Compound',
+  Unit: 'Unit',
+  AssignedCompound: 'AssignedCompound',
+  SubscriptionRequest: 'SubscriptionRequest',
   Visit: 'Visit',
   customers: 'customers',
   dashborad_Insights: 'dashborad_Insights',
@@ -414,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs"
+    modelProps: "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -489,6 +493,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    Compound: {
+      payload: Prisma.$CompoundPayload<ExtArgs>
+      fields: Prisma.CompoundFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CompoundFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CompoundFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>
+        }
+        findFirst: {
+          args: Prisma.CompoundFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CompoundFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>
+        }
+        findMany: {
+          args: Prisma.CompoundFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>[]
+        }
+        create: {
+          args: Prisma.CompoundCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>
+        }
+        createMany: {
+          args: Prisma.CompoundCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CompoundCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>[]
+        }
+        delete: {
+          args: Prisma.CompoundDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>
+        }
+        update: {
+          args: Prisma.CompoundUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>
+        }
+        deleteMany: {
+          args: Prisma.CompoundDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CompoundUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CompoundUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>[]
+        }
+        upsert: {
+          args: Prisma.CompoundUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompoundPayload>
+        }
+        aggregate: {
+          args: Prisma.CompoundAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCompound>
+        }
+        groupBy: {
+          args: Prisma.CompoundGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompoundGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CompoundCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompoundCountAggregateOutputType> | number
+        }
+      }
+    }
+    Unit: {
+      payload: Prisma.$UnitPayload<ExtArgs>
+      fields: Prisma.UnitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UnitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UnitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>
+        }
+        findFirst: {
+          args: Prisma.UnitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UnitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>
+        }
+        findMany: {
+          args: Prisma.UnitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>[]
+        }
+        create: {
+          args: Prisma.UnitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>
+        }
+        createMany: {
+          args: Prisma.UnitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UnitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>[]
+        }
+        delete: {
+          args: Prisma.UnitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>
+        }
+        update: {
+          args: Prisma.UnitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>
+        }
+        deleteMany: {
+          args: Prisma.UnitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UnitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UnitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>[]
+        }
+        upsert: {
+          args: Prisma.UnitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UnitPayload>
+        }
+        aggregate: {
+          args: Prisma.UnitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUnit>
+        }
+        groupBy: {
+          args: Prisma.UnitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UnitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UnitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UnitCountAggregateOutputType> | number
+        }
+      }
+    }
+    AssignedCompound: {
+      payload: Prisma.$AssignedCompoundPayload<ExtArgs>
+      fields: Prisma.AssignedCompoundFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssignedCompoundFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssignedCompoundFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>
+        }
+        findFirst: {
+          args: Prisma.AssignedCompoundFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssignedCompoundFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>
+        }
+        findMany: {
+          args: Prisma.AssignedCompoundFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>[]
+        }
+        create: {
+          args: Prisma.AssignedCompoundCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>
+        }
+        createMany: {
+          args: Prisma.AssignedCompoundCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssignedCompoundCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>[]
+        }
+        delete: {
+          args: Prisma.AssignedCompoundDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>
+        }
+        update: {
+          args: Prisma.AssignedCompoundUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssignedCompoundDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssignedCompoundUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssignedCompoundUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssignedCompoundUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssignedCompoundPayload>
+        }
+        aggregate: {
+          args: Prisma.AssignedCompoundAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssignedCompound>
+        }
+        groupBy: {
+          args: Prisma.AssignedCompoundGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssignedCompoundGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssignedCompoundCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssignedCompoundCountAggregateOutputType> | number
+        }
+      }
+    }
+    SubscriptionRequest: {
+      payload: Prisma.$SubscriptionRequestPayload<ExtArgs>
+      fields: Prisma.SubscriptionRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SubscriptionRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SubscriptionRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.SubscriptionRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SubscriptionRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>
+        }
+        findMany: {
+          args: Prisma.SubscriptionRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>[]
+        }
+        create: {
+          args: Prisma.SubscriptionRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>
+        }
+        createMany: {
+          args: Prisma.SubscriptionRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SubscriptionRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.SubscriptionRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>
+        }
+        update: {
+          args: Prisma.SubscriptionRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.SubscriptionRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SubscriptionRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SubscriptionRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.SubscriptionRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.SubscriptionRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSubscriptionRequest>
+        }
+        groupBy: {
+          args: Prisma.SubscriptionRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SubscriptionRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SubscriptionRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SubscriptionRequestCountAggregateOutputType> | number
         }
       }
     }
@@ -1572,33 +1872,82 @@ export const UserScalarFieldEnum = {
   name: 'name',
   campany: 'campany',
   industry: 'industry',
+  campanySize: 'campanySize',
+  campanyRole: 'campanyRole',
+  website: 'website',
+  phone: 'phone',
+  email: 'email',
+  password: 'password',
+  generatedToken: 'generatedToken',
+  role: 'role',
+  createdAt: 'createdAt',
+  confirmed: 'confirmed',
+  acceptedAuthorize: 'acceptedAuthorize',
+  acceptedTerms: 'acceptedTerms',
+  ownerId: 'ownerId'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CompoundScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  ownerId: 'ownerId'
+} as const
+
+export type CompoundScalarFieldEnum = (typeof CompoundScalarFieldEnum)[keyof typeof CompoundScalarFieldEnum]
+
+
+export const UnitScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  compoundId: 'compoundId'
+} as const
+
+export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
+
+
+export const AssignedCompoundScalarFieldEnum = {
+  assignedAt: 'assignedAt',
+  guardId: 'guardId',
+  compoundId: 'compoundId'
+} as const
+
+export type AssignedCompoundScalarFieldEnum = (typeof AssignedCompoundScalarFieldEnum)[keyof typeof AssignedCompoundScalarFieldEnum]
+
+
+export const SubscriptionRequestScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  campany: 'campany',
+  industry: 'industry',
   city: 'city',
   country: 'country',
   totalBranches: 'totalBranches',
   chatVolume: 'chatVolume',
-  aiConnect: 'aiConnect',
   aiIntegration: 'aiIntegration',
-  services: 'services',
   campanySize: 'campanySize',
-  comment: 'comment',
-  isTrial: 'isTrial',
   website: 'website',
   phone: 'phone',
   email: 'email',
-  crNo: 'crNo',
   password: 'password',
   generatedToken: 'generatedToken',
   role: 'role',
   createdAt: 'createdAt',
   whatsapp: 'whatsapp',
   confirmed: 'confirmed',
-  plan: 'plan',
   acceptedAuthorize: 'acceptedAuthorize',
   acceptedTerms: 'acceptedTerms',
-  campanyRole: 'campanyRole'
+  campanyRole: 'campanyRole',
+  plan: 'plan'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type SubscriptionRequestScalarFieldEnum = (typeof SubscriptionRequestScalarFieldEnum)[keyof typeof SubscriptionRequestScalarFieldEnum]
 
 
 export const VisitScalarFieldEnum = {
@@ -1613,10 +1962,12 @@ export const VisitScalarFieldEnum = {
   visitTime: 'visitTime',
   pdfUrl: 'pdfUrl',
   qrCode: 'qrCode',
-  compound: 'compound',
+  scanned: 'scanned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isExpired: 'isExpired'
+  isExpired: 'isExpired',
+  compound: 'compound',
+  userToken: 'userToken'
 } as const
 
 export type VisitScalarFieldEnum = (typeof VisitScalarFieldEnum)[keyof typeof VisitScalarFieldEnum]
@@ -1785,7 +2136,13 @@ export const Whatsapp_messagesScalarFieldEnum = {
   timestamp: 'timestamp',
   id: 'id',
   guest: 'guest',
-  az_bs: 'az_bs'
+  az_bs: 'az_bs',
+  wo_category: 'wo_category',
+  wo_priority: 'wo_priority',
+  wo_subcategory: 'wo_subcategory',
+  wo_code: 'wo_code',
+  wo_statusmessage: 'wo_statusmessage',
+  wo_status_last_update: 'wo_status_last_update'
 } as const
 
 export type Whatsapp_messagesScalarFieldEnum = (typeof Whatsapp_messagesScalarFieldEnum)[keyof typeof Whatsapp_messagesScalarFieldEnum]
@@ -1816,6 +2173,7 @@ export const SrsScalarFieldEnum = {
   resemail: 'resemail',
   compound: 'compound',
   unit: 'unit',
+  userToken: 'userToken',
   propertycode: 'propertycode',
   priority: 'priority',
   leasename: 'leasename',
@@ -1904,13 +2262,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1921,6 +2272,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2073,6 +2431,10 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  compound?: Prisma.CompoundOmit
+  unit?: Prisma.UnitOmit
+  assignedCompound?: Prisma.AssignedCompoundOmit
+  subscriptionRequest?: Prisma.SubscriptionRequestOmit
   visit?: Prisma.VisitOmit
   customers?: Prisma.customersOmit
   dashborad_Insights?: Prisma.dashborad_InsightsOmit

@@ -14,6 +14,10 @@ import { createUserRouter } from "./user/user.router";
 import { createContactRouter } from "./contact/contact.router";
 import { createPdfRouter } from "./pdf/pdf.router";
 import { createVisitorsRouter } from "./visitors/visitors.router";
+import { createSubscriptionRequestRouter } from "./subscription-request/subscription-request.router";
+import { createMemberRouter } from "./member/member.router";
+import { createCompoundRouter } from "./compound/compound.router";
+import { createUnitRouter } from "./unit/unit.router";
 import { startVisitCleanupCron } from "./qr-code/visit-cleanup.service";
 import { errorHandler } from "./middleware/error-handler";
 import { swaggerSpec } from "./swagger";
@@ -27,11 +31,14 @@ app.set("trust proxy", 1);
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
 app.use(cors({
-  origin: 'https://dashboard.theblueinnovation.com',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
 }));
+
+// ── Documentation (must be before helmet — swagger needs relaxed CSP) ─────────
+app.use("/documentation", swaggerUi.serve);
+app.get("/documentation", swaggerUi.setup(swaggerSpec));
 
 app.use(helmet());
 app.use(express.json({ limit: "10kb" }));
@@ -44,14 +51,6 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { message: "Too many auth requests, please try again later." },
 });
-
-// ── Documentation ─────────────────────────────────────────────────────────────
-app.use(
-  "/documentation",
-  helmet({ contentSecurityPolicy: false }),
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec),
-);
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.get("/api/v1/check-email", async (req, res) => {
@@ -71,6 +70,10 @@ app.use("/api/v1/analytics", createAnalyticsRouter(prisma));
 app.use("/api/v1/user", createUserRouter(prisma));
 app.use("/api/v1/contact", createContactRouter());
 app.use("/api/v1/visitors", createVisitorsRouter(prisma));
+app.use("/api/v1/subscription-request", createSubscriptionRequestRouter(prisma));
+app.use("/api/v1/member", createMemberRouter(prisma));
+app.use("/api/v1/compound", createCompoundRouter(prisma));
+app.use("/api/v1/unit", createUnitRouter(prisma));
 
 // ── Global error handler (must be last) ───────────────────────────────────────
 app.use(errorHandler);

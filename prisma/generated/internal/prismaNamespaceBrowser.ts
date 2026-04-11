@@ -52,6 +52,10 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Compound: 'Compound',
+  Unit: 'Unit',
+  AssignedCompound: 'AssignedCompound',
+  SubscriptionRequest: 'SubscriptionRequest',
   Visit: 'Visit',
   customers: 'customers',
   dashborad_Insights: 'dashborad_Insights',
@@ -89,33 +93,82 @@ export const UserScalarFieldEnum = {
   name: 'name',
   campany: 'campany',
   industry: 'industry',
+  campanySize: 'campanySize',
+  campanyRole: 'campanyRole',
+  website: 'website',
+  phone: 'phone',
+  email: 'email',
+  password: 'password',
+  generatedToken: 'generatedToken',
+  role: 'role',
+  createdAt: 'createdAt',
+  confirmed: 'confirmed',
+  acceptedAuthorize: 'acceptedAuthorize',
+  acceptedTerms: 'acceptedTerms',
+  ownerId: 'ownerId'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CompoundScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  ownerId: 'ownerId'
+} as const
+
+export type CompoundScalarFieldEnum = (typeof CompoundScalarFieldEnum)[keyof typeof CompoundScalarFieldEnum]
+
+
+export const UnitScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  compoundId: 'compoundId'
+} as const
+
+export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum]
+
+
+export const AssignedCompoundScalarFieldEnum = {
+  assignedAt: 'assignedAt',
+  guardId: 'guardId',
+  compoundId: 'compoundId'
+} as const
+
+export type AssignedCompoundScalarFieldEnum = (typeof AssignedCompoundScalarFieldEnum)[keyof typeof AssignedCompoundScalarFieldEnum]
+
+
+export const SubscriptionRequestScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  campany: 'campany',
+  industry: 'industry',
   city: 'city',
   country: 'country',
   totalBranches: 'totalBranches',
   chatVolume: 'chatVolume',
-  aiConnect: 'aiConnect',
   aiIntegration: 'aiIntegration',
-  services: 'services',
   campanySize: 'campanySize',
-  comment: 'comment',
-  isTrial: 'isTrial',
   website: 'website',
   phone: 'phone',
   email: 'email',
-  crNo: 'crNo',
   password: 'password',
   generatedToken: 'generatedToken',
   role: 'role',
   createdAt: 'createdAt',
   whatsapp: 'whatsapp',
   confirmed: 'confirmed',
-  plan: 'plan',
   acceptedAuthorize: 'acceptedAuthorize',
   acceptedTerms: 'acceptedTerms',
-  campanyRole: 'campanyRole'
+  campanyRole: 'campanyRole',
+  plan: 'plan'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type SubscriptionRequestScalarFieldEnum = (typeof SubscriptionRequestScalarFieldEnum)[keyof typeof SubscriptionRequestScalarFieldEnum]
 
 
 export const VisitScalarFieldEnum = {
@@ -130,10 +183,12 @@ export const VisitScalarFieldEnum = {
   visitTime: 'visitTime',
   pdfUrl: 'pdfUrl',
   qrCode: 'qrCode',
-  compound: 'compound',
+  scanned: 'scanned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isExpired: 'isExpired'
+  isExpired: 'isExpired',
+  compound: 'compound',
+  userToken: 'userToken'
 } as const
 
 export type VisitScalarFieldEnum = (typeof VisitScalarFieldEnum)[keyof typeof VisitScalarFieldEnum]
@@ -302,7 +357,13 @@ export const Whatsapp_messagesScalarFieldEnum = {
   timestamp: 'timestamp',
   id: 'id',
   guest: 'guest',
-  az_bs: 'az_bs'
+  az_bs: 'az_bs',
+  wo_category: 'wo_category',
+  wo_priority: 'wo_priority',
+  wo_subcategory: 'wo_subcategory',
+  wo_code: 'wo_code',
+  wo_statusmessage: 'wo_statusmessage',
+  wo_status_last_update: 'wo_status_last_update'
 } as const
 
 export type Whatsapp_messagesScalarFieldEnum = (typeof Whatsapp_messagesScalarFieldEnum)[keyof typeof Whatsapp_messagesScalarFieldEnum]
@@ -333,6 +394,7 @@ export const SrsScalarFieldEnum = {
   resemail: 'resemail',
   compound: 'compound',
   unit: 'unit',
+  userToken: 'userToken',
   propertycode: 'propertycode',
   priority: 'priority',
   leasename: 'leasename',

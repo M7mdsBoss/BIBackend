@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-import { PrismaClient } from '../../prisma/generated/client';
-import { generateVisitPDF, getPdfPath } from './pdf.service';
+import { v4 as uuidv4 } from "uuid";
+import { PrismaClient } from "../../prisma/generated/client";
+import { generateVisitPDF, getPdfPath } from "./pdf.service";
 
 export interface CreateVisitDto {
   residentFullName: string;
@@ -35,7 +35,7 @@ export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
   await generateVisitPDF(visit);
 
   const pdfUrl = `${process.env.BASE_URL}/pdf/${visit.id}`;
-
+  console.log(pdfUrl);
   const updated = await prisma.visit.update({
     where: { id: visit.id },
     data: {
@@ -46,18 +46,41 @@ export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
   });
 
   return {
-    message: 'Visit created successfully.',
+    message: "Visit created successfully.",
     visit: updated,
   };
 }
 
-export async function getVisitById(prisma: PrismaClient, id: string) {
-  const visit = await prisma.visit.findUnique({ where: { id } });
+export async function getVisitById(
+  prisma: PrismaClient,
+  id: string,
+  user: any,
+) {
+  const visit = await prisma.visit.findUnique({
+    where: { id },
+    include: { compoundRef: true },
+  });
 
   if (!visit) {
-    const err: any = new Error('Visit not found.');
+    const err: any = new Error("Visit not found.");
     err.status = 404;
     throw err;
+  }
+
+  if (user?.role === "GUARD" && !visit.scanned && visit.compoundRef) {
+    if (!visit.compound) return visit;
+    const assigned = await prisma.assignedCompound.findFirst({
+      where: {
+        compoundId: visit.compoundRef.id,
+      },
+    });
+
+    if (!assigned) return visit;
+
+    return prisma.visit.update({
+      where: { id },
+      data: { scanned: true },
+    });
   }
 
   return visit;

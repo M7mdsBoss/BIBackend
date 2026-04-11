@@ -9,6 +9,10 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/Compound.js'
+export type * from './models/Unit.js'
+export type * from './models/AssignedCompound.js'
+export type * from './models/SubscriptionRequest.js'
 export type * from './models/Visit.js'
 export type * from './models/customers.js'
 export type * from './models/dashborad_Insights.js'
