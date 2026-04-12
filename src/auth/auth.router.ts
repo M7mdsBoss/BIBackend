@@ -8,6 +8,7 @@ import { confirmMember } from '../member/member.service';
 import { validate } from '../middleware/validate';
 import { registerSchema, confirmRegisterSchema, loginSchema, confirmMemberSchema } from './auth.schemas';
 import { sendEmail } from '../shared/mail.service';
+import { PUBLIC_URL } from '../helper/const/base';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -149,7 +150,7 @@ export function createAuthRouter(prisma: PrismaClient) {
     }
 
     const token = jwt.sign({ id: userId }, process.env.JWT_SECRET!, { expiresIn: '60m' });
-    const confirmationLink = `${process.env.PUBLIC_URL}/activation/${token}?plan=${plan}`;
+    const confirmationLink = `${PUBLIC_URL}/activation/${token}?plan=${plan}`;
 
     const result = await sendEmail({
       to: email,

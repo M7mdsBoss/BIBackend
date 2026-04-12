@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { PrismaClient } from "../../prisma/generated/client";
 import { sendEmail } from "../shared/mail.service";
+import { PUBLIC_URL } from "../helper/const/base";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -107,7 +108,7 @@ export async function createMember(
   const confirmToken = jwt.sign({ id: memberId }, JWT_SECRET, {
     expiresIn: "60m",
   });
-  const confirmationLink = `${process.env.PUBLIC_URL}/confirm-member/${confirmToken}`;
+  const confirmationLink = `${PUBLIC_URL}/confirm-member/${confirmToken}`;
 
   const emailResult = await sendEmail({
     to: dto.email,

@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as https from 'https';
 import PdfPrinter from 'pdfmake';
 import type { TDocumentDefinitions, Content } from 'pdfmake/interfaces';
+import { PUBLIC_URL } from '../helper/const/base';
 
 const PDF_DIR = path.resolve(process.env.PDF_STORAGE_PATH || './pdfs');
 
@@ -59,7 +60,7 @@ async function getLogoDataUrl(): Promise<string | null> {
 }
 
 async function generateQRCode(visitId: string) {
-  const verifyUrl = `${process.env.PUBLIC_URL}/scan/qr-code/${visitId}`;
+  const verifyUrl = `${PUBLIC_URL}/scan/qr-code/${visitId}`;
   const qrBuffer = await QRCode.toBuffer(verifyUrl, {
     width: 150,
     margin: 2,

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { PrismaClient } from "../../prisma/generated/client";
 import { generateVisitPDF, getPdfPath } from "./pdf.service";
+import { PUBLIC_URL } from "../helper/const/base";
 
 export interface CreateVisitDto {
   residentFullName: string;
@@ -40,7 +41,7 @@ export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
     where: { id: visit.id },
     data: {
       pdfUrl,
-      qrCode: `${process.env.PUBLIC_URL}/scan/qr-code/${visit.id}`,
+      qrCode: `${PUBLIC_URL}/scan/qr-code/${visit.id}`,
       updatedAt: new Date(),
     },
   });

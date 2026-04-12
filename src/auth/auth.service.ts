@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaClient } from '../../prisma/generated/client';
 import { sendEmail } from '../shared/mail.service';
+import { PUBLIC_URL } from '../helper/const/base';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -92,7 +93,7 @@ export async function register(prisma: PrismaClient, dto: RegisterDto) {
   }
 
   const confirmToken = jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '60m' });
-  const confirmationLink = `${process.env.PUBLIC_URL}/confirm-register/${confirmToken}`;
+  const confirmationLink = `${PUBLIC_URL}/confirm-register/${confirmToken}`;
 
   const emailResult = await sendEmail({
     to: email,
@@ -273,7 +274,7 @@ function buildWelcomeEmail(name: string): string {
           <h2>Welcome, ${name || 'there'}!</h2>
           <p>Your email has been confirmed and your account is now active. You can log in to <strong>The Blue Innovation</strong> platform at any time.</p>
           <p style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.PUBLIC_URL}" style="background-color: #007BFF; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+            <a href="${PUBLIC_URL}" style="background-color: #007BFF; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">
               Go to Platform
             </a>
           </p>
@@ -282,7 +283,7 @@ function buildWelcomeEmail(name: string): string {
             <h2>مرحباً بك، ${name || ''}!</h2>
             <p>تم تأكيد بريدك الإلكتروني وأصبح حسابك نشطاً. يمكنك الآن تسجيل الدخول إلى منصة <strong>The Blue Innovation</strong> في أي وقت.</p>
             <p style="text-align: center; margin: 30px 0;">
-              <a href="${process.env.PUBLIC_URL}" style="background-color: #007BFF; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+              <a href="${PUBLIC_URL}" style="background-color: #007BFF; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">
                 الذهاب إلى المنصة
               </a>
             </p>
