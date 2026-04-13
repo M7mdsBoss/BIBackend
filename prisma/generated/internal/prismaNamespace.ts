@@ -1952,6 +1952,7 @@ export type SubscriptionRequestScalarFieldEnum = (typeof SubscriptionRequestScal
 
 export const VisitScalarFieldEnum = {
   id: 'id',
+  visitCode: 'visitCode',
   residentFullName: 'residentFullName',
   residentUnit: 'residentUnit',
   residentPhone: 'residentPhone',

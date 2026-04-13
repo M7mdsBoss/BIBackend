@@ -39,7 +39,7 @@ export async function resolveVisitWhere(
     return { userToken: user?.generatedToken };
   }
 
-  if (caller.role === 'GUARD') {
+  if (caller.role === 'GUARD' || caller.role === 'MANAGER') {
     const assignments = await (prisma.assignedCompound as any).findMany({
       where: { guardId: caller.id },
       include: { compound: { select: { slug: true } } },
@@ -49,6 +49,15 @@ export async function resolveVisitWhere(
   }
 
   return {};
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function buildVisitCode(compoundName: string, sequence: number): string {
+  const prefix = compoundName.replace(/\s+/g, '').slice(0, 3).toUpperCase();
+  // padStart sets a minimum of 6 digits; if sequence exceeds 999999 it naturally
+  // grows to 7, 8, ... digits without any truncation.
+  const seq = String(sequence).padStart(6, '0');
+  return `${prefix}_${seq}`;
 }
 
 // ── Create ────────────────────────────────────────────────────────────────────
@@ -72,25 +81,31 @@ export async function createVisit(
 
   const now = new Date();
 
-  const visit = await prisma.visit.create({
-    data: {
-      id: uuidv4(),
-      residentFullName: dto.residentFullName,
-      residentUnit: dto.residentUnit,
-      residentPhone: dto.residentPhone,
-      visitorFullName: dto.visitorFullName,
-      visitorCarType: dto.visitorCarType,
-      visitorLicensePlate: dto.visitorLicensePlate,
-      visitDate: dto.visitDate,
-      visitTime: dto.visitTime,
-      compound: dto.compound,
-      pdfUrl: dto.pdfUrl,
-      qrCode: dto.qrCode,
-      userToken: dto.userToken,
-      isExpired: false,
-      createdAt: now,
-      updatedAt: now,
-    },
+  const visit = await prisma.$transaction(async (tx) => {
+    const count = await tx.visit.count({ where: { compound: dto.compound } });
+    const visitCode = buildVisitCode(compound.name, count + 1);
+
+    return tx.visit.create({
+      data: {
+        id: uuidv4(),
+        visitCode,
+        residentFullName: dto.residentFullName,
+        residentUnit: dto.residentUnit,
+        residentPhone: dto.residentPhone,
+        visitorFullName: dto.visitorFullName,
+        visitorCarType: dto.visitorCarType,
+        visitorLicensePlate: dto.visitorLicensePlate,
+        visitDate: dto.visitDate,
+        visitTime: dto.visitTime,
+        compound: dto.compound,
+        pdfUrl: dto.pdfUrl,
+        qrCode: dto.qrCode,
+        userToken: dto.userToken,
+        isExpired: false,
+        createdAt: now,
+        updatedAt: now,
+      },
+    });
   });
 
   await generateVisitPDF(visit);
@@ -116,6 +131,7 @@ export interface ListVisitsQuery {
   page: number;
   limit: number;
   unit?: string;
+  sort: 'asc' | 'desc';
 }
 
 export async function listVisits(
@@ -123,7 +139,7 @@ export async function listVisits(
   query: ListVisitsQuery,
   caller: CallerContext,
 ) {
-  const { page, limit, unit } = query;
+  const { page, limit, unit, sort } = query;
   const skip = (page - 1) * limit;
 
   const scopedWhere = await resolveVisitWhere(prisma, caller);
@@ -132,7 +148,7 @@ export async function listVisits(
   if (unit) where.residentUnit = { contains: unit, mode: 'insensitive' as const };
 
   const [data, total] = await Promise.all([
-    prisma.visit.findMany({ where, skip, take: limit, orderBy: { visitDate: 'desc' } }),
+    prisma.visit.findMany({ where, skip, take: limit, orderBy: { createdAt: sort } }),
     prisma.visit.count({ where }),
   ]);
 

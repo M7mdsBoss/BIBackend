@@ -19,12 +19,6 @@ const createSchema = z.object({
   compoundIds: z.array(z.uuid()).min(1).optional(),
 });
 
-const assignSchema = z.object({
-  email: z.email(),
-  role: z.enum(MEMBER_ROLES),
-  compoundIds: z.array(z.uuid()).min(1).optional(),
-});
-
 const updateSchema = z.object({
   name: z.string().min(1).optional(),
   phone: z.string().optional(),

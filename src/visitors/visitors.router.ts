@@ -23,7 +23,9 @@ const listQuerySchema = z.object({
   page:  z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
   unit:  z.string().min(1).optional(),
+  sort: z.enum(['asc', 'desc']).default('desc'),
 });
+
 
 export function createVisitorsRouter(prisma: PrismaClient) {
   const router = Router();
@@ -47,7 +49,7 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors/stats
-  router.get('/stats', guard('OWNER', 'GUARD'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/stats', guard('OWNER', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       res.json(await getVisitorStats(prisma, { id: req.user!.id, role: req.user!.role }));
     } catch (err) {
@@ -56,9 +58,8 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors/:id
-  router.get('/:id', guard('OWNER', 'GUARD'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/:id', guard('OWNER', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      console.log("get visit by id")
       const visitId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       res.json(await getVisitById(prisma, visitId));
     } catch (err) {
@@ -67,8 +68,8 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors?page=1&limit=10&unit=UNIT_*
-  // OWNER → their own visits (by userToken) | GUARD → visits for their assigned compounds
-  router.get('/', guard('OWNER', 'GUARD'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  // OWNER → their own visits (by userToken) | GUARD / MANAGER → visits for their assigned compounds
+  router.get('/', guard('OWNER', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const parsed = listQuerySchema.safeParse(req.query);
       if (!parsed.success) {

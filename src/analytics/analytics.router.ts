@@ -21,7 +21,7 @@ const listQuerySchema = z.object({
 export function createAnalyticsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  router.use(guard('OWNER', 'OPERATION'));
+  router.use(guard('OWNER', 'OPERATION', 'MANAGER'));
 
   // GET /analytics/requests/by-agent
   router.get('/requests/by-agent', async (req: AuthRequest, res: Response, next: NextFunction) => {

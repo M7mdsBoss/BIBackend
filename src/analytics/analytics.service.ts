@@ -35,7 +35,7 @@ export async function resolveSrsWhere(
     return { userToken: user?.generatedToken };
   }
 
-  if (callerRole === 'OPERATION') {
+  if (callerRole === 'OPERATION' || callerRole === 'MANAGER') {
     const assignments = await (prisma.assignedCompound as any).findMany({
       where: { guardId: callerId },
       include: { compound: { select: { slug: true } } },

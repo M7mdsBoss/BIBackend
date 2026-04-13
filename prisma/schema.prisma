@@ -115,6 +115,7 @@ model SubscriptionRequest {
 
 model Visit {
   id                  String   @id
+  visitCode           String   @unique
   residentFullName    String
   residentUnit        String
   residentPhone       String
