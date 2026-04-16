@@ -10,46 +10,91 @@ export interface CreateVisitDto {
   visitorFullName: string;
   visitorCarType: string;
   visitorLicensePlate: string;
-  visitDate: string;
+  visitDate: Date;
   visitTime: string;
-  compound?: string;
+  compound: string;
+  userToken: string;
+  pdfUrl?: string;
+  qrCode?: string;
+}
+
+function buildVisitCode(compoundName: string, sequence: number): string {
+  const prefix = compoundName.replace(/\s+/g, "").slice(0, 3).toUpperCase();
+  // padStart sets a minimum of 6 digits; if sequence exceeds 999999 it naturally
+  // grows to 7, 8, ... digits without any truncation.
+  const seq = String(sequence).padStart(6, "0");
+  return `${prefix}_${seq}`;
 }
 
 export async function createVisit(prisma: PrismaClient, dto: CreateVisitDto) {
   const now = new Date();
-  const visit = await prisma.visit.create({
-    data: {
-      id: uuidv4(),
-      residentFullName: dto.residentFullName,
-      residentUnit: dto.residentUnit,
-      residentPhone: dto.residentPhone,
-      visitorFullName: dto.visitorFullName,
-      visitorCarType: dto.visitorCarType,
-      visitorLicensePlate: dto.visitorLicensePlate,
-      visitDate: new Date(dto.visitDate),
-      visitTime: dto.visitTime,
-      compound: dto.compound,
-      updatedAt: now,
-    },
+  const unit = await (prisma.unit as any).findUnique({
+    where: { slug: dto.residentUnit },
+  });
+  if (!unit) {
+    const err: any = new Error("unit-not-found");
+    err.status = 404;
+    throw err;
+  }
+
+  const compound = await (prisma.compound as any).findUnique({
+    where: { slug: dto.compound },
+  });
+  if (!compound) {
+    const err: any = new Error("compound-not-found");
+    err.status = 404;
+    throw err;
+  }
+
+  const visit = await prisma.$transaction(async (tx) => {
+    const count = await tx.visit.count({ where: { compound: dto.compound } });
+    const visitCode = buildVisitCode(compound.name, count + 1);
+
+    return tx.visit.create({
+      data: {
+        id: uuidv4(),
+        visitCode,
+        residentFullName: dto.residentFullName,
+        residentUnit: dto.residentUnit,
+        residentPhone: dto.residentPhone,
+        visitorFullName: dto.visitorFullName,
+        visitorCarType: dto.visitorCarType,
+        visitorLicensePlate: dto.visitorLicensePlate,
+        visitDate: dto.visitDate,
+        visitTime: dto.visitTime,
+        compound: dto.compound,
+        pdfUrl: dto.pdfUrl,
+        qrCode: dto.qrCode,
+        userToken: dto.userToken,
+        isExpired: false,
+        createdAt: now,
+        updatedAt: now,
+      },
+    });
   });
 
   await generateVisitPDF(visit);
 
   const pdfUrl = `${process.env.BASE_URL}/pdf/${visit.id}`;
-  console.log(pdfUrl);
+  const qrCode = `${PUBLIC_URL}/scan/qr-code/${visit.id}`;
+
   const updated = await prisma.visit.update({
     where: { id: visit.id },
-    data: {
-      pdfUrl,
-      qrCode: `${PUBLIC_URL}/scan/qr-code/${visit.id}`,
-      updatedAt: new Date(),
-    },
+    data: { pdfUrl, qrCode, updatedAt: new Date() },
   });
 
-  return {
-    message: "Visit created successfully.",
-    visit: updated,
-  };
+  const [compoundRef, residentUnitRef] = await Promise.all([
+    (prisma.compound as any).findUnique({
+      where: { slug: dto.compound },
+      select: { id: true, name: true, slug: true },
+    }),
+    (prisma.unit as any).findUnique({
+      where: { slug: dto.residentUnit },
+      select: { id: true, name: true, slug: true },
+    }),
+  ]);
+
+  return { ...updated, compoundRef, residentUnitRef };
 }
 
 export async function getVisitById(

@@ -384,6 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  Client: 'Client',
   User: 'User',
   Compound: 'Compound',
   Unit: 'Unit',
@@ -418,10 +419,84 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs"
+    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    Client: {
+      payload: Prisma.$ClientPayload<ExtArgs>
+      fields: Prisma.ClientFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClientFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClientFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>
+        }
+        findFirst: {
+          args: Prisma.ClientFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClientFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>
+        }
+        findMany: {
+          args: Prisma.ClientFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>[]
+        }
+        create: {
+          args: Prisma.ClientCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>
+        }
+        createMany: {
+          args: Prisma.ClientCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClientCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>[]
+        }
+        delete: {
+          args: Prisma.ClientDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>
+        }
+        update: {
+          args: Prisma.ClientUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClientDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClientUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClientUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClientUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>
+        }
+        aggregate: {
+          args: Prisma.ClientAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClient>
+        }
+        groupBy: {
+          args: Prisma.ClientGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClientGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClientCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClientCountAggregateOutputType> | number
+        }
+      }
+    }
     User: {
       payload: Prisma.$UserPayload<ExtArgs>
       fields: Prisma.UserFieldRefs
@@ -1867,6 +1942,21 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  clientName: 'clientName',
+  address: 'address',
+  crNb: 'crNb',
+  contact: 'contact',
+  domainName: 'domainName',
+  website: 'website',
+  createdAt: 'createdAt',
+  adminId: 'adminId'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1884,7 +1974,7 @@ export const UserScalarFieldEnum = {
   confirmed: 'confirmed',
   acceptedAuthorize: 'acceptedAuthorize',
   acceptedTerms: 'acceptedTerms',
-  ownerId: 'ownerId'
+  clientId: 'clientId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1895,7 +1985,7 @@ export const CompoundScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   createdAt: 'createdAt',
-  ownerId: 'ownerId'
+  clientId: 'clientId'
 } as const
 
 export type CompoundScalarFieldEnum = (typeof CompoundScalarFieldEnum)[keyof typeof CompoundScalarFieldEnum]
@@ -1968,7 +2058,7 @@ export const VisitScalarFieldEnum = {
   updatedAt: 'updatedAt',
   isExpired: 'isExpired',
   compound: 'compound',
-  userToken: 'userToken'
+  clientId: 'clientId'
 } as const
 
 export type VisitScalarFieldEnum = (typeof VisitScalarFieldEnum)[keyof typeof VisitScalarFieldEnum]
@@ -2174,7 +2264,7 @@ export const SrsScalarFieldEnum = {
   resemail: 'resemail',
   compound: 'compound',
   unit: 'unit',
-  userToken: 'userToken',
+  clientId: 'clientId',
   propertycode: 'propertycode',
   priority: 'priority',
   leasename: 'leasename',
@@ -2273,6 +2363,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UserRole'
+ */
+export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+/**
+ * Reference to a field of type 'UserRole[]'
+ */
+export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 
@@ -2431,6 +2535,7 @@ export type PrismaClientOptions = ({
   omit?: GlobalOmitConfig
 }
 export type GlobalOmitConfig = {
+  client?: Prisma.ClientOmit
   user?: Prisma.UserOmit
   compound?: Prisma.CompoundOmit
   unit?: Prisma.UnitOmit

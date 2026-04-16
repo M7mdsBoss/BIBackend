@@ -1,6 +1,6 @@
 const bearerAuth = [{ bearerAuth: [] }];
 const adminNote  = 'Requires ADMIN role JWT.';
-const ownerNote  = 'Requires OWNER role JWT.';
+const clientNote = 'Requires CLIENT role JWT.';
 const authNote   = 'Requires any valid JWT.';
 
 // ── Reusable inline schemas ───────────────────────────────────────────────────
@@ -43,14 +43,15 @@ export const swaggerSpec = {
   openapi: '3.0.3',
   info: {
     title: 'Blue Innovation API',
-    version: '2.0.0',
+    version: '3.0.0',
     description: 'REST API for Blue Innovation platform.',
   },
   tags: [
     { name: 'Auth',                 description: 'Registration, confirmation, login' },
+    { name: 'Client',               description: 'Client onboarding and management' },
     { name: 'User',                 description: 'User management (Admin)' },
-    { name: 'Member',               description: 'Owner manages their team members' },
-    { name: 'Compound',             description: 'Compound management (Admin)' },
+    { name: 'Member',               description: 'Client Admin manages their team members' },
+    { name: 'Compound',             description: 'Compound management' },
     { name: 'Unit',                 description: 'Unit management (Admin)' },
     { name: 'Visitors',             description: 'Visit records' },
     { name: 'Subscription Request', description: 'Pre-registration subscription requests' },
@@ -71,6 +72,84 @@ export const swaggerSpec = {
       // ── Shared ──────────────────────────────────────────────────────────────
       Pagination: PaginationSchema,
 
+      // ── Client ──────────────────────────────────────────────────────────────
+      Client: {
+        type: 'object',
+        properties: {
+          id:         { type: 'string', format: 'uuid' },
+          clientName: { type: 'string', example: 'Blue Innovation' },
+          address:    { type: 'string', example: '123 King Fahd Road', nullable: true },
+          crNb:       { type: 'string', example: '1234567890', nullable: true },
+          contact:    { type: 'string', example: '+966501234567', nullable: true },
+          domainName: { type: 'string', example: 'blueinnovation.sa', nullable: true },
+          website:    { type: 'string', example: 'https://blueinnovation.sa', nullable: true },
+          adminId:    { type: 'string', format: 'uuid', nullable: true, description: 'ID of the CLIENT-role user who administers this client' },
+          createdAt:  { type: 'string', format: 'date-time' },
+        },
+      },
+      ClientDetail: {
+        allOf: [
+          { $ref: '#/components/schemas/Client' },
+          {
+            type: 'object',
+            properties: {
+              admin: {
+                nullable: true,
+                type: 'object',
+                properties: {
+                  id:    { type: 'string', format: 'uuid' },
+                  name:  { type: 'string' },
+                  email: { type: 'string', format: 'email' },
+                },
+              },
+              members: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    id:    { type: 'string', format: 'uuid' },
+                    name:  { type: 'string' },
+                    email: { type: 'string', format: 'email' },
+                    role:  { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'] },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+      ClientListItem: {
+        allOf: [
+          { $ref: '#/components/schemas/Client' },
+          {
+            type: 'object',
+            properties: {
+              admin: {
+                nullable: true,
+                type: 'object',
+                properties: {
+                  id:    { type: 'string', format: 'uuid' },
+                  name:  { type: 'string' },
+                  email: { type: 'string', format: 'email' },
+                },
+              },
+              _count: {
+                type: 'object',
+                properties: {
+                  members: { type: 'integer', example: 1 },
+                },
+              },
+            },
+          },
+        ],
+      },
+      ClientCreateResponse: {
+        type: 'object',
+        properties: {
+          client: { $ref: '#/components/schemas/Client' },
+        },
+      },
+
       // ── Compound ────────────────────────────────────────────────────────────
       Compound: {
         type: 'object',
@@ -78,7 +157,7 @@ export const swaggerSpec = {
           id:        { type: 'string', format: 'uuid' },
           name:      { type: 'string', example: 'Green Valley' },
           slug:      { type: 'string', example: 'COMP_green_valley' },
-          ownerId:   { type: 'string', format: 'uuid' },
+          clientId:  { type: 'string', format: 'uuid', description: 'ID of the owning Client entity' },
           createdAt: { type: 'string', format: 'date-time' },
         },
       },
@@ -88,19 +167,18 @@ export const swaggerSpec = {
           {
             type: 'object',
             properties: {
-              owner: {
+              client: {
                 type: 'object',
                 properties: {
-                  id:    { type: 'string' },
-                  name:  { type: 'string' },
-                  email: { type: 'string' },
+                  id:         { type: 'string', format: 'uuid' },
+                  clientName: { type: 'string' },
                 },
               },
               units: {
                 type: 'array',
                 items: { $ref: '#/components/schemas/Unit' },
               },
-              guards: {
+              assignedMembers: {
                 type: 'array',
                 items: {
                   type: 'object',
@@ -109,9 +187,9 @@ export const swaggerSpec = {
                     guard: {
                       type: 'object',
                       properties: {
-                        id:    { type: 'string' },
+                        id:    { type: 'string', format: 'uuid' },
                         name:  { type: 'string' },
-                        email: { type: 'string' },
+                        email: { type: 'string', format: 'email' },
                         role:  { type: 'string', example: 'GUARD' },
                       },
                     },
@@ -143,8 +221,8 @@ export const swaggerSpec = {
           name:      { type: 'string', example: 'Khalid Guard' },
           email:     { type: 'string', format: 'email' },
           phone:     { type: 'string', example: '+966501234567' },
-          role:      { type: 'string', enum: ['GUARD'], example: 'GUARD' },
-          ownerId:   { type: 'string', format: 'uuid' },
+          role:      { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'], example: 'GUARD' },
+          clientId:  { type: 'string', format: 'uuid', description: 'Client this member belongs to' },
           createdAt: { type: 'string', format: 'date-time' },
         },
       },
@@ -154,6 +232,7 @@ export const swaggerSpec = {
         type: 'object',
         properties: {
           id:                  { type: 'string', format: 'uuid' },
+          visitCode:           { type: 'string', example: 'GRE_000001' },
           residentFullName:    { type: 'string', example: 'Ahmed Salem' },
           residentUnit:        { type: 'string', example: 'UNIT_tower_a_101', description: 'Unit slug' },
           residentPhone:       { type: 'string', example: '+966501234567' },
@@ -163,8 +242,10 @@ export const swaggerSpec = {
           visitDate:           { type: 'string', format: 'date-time' },
           visitTime:           { type: 'string', example: '14:30' },
           compound:            { type: 'string', example: 'COMP_green_valley', description: 'Compound slug', nullable: true },
+          clientId:            { type: 'string', format: 'uuid', description: 'Derived from the compound — visit belongs to the Client that owns the compound', nullable: true },
           pdfUrl:              { type: 'string', nullable: true },
           qrCode:              { type: 'string', nullable: true },
+          scanned:             { type: 'boolean', example: false },
           isExpired:           { type: 'boolean' },
           createdAt:           { type: 'string', format: 'date-time' },
           updatedAt:           { type: 'string', format: 'date-time' },
@@ -172,7 +253,7 @@ export const swaggerSpec = {
             nullable: true,
             type: 'object',
             properties: {
-              id:   { type: 'string' },
+              id:   { type: 'string', format: 'uuid' },
               name: { type: 'string' },
               slug: { type: 'string' },
             },
@@ -181,7 +262,7 @@ export const swaggerSpec = {
             nullable: true,
             type: 'object',
             properties: {
-              id:   { type: 'string' },
+              id:   { type: 'string', format: 'uuid' },
               name: { type: 'string' },
               slug: { type: 'string' },
             },
@@ -245,7 +326,8 @@ export const swaggerSpec = {
     '/api/v1/auth/register': {
       post: {
         tags: ['Auth'],
-        summary: 'Register a new OWNER account',
+        summary: 'Register a new user account',
+        description: 'Creates a User only. No Client is created automatically — client onboarding is a separate step via `POST /api/v1/client`.',
         requestBody: {
           required: true,
           content: {
@@ -273,7 +355,7 @@ export const swaggerSpec = {
         },
         responses: {
           200: { description: 'Confirmation email sent' },
-          400: { $ref: '#/components/schemas/~1ValidationError' },
+          400: ValidationError,
         },
       },
     },
@@ -281,6 +363,7 @@ export const swaggerSpec = {
       post: {
         tags: ['Auth'],
         summary: 'Confirm email and activate account',
+        description: 'Verifies the JWT from the confirmation email. Returns a login token with `clientId: null` until the user completes client onboarding.',
         requestBody: {
           required: true,
           content: {
@@ -294,7 +377,27 @@ export const swaggerSpec = {
           },
         },
         responses: {
-          200: { description: 'Account confirmed, returns JWT' },
+          200: {
+            description: 'Account confirmed — returns JWT (`clientId` will be null until client onboarding)',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    token: { type: 'string' },
+                    user: {
+                      type: 'object',
+                      properties: {
+                        id:    { type: 'string', format: 'uuid' },
+                        name:  { type: 'string' },
+                        email: { type: 'string', format: 'email' },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           400: { description: 'Invalid or expired token' },
         },
       },
@@ -303,6 +406,7 @@ export const swaggerSpec = {
       post: {
         tags: ['Auth'],
         summary: 'Confirm member invitation — set password and activate account',
+        description: 'Used by invited GUARD / OPERATION / MANAGER users. Returns a JWT with their `clientId` already populated.',
         requestBody: {
           required: true,
           content: {
@@ -319,7 +423,28 @@ export const swaggerSpec = {
           },
         },
         responses: {
-          200: { description: 'Account confirmed, returns JWT and user summary' },
+          200: {
+            description: 'Account confirmed — returns JWT and user summary',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    token: { type: 'string' },
+                    user: {
+                      type: 'object',
+                      properties: {
+                        id:    { type: 'string', format: 'uuid' },
+                        name:  { type: 'string' },
+                        email: { type: 'string', format: 'email' },
+                        role:  { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'] },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           400: { description: 'Invalid or expired token / already confirmed' },
         },
       },
@@ -327,7 +452,8 @@ export const swaggerSpec = {
     '/api/v1/auth/login': {
       post: {
         tags: ['Auth'],
-        summary: 'Login — returns JWT containing id, role, ownerId',
+        summary: 'Login — returns JWT containing id, role, clientId',
+        description: '`clientId` is `null` for users who have not yet completed client onboarding.',
         requestBody: {
           required: true,
           content: {
@@ -351,14 +477,17 @@ export const swaggerSpec = {
                 schema: {
                   type: 'object',
                   properties: {
-                    token: { type: 'string' },
+                    token: {
+                      type: 'string',
+                      description: 'JWT payload: { id, role, clientId }. clientId is null until client onboarding.',
+                    },
                     user: {
                       type: 'object',
                       properties: {
-                        id:    { type: 'string' },
-                        name:  { type: 'string' },
-                        email: { type: 'string' },
-                        role:  { type: 'string', enum: ['OWNER', 'GUARD', 'ADMIN', 'OPERATION'] },
+                        id:       { type: 'string', format: 'uuid' },
+                        name:     { type: 'string' },
+                        email:    { type: 'string', format: 'email' },
+                        role:     { type: 'string', enum: ['CLIENT', 'GUARD', 'ADMIN', 'OPERATION', 'MANAGER'] },
                       },
                     },
                   },
@@ -409,6 +538,143 @@ export const swaggerSpec = {
       },
     },
 
+    // ── Client ────────────────────────────────────────────────────────────────
+    '/api/v1/client': {
+      post: {
+        tags: ['Client'],
+        summary: 'Create a Client',
+        security: bearerAuth,
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['clientName'],
+                properties: {
+                  clientName: { type: 'string', example: 'Blue Innovation' },
+                  address:    { type: 'string', example: '123 King Fahd Road' },
+                  crNb:       { type: 'string', example: '1234567890' },
+                  contact:    { type: 'string', example: '+966501234567' },
+                  domainName: { type: 'string', example: 'blueinnovation.sa' },
+                  website:    { type: 'string', example: 'https://blueinnovation.sa' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: 'Client created',
+            content: {
+              'application/json': { schema: { $ref: '#/components/schemas/ClientCreateResponse' } },
+            },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – ADMIN role required' },
+        },
+      },
+      get: {
+        tags: ['Client'],
+        summary: `List all clients with admin info and counts. ${adminNote}`,
+        security: bearerAuth,
+        responses: {
+          200: {
+            description: 'Array of clients',
+            content: {
+              'application/json': {
+                schema: { type: 'array', items: { $ref: '#/components/schemas/ClientDetail' } },
+              },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – ADMIN only' },
+        },
+      },
+    },
+    '/api/v1/client/me': {
+      get: {
+        tags: ['Client'],
+        summary: `Get the authenticated user's own Client. ${clientNote}`,
+        security: bearerAuth,
+        responses: {
+          200: {
+            description: 'Client detail with admin and members',
+            content: {
+              'application/json': { schema: { $ref: '#/components/schemas/ClientDetail' } },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required' },
+          404: { description: 'No client found for this user — onboarding not yet complete' },
+        },
+      },
+    },
+    '/api/v1/client/{id}': {
+      get: {
+        tags: ['Client'],
+        summary: `Get client by ID. ${adminNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: {
+            description: 'Client detail',
+            content: {
+              'application/json': { schema: { $ref: '#/components/schemas/ClientDetail' } },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – ADMIN only' },
+          404: { description: 'Client not found' },
+        },
+      },
+      patch: {
+        tags: ['Client'],
+        summary: `Update client name. ${adminNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  clientName: { type: 'string', example: 'Blue Innovation LLC' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: { description: 'Updated client' },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – ADMIN only' },
+          404: { description: 'Client not found' },
+        },
+      },
+      delete: {
+        tags: ['Client'],
+        summary: `Delete a client and cascade all associated data. ${adminNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: { description: 'Client deleted' },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – ADMIN only' },
+          404: { description: 'Client not found' },
+        },
+      },
+    },
+
     // ── Check Email ───────────────────────────────────────────────────────────
     '/api/v1/check-email': {
       get: {
@@ -438,7 +704,7 @@ export const swaggerSpec = {
     '/api/v1/user': {
       get: {
         tags: ['User'],
-        summary: `List confirmed users with pagination. ${adminNote}`,
+        summary: `List confirmed CLIENT users with pagination. ${adminNote}`,
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'page',  schema: { type: 'integer', default: 1 } },
@@ -454,7 +720,7 @@ export const swaggerSpec = {
     '/api/v1/user/search': {
       get: {
         tags: ['User'],
-        summary: `Search users by name, email, or token. ${adminNote}`,
+        summary: `Search CLIENT users by name, email, or token. ${adminNote}`,
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'q', schema: { type: 'string' }, description: 'Search query (max 5 results)' },
@@ -472,7 +738,7 @@ export const swaggerSpec = {
         summary: `Get user by ID. ${adminNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: { description: 'User object (password excluded)' },
@@ -483,10 +749,12 @@ export const swaggerSpec = {
       },
     },
 
+    // ── Member ────────────────────────────────────────────────────────────────
     '/api/v1/member': {
       post: {
         tags: ['Member'],
-        summary: `Create a member (e.g. GUARD) under the authenticated Owner. ${ownerNote}`,
+        summary: `Create a member (GUARD / OPERATION / MANAGER) under the authenticated Client Admin. ${clientNote}`,
+        description: 'An invitation email is sent. The member must follow the link in the email and call `POST /auth/confirm-member` to set their password and activate their account.',
         security: bearerAuth,
         requestBody: {
           required: true,
@@ -498,14 +766,14 @@ export const swaggerSpec = {
                 properties: {
                   name:  { type: 'string', example: 'Khalid Guard' },
                   email: { type: 'string', format: 'email' },
-                  role:  { type: 'string', enum: ['GUARD'], example: 'GUARD' },
-                  phone:       { type: 'string', example: '+966501234567' },
+                  role:  { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'], example: 'GUARD' },
+                  phone: { type: 'string', example: '+966501234567' },
                   compoundIds: {
                     type: 'array',
                     items: { type: 'string', format: 'uuid' },
                     minItems: 1,
-                    description: 'IDs of compounds (owned by the OWNER) to assign this guard to',
-                    example: ['uuid-of-compound-1', 'uuid-of-compound-2'],
+                    description: 'IDs of compounds (belonging to this Client) to assign this member to',
+                    example: ['uuid-of-compound-1'],
                   },
                 },
               },
@@ -514,7 +782,7 @@ export const swaggerSpec = {
         },
         responses: {
           201: {
-            description: 'Member created — invitation email sent, member must confirm to set password',
+            description: 'Member created — invitation email sent',
             content: {
               'application/json': {
                 schema: {
@@ -526,7 +794,6 @@ export const swaggerSpec = {
                         assignedCompounds: {
                           type: 'array',
                           items: { type: 'string', format: 'uuid' },
-                          description: 'IDs of compounds the guard was assigned to',
                         },
                       },
                     },
@@ -537,14 +804,14 @@ export const swaggerSpec = {
           },
           400: ValidationError,
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
-          404: { description: 'One or more compoundIds not found or not owned by this OWNER' },
+          403: { description: 'Forbidden – CLIENT role required' },
+          404: { description: 'One or more compoundIds not found or not belonging to this Client' },
           409: { description: 'Email already registered' },
         },
       },
       get: {
         tags: ['Member'],
-        summary: `List all members belonging to the authenticated Owner. ${ownerNote}`,
+        summary: `List all members belonging to the authenticated Client. ${clientNote}`,
         security: bearerAuth,
         responses: {
           200: {
@@ -556,31 +823,31 @@ export const swaggerSpec = {
             },
           },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT role required' },
         },
       },
     },
     '/api/v1/member/{id}': {
       get: {
         tags: ['Member'],
-        summary: `Get a member by ID (must belong to the Owner). ${ownerNote}`,
+        summary: `Get a member by ID (must belong to the Client). ${clientNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: { content: { 'application/json': { schema: { $ref: '#/components/schemas/Member' } } }, description: 'Member' },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT role required' },
           404: { description: 'Member not found' },
         },
       },
       patch: {
         tags: ['Member'],
-        summary: `Update a member. ${ownerNote}`,
+        summary: `Update a member. ${clientNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         requestBody: {
           required: true,
@@ -591,7 +858,7 @@ export const swaggerSpec = {
                 properties: {
                   name:        { type: 'string' },
                   phone:       { type: 'string' },
-                  role:        { type: 'string', enum: ['GUARD', 'OPERATION'] },
+                  role:        { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'] },
                   compoundIds: { type: 'array', items: { type: 'string', format: 'uuid' } },
                 },
               },
@@ -602,21 +869,21 @@ export const swaggerSpec = {
           200: { description: 'Updated member' },
           400: ValidationError,
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT role required' },
           404: { description: 'Member not found' },
         },
       },
       delete: {
         tags: ['Member'],
-        summary: `Delete a member. ${ownerNote}`,
+        summary: `Delete a member. ${clientNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: { description: 'Member deleted' },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT role required' },
           404: { description: 'Member not found' },
         },
       },
@@ -626,11 +893,11 @@ export const swaggerSpec = {
     '/api/v1/compound/my': {
       get: {
         tags: ['Compound'],
-        summary: `List all compounds owned by the authenticated OWNER, with unit and guard counts. ${ownerNote}`,
+        summary: `List all compounds belonging to the authenticated Client, with unit and member counts. ${clientNote}`,
         security: bearerAuth,
         responses: {
           200: {
-            description: 'Array of compounds belonging to the OWNER',
+            description: 'Array of compounds belonging to the Client',
             content: {
               'application/json': {
                 schema: {
@@ -644,8 +911,8 @@ export const swaggerSpec = {
                           _count: {
                             type: 'object',
                             properties: {
-                              units:  { type: 'integer', example: 5 },
-                              guards: { type: 'integer', example: 2 },
+                              units:           { type: 'integer', example: 5 },
+                              assignedMembers: { type: 'integer', example: 2 },
                             },
                           },
                         },
@@ -657,14 +924,14 @@ export const swaggerSpec = {
             },
           },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT role required' },
         },
       },
     },
     '/api/v1/compound': {
       post: {
         tags: ['Compound'],
-        summary: `Create a compound. Slug auto-generated as COMP_{name}. ${adminNote}`,
+        summary: `Create a compound and assign it to a Client. Slug auto-generated as COMP_{name}. ${adminNote}`,
         security: bearerAuth,
         requestBody: {
           required: true,
@@ -672,10 +939,10 @@ export const swaggerSpec = {
             'application/json': {
               schema: {
                 type: 'object',
-                required: ['name', 'ownerId'],
+                required: ['name', 'clientId'],
                 properties: {
-                  name:    { type: 'string', example: 'Green Valley' },
-                  ownerId: { type: 'string', format: 'uuid', description: 'ID of the OWNER user' },
+                  name:     { type: 'string', example: 'Green Valley' },
+                  clientId: { type: 'string', format: 'uuid', description: 'ID of the Client entity to assign this compound to' },
                 },
               },
             },
@@ -693,14 +960,14 @@ export const swaggerSpec = {
       },
       get: {
         tags: ['Compound'],
-        summary: `List all compounds with owner info and counts. ${adminNote}`,
+        summary: `List all compounds with client info and counts. ${adminNote}`,
         security: bearerAuth,
         responses: {
           200: {
             description: 'Array of compounds',
             content: {
               'application/json': {
-                schema: { type: 'array', items: { $ref: '#/components/schemas/Compound' } },
+                schema: { type: 'array', items: { $ref: '#/components/schemas/CompoundDetail' } },
               },
             },
           },
@@ -712,10 +979,10 @@ export const swaggerSpec = {
     '/api/v1/compound/{id}': {
       get: {
         tags: ['Compound'],
-        summary: `Get compound by ID with units and assigned guards. ${adminNote}`,
+        summary: `Get compound by ID with units and assigned members. ${adminNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: {
@@ -729,10 +996,10 @@ export const swaggerSpec = {
       },
       patch: {
         tags: ['Compound'],
-        summary: `Update compound name or owner. Slug regenerated on name change. ${adminNote}`,
+        summary: `Update compound name or reassign to another Client. Slug regenerated on name change. ${adminNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         requestBody: {
           required: true,
@@ -741,8 +1008,8 @@ export const swaggerSpec = {
               schema: {
                 type: 'object',
                 properties: {
-                  name:    { type: 'string' },
-                  ownerId: { type: 'string', format: 'uuid' },
+                  name:     { type: 'string' },
+                  clientId: { type: 'string', format: 'uuid', description: 'Reassign to a different Client' },
                 },
               },
             },
@@ -819,7 +1086,7 @@ export const swaggerSpec = {
         summary: `Get unit by ID. ${adminNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: {
@@ -836,7 +1103,7 @@ export const swaggerSpec = {
         summary: `Update unit name. Slug regenerated automatically. ${adminNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         requestBody: {
           required: true,
@@ -863,8 +1130,8 @@ export const swaggerSpec = {
     '/api/v1/visitors': {
       post: {
         tags: ['Visitors'],
-        summary: `Create a new visit record. ${authNote}`,
-        security: bearerAuth,
+        summary: 'Create a new visit record (public)',
+        description: 'No authentication required. The `clientId` is automatically derived from the compound — no `userToken` needed.',
         requestBody: {
           required: true,
           content: {
@@ -874,7 +1141,7 @@ export const swaggerSpec = {
                 required: [
                   'residentFullName', 'residentUnit', 'residentPhone',
                   'visitorFullName', 'visitorCarType', 'visitorLicensePlate',
-                  'visitDate', 'visitTime', 'compound', 'userToken',
+                  'visitDate', 'visitTime', 'compound',
                 ],
                 properties: {
                   residentFullName:    { type: 'string', example: 'Ahmed Salem' },
@@ -886,7 +1153,6 @@ export const swaggerSpec = {
                   visitDate:           { type: 'string', format: 'date-time' },
                   visitTime:           { type: 'string', example: '14:30' },
                   compound:            { type: 'string', example: 'COMP_green_valley', description: 'Must match an existing Compound slug' },
-                  userToken:           { type: 'string', example: 'TOK_abc123', description: 'User generated token (User.generatedToken)' },
                   pdfUrl:              { type: 'string', format: 'uri' },
                   qrCode:              { type: 'string' },
                 },
@@ -896,22 +1162,23 @@ export const swaggerSpec = {
         },
         responses: {
           201: {
-            description: 'Visit created with resolved compoundRef and residentUnitRef',
+            description: 'Visit created — includes resolved compoundRef, residentUnitRef, pdfUrl, and qrCode',
             content: { 'application/json': { schema: { $ref: '#/components/schemas/Visit' } } },
           },
           400: ValidationError,
-          401: { description: 'Unauthorized' },
           404: { description: 'Unit or Compound slug not found' },
         },
       },
       get: {
         tags: ['Visitors'],
         summary: `List visits with pagination and optional unit filter. ${authNote}`,
+        description: 'Scoped by role: CLIENT sees all visits for their Client; GUARD/MANAGER see visits for their assigned compounds.',
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'page',  schema: { type: 'integer', default: 1 } },
           { in: 'query', name: 'limit', schema: { type: 'integer', default: 10, maximum: 100 } },
-          { in: 'query', name: 'unit',  schema: { type: 'string' }, description: 'Partial match on residentUnit' },
+          { in: 'query', name: 'unit',  schema: { type: 'string' }, description: 'Partial match on residentUnit slug' },
+          { in: 'query', name: 'sort',  schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' } },
         ],
         responses: {
           200: {
@@ -929,6 +1196,7 @@ export const swaggerSpec = {
             },
           },
           401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, GUARD, or MANAGER role required' },
         },
       },
     },
@@ -936,10 +1204,31 @@ export const swaggerSpec = {
       get: {
         tags: ['Visitors'],
         summary: `Visitor stats — total, per compound/unit, last 7 days, today. ${authNote}`,
+        description: 'Scoped by role: CLIENT sees stats for their Client; GUARD/MANAGER see stats for their assigned compounds.',
         security: bearerAuth,
         responses: {
           200: { description: 'Statistics object' },
           401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, GUARD, or MANAGER role required' },
+        },
+      },
+    },
+    '/api/v1/visitors/{id}': {
+      get: {
+        tags: ['Visitors'],
+        summary: `Get a single visit by ID. ${authNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: {
+            description: 'Visit record',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Visit' } } },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, GUARD, or MANAGER role required' },
+          404: { description: 'Visit not found' },
         },
       },
     },
@@ -1023,7 +1312,7 @@ export const swaggerSpec = {
         summary: `Get subscription request by ID. ${adminNote}`,
         security: bearerAuth,
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: {
@@ -1094,7 +1383,7 @@ export const swaggerSpec = {
         tags: ['PDF'],
         summary: 'Download a generated visit PDF',
         parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string' } },
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
           200: { description: 'PDF stream', content: { 'application/pdf': {} } },
@@ -1107,11 +1396,12 @@ export const swaggerSpec = {
     '/api/v1/analytics/requests/by-agent': {
       get: {
         tags: ['Analytics'],
-        summary: `SRS statistics grouped by category, compound, and unit (all-time / 7 days / today). ${ownerNote}`,
+        summary: `SRS statistics grouped by category, compound, and unit (all-time / 7 days / today). ${clientNote}`,
+        description: 'Scoped by role: CLIENT sees their Client\'s data; OPERATION/MANAGER see data for their assigned compounds.',
         security: bearerAuth,
         responses: {
           200: {
-            description: 'Breakdown by category, compound, and unit — scoped to the OWNER\'s data',
+            description: 'Breakdown by category, compound, and unit',
             content: {
               'application/json': {
                 schema: {
@@ -1126,26 +1416,26 @@ export const swaggerSpec = {
             },
           },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
         },
       },
     },
     '/api/v1/analytics/requests/status': {
       get: {
         tags: ['Analytics'],
-        summary: `SRS request counts grouped by status — scoped to the OWNER's data. ${ownerNote}`,
+        summary: `SRS request counts grouped by status — scoped to the caller's data. ${clientNote}`,
         security: bearerAuth,
         responses: {
           200: { description: 'Status breakdown' },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
         },
       },
     },
     '/api/v1/analytics/requests/list': {
       get: {
         tags: ['Analytics'],
-        summary: `Paginated SRS list with filters — scoped to the OWNER's data. ${ownerNote}`,
+        summary: `Paginated SRS list with filters — scoped to the caller's data. ${clientNote}`,
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'page',     schema: { type: 'integer', default: 1 } },
@@ -1157,7 +1447,7 @@ export const swaggerSpec = {
           200: { description: 'Paginated SRS list with category options' },
           400: { description: 'Invalid query parameters' },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – OWNER only' },
+          403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
         },
       },
     },

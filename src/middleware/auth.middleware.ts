@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 export interface AuthRequest extends Request {
-  user?: { id: string; role: string; ownerId: string | null };
+  user?: { id: string; role: string; clientId: string | null };
 }
 
 export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
@@ -17,7 +17,7 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
       role: string;
-      ownerId: string | null;
+      clientId: string | null;
     };
     req.user = payload;
     next();
@@ -38,8 +38,8 @@ export function requireAdmin(req: AuthRequest, res: Response, next: NextFunction
 
 export function requireOwner(req: AuthRequest, res: Response, next: NextFunction) {
   authMiddleware(req, res, () => {
-    if (req.user?.role !== 'OWNER') {
-      res.status(403).json({ message: 'Forbidden: OWNER role required' });
+    if (req.user?.role !== 'CLIENT') {
+      res.status(403).json({ message: 'Forbidden: CLIENT role required' });
       return;
     }
     next();
@@ -62,7 +62,7 @@ export function optionalAuth(req: AuthRequest, res: Response, next: NextFunction
     const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
       role: string;
-      ownerId: string | null;
+      clientId: string | null;
     };
     req.user = payload;
   } catch {
@@ -74,7 +74,7 @@ export function optionalAuth(req: AuthRequest, res: Response, next: NextFunction
 
 /**
  * Role guard middleware factory.
- * Usage: router.get('/route', guard('OWNER', 'ADMIN'), handler)
+ * Usage: router.get('/route', guard('CLIENT', 'ADMIN'), handler)
  */
 export function guard(...roles: string[]) {
   return (req: AuthRequest, res: Response, next: NextFunction) => {

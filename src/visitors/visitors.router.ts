@@ -9,12 +9,11 @@ const createVisitSchema = z.object({
   residentUnit:        z.string().min(1),   // Unit.slug  → UNIT_*
   residentPhone:       z.string().min(1),
   visitorFullName:     z.string().min(1),
-  visitorCarType:      z.string().min(1),
-  visitorLicensePlate: z.string().min(1),
+  visitorCarType:      z.string().optional(),
+  visitorLicensePlate: z.string().optional(),
   visitDate:           z.coerce.date(),
   visitTime:           z.string().min(1),
-  compound:            z.string().min(1),              // Compound.slug → COMP_*
-  userToken:           z.string().min(1),              // User.generatedToken
+  compound:            z.string().min(1),   // Compound.slug → COMP_*
   pdfUrl:              z.url().optional(),
   qrCode:              z.string().optional(),
 });
@@ -23,14 +22,14 @@ const listQuerySchema = z.object({
   page:  z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
   unit:  z.string().min(1).optional(),
-  sort: z.enum(['asc', 'desc']).default('desc'),
+  sort:  z.enum(['asc', 'desc']).default('desc'),
 });
 
 
 export function createVisitorsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  // POST /api/v1/visitors  (public)
+  // POST /api/v1/visitors  (public — clientId derived from compound)
   router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const parsed = createVisitSchema.safeParse(req.body);
@@ -49,16 +48,20 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors/stats
-  router.get('/stats', guard('OWNER', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/stats', guard('CLIENT', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getVisitorStats(prisma, { id: req.user!.id, role: req.user!.role }));
+      res.json(await getVisitorStats(prisma, {
+        id: req.user!.id,
+        role: req.user!.role,
+        clientId: req.user!.clientId,
+      }));
     } catch (err) {
       next(err);
     }
   });
 
   // GET /api/v1/visitors/:id
-  router.get('/:id', guard('OWNER', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/:id', guard('CLIENT', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const visitId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       res.json(await getVisitById(prisma, visitId));
@@ -68,8 +71,8 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors?page=1&limit=10&unit=UNIT_*
-  // OWNER → their own visits (by userToken) | GUARD / MANAGER → visits for their assigned compounds
-  router.get('/', guard('OWNER', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  // CLIENT → their client's visits | GUARD/MANAGER → visits for their assigned compounds
+  router.get('/', guard('CLIENT', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const parsed = listQuerySchema.safeParse(req.query);
       if (!parsed.success) {
@@ -79,7 +82,11 @@ export function createVisitorsRouter(prisma: PrismaClient) {
         });
         return;
       }
-      res.json(await listVisits(prisma, parsed.data, { id: req.user!.id, role: req.user!.role }));
+      res.json(await listVisits(prisma, parsed.data, {
+        id: req.user!.id,
+        role: req.user!.role,
+        clientId: req.user!.clientId,
+      }));
     } catch (err) {
       next(err);
     }

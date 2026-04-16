@@ -18,21 +18,18 @@ function startOfToday(): Date {
 }
 
 // ── Scoped SRS where clause ───────────────────────────────────────────────────
-// OWNER     → all SRS whose userToken matches their generatedToken
-// OPERATION → SRS scoped to their assigned compound slugs (via AssignedCompound)
+// CLIENT    → all SRS whose clientId matches their Client entity
+// OPERATION/MANAGER → SRS scoped to their assigned compound slugs
 // all other roles → blocked at router level (403)
 export async function resolveSrsWhere(
   prisma: PrismaClient,
   callerId: string,
   callerRole: string,
+  clientId?: string | null,
 ): Promise<Record<string, any>> {
 
-  if (callerRole === 'OWNER') {
-    const user = await prisma.user.findUnique({
-      where: { id: callerId },
-      select: { generatedToken: true },
-    });
-    return { userToken: user?.generatedToken };
+  if (callerRole === 'CLIENT' && clientId) {
+    return { clientId };
   }
 
   if (callerRole === 'OPERATION' || callerRole === 'MANAGER') {

@@ -8,12 +8,11 @@ export interface CreateVisitDto {
   residentUnit: string;
   residentPhone: string;
   visitorFullName: string;
-  visitorCarType: string;
-  visitorLicensePlate: string;
+  visitorCarType?: string;
+  visitorLicensePlate?: string;
   visitDate: Date;
   visitTime: string;
   compound: string;
-  userToken: string;
   pdfUrl?: string;
   qrCode?: string;
 }
@@ -21,22 +20,19 @@ export interface CreateVisitDto {
 export interface CallerContext {
   id: string;
   role: string;
+  clientId?: string | null;
 }
 
 // ── Scoped where clause ───────────────────────────────────────────────────────
-// OWNER  → visits whose userToken matches their generatedToken
-// GUARD  → visits whose compound is in their assigned compounds
+// CLIENT → visits whose clientId matches their Client entity
+// GUARD/MANAGER → visits whose compound is in their assigned compounds
 // ADMIN/OPERATION → no filter (sees all)
 export async function resolveVisitWhere(
   prisma: PrismaClient,
   caller: CallerContext,
 ): Promise<Record<string, any>> {
-  if (caller.role === 'OWNER') {
-    const user = await prisma.user.findUnique({
-      where: { id: caller.id },
-      select: { generatedToken: true },
-    });
-    return { userToken: user?.generatedToken };
+  if (caller.role === 'CLIENT' && caller.clientId) {
+    return { clientId: caller.clientId };
   }
 
   if (caller.role === 'GUARD' || caller.role === 'MANAGER') {
@@ -54,8 +50,6 @@ export async function resolveVisitWhere(
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function buildVisitCode(compoundName: string, sequence: number): string {
   const prefix = compoundName.replace(/\s+/g, '').slice(0, 3).toUpperCase();
-  // padStart sets a minimum of 6 digits; if sequence exceeds 999999 it naturally
-  // grows to 7, 8, ... digits without any truncation.
   const seq = String(sequence).padStart(6, '0');
   return `${prefix}_${seq}`;
 }
@@ -65,30 +59,50 @@ export async function createVisit(
   prisma: PrismaClient,
   dto: CreateVisitDto,
 ) {
-  const unit = await (prisma.unit as any).findUnique({ where: { slug: dto.residentUnit } });
-  if (!unit) {
-    const err: any = new Error('unit-not-found');
-    err.status = 404;
-    throw err;
-  }
-
-  const compound = await (prisma.compound as any).findUnique({ where: { slug: dto.compound } });
+  const compound = await prisma.compound.findUnique({ where: { slug: dto.compound } });
   if (!compound) {
     const err: any = new Error('compound-not-found');
     err.status = 404;
     throw err;
   }
 
+  console.log("compount response",compound)
+
+  const unit = await prisma.unit.findUnique({ where: { slug: dto.residentUnit } });
+  if (!unit) {
+    const err: any = new Error('unit-not-found');
+    err.status = 404;
+    throw err;
+  }
+
+  console.log("unit response",unit)
+
+  if (unit.compoundId !== compound.id) {
+    const err: any = new Error('unit-not-in-compound');
+    err.status = 400;
+    throw err;
+  }
+
+  // Derive clientId from the compound — data belongs to the Client, not a User
+  const clientId: string = compound.clientId;
+
   const now = new Date();
 
   const visit = await prisma.$transaction(async (tx) => {
     const count = await tx.visit.count({ where: { compound: dto.compound } });
-    const visitCode = buildVisitCode(compound.name, count + 1);
+    let seq = count + 1;
+    let visitCode: string;
+    while (true) {
+      visitCode = buildVisitCode(compound.name, seq);
+      const taken = await tx.visit.findUnique({ where: { visitCode } });
+      if (!taken) break;
+      seq++;
+    }
 
-    return tx.visit.create({
+    return (tx.visit as any).create({
       data: {
         id: uuidv4(),
-        visitCode,
+        visitCode: visitCode!,
         residentFullName: dto.residentFullName,
         residentUnit: dto.residentUnit,
         residentPhone: dto.residentPhone,
@@ -98,9 +112,9 @@ export async function createVisit(
         visitDate: dto.visitDate,
         visitTime: dto.visitTime,
         compound: dto.compound,
+        clientId,
         pdfUrl: dto.pdfUrl,
         qrCode: dto.qrCode,
-        userToken: dto.userToken,
         isExpired: false,
         createdAt: now,
         updatedAt: now,
@@ -113,14 +127,14 @@ export async function createVisit(
   const pdfUrl = `${process.env.BASE_URL}/pdf/${visit.id}`;
   const qrCode = `${PUBLIC_URL}/scan/qr-code/${visit.id}`;
 
-  const updated = await prisma.visit.update({
+  const updated = await (prisma.visit as any).update({
     where: { id: visit.id },
     data: { pdfUrl, qrCode, updatedAt: new Date() },
   });
 
   const [compoundRef, residentUnitRef] = await Promise.all([
-    (prisma.compound as any).findUnique({ where: { slug: dto.compound }, select: { id: true, name: true, slug: true } }),
-    (prisma.unit as any).findUnique({ where: { slug: dto.residentUnit }, select: { id: true, name: true, slug: true } }),
+    prisma.compound.findUnique({ where: { slug: dto.compound }, select: { id: true, name: true, slug: true } }),
+    prisma.unit.findUnique({ where: { slug: dto.residentUnit }, select: { id: true, name: true, slug: true } }),
   ]);
 
   return { ...updated, compoundRef, residentUnitRef };
@@ -198,8 +212,8 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
 
   const scopedWhere = await resolveVisitWhere(prisma, caller);
 
-  const allTime   = { ...scopedWhere };
-  const last7     = { ...scopedWhere, visitDate: { gte: weekStart } };
+  const allTime    = { ...scopedWhere };
+  const last7      = { ...scopedWhere, visitDate: { gte: weekStart } };
   const todayWhere = { ...scopedWhere, visitDate: { gte: todayStart, lt: todayEnd } };
 
   const [

@@ -1,10 +1,45 @@
 generator client {
   provider = "prisma-client"
   output   = "./generated"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+  GUARD
+  OPERATION
+  MANAGER
 }
 
 datasource db {
   provider = "postgresql"
+  extensions = [vector]
+}
+
+// ── Client ────────────────────────────────────────────────────────────────────
+// Top-level business owner. One CLIENT user is the admin; all business data
+// (compounds, visits, srs) belongs here — not to User directly.
+
+model Client {
+  id         String   @id
+  clientName String
+  address    String? 
+  crNb       String?
+  contact    String?
+  domainName String?
+  website    String?
+  createdAt  DateTime @default(now())
+
+  // 1-1: the CLIENT-role user who administers this client
+  adminId    String?  @unique
+  admin      User?    @relation("ClientAdmin", fields: [adminId], references: [id])
+
+  members    User[]   @relation("ClientMembers")
+
+  compounds  Compound[]
+  srsRecords srs[]    @relation("ClientSrs")
+  visits     Visit[]  @relation("ClientVisit")
 }
 
 model User {
@@ -19,26 +54,21 @@ model User {
   email             String    @unique
   password          String
   generatedToken    String    @unique
-  role              String  @default("OWNER")
+  role              UserRole  @default(CLIENT)
   createdAt         DateTime  @default(now())
   confirmed         Boolean   @default(false)
   acceptedAuthorize Boolean   @default(false)
   acceptedTerms     Boolean   @default(false)
 
-  // Self-referential: OWNER → members (GUARD, etc.)
-  ownerId           String?
-  owner             User?           @relation("OrgMembers", fields: [ownerId], references: [id], onDelete: SetNull)
-  members           User[]          @relation("OrgMembers")
+  // If role=CLIENT: back-relation to the Client this user clent admin (1-1)
+  clientAsAdmin     Client?   @relation("ClientAdmin")
 
-  // OWNER → Compounds they own
-  compounds         Compound[]      @relation("OwnerCompounds")
+  // If role=GUARD/OPERATION/MANAGER: the Client they belong to
+  clientId          String?
+  client            Client?   @relation("ClientMembers", fields: [clientId], references: [id], onDelete: SetNull)
 
-  // OPERATION/GUARD → Compounds they are assigned to
+  // GUARD/OPERATION/MANAGER → Compounds they are assigned to
   assignedCompounds AssignedCompound[]
-
-  // SRS and Visit records linked via generatedToken
-  srsRecords        srs[]   @relation("UserSrs")
-  visits            Visit[] @relation("UserVisit")
 }
 
 // ── Compound & Unit ───────────────────────────────────────────────────────────
@@ -49,13 +79,13 @@ model Compound {
   slug      String   @unique // COMP_{normalized_name}
   createdAt DateTime @default(now())
 
-  ownerId String
-  owner   User   @relation("OwnerCompounds", fields: [ownerId], references: [id], onDelete: Cascade)
+  clientId  String
+  client    Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
-  units      Unit[]
+  units           Unit[]
   assignedMembers AssignedCompound[]
-  srsRecords srs[]   @relation("CompoundSrs")
-  visits     Visit[] @relation("CompoundVisit")
+  srsRecords      srs[]   @relation("CompoundSrs")
+  visits          Visit[] @relation("CompoundVisit")
 }
 
 model Unit {
@@ -120,8 +150,8 @@ model Visit {
   residentUnit        String
   residentPhone       String
   visitorFullName     String
-  visitorCarType      String
-  visitorLicensePlate String
+  visitorCarType      String?
+  visitorLicensePlate String?
   visitDate           DateTime
   visitTime           String
   pdfUrl              String?
@@ -133,8 +163,8 @@ model Visit {
   compound            String?
   compoundRef         Compound? @relation("CompoundVisit", fields: [compound], references: [slug])
   residentUnitRef     Unit?     @relation("UnitVisit", fields: [residentUnit], references: [slug])
-  userToken           String?
-  userRef             User?     @relation("UserVisit", fields: [userToken], references: [generatedToken])
+  clientId            String?
+  clientRef           Client?   @relation("ClientVisit", fields: [clientId], references: [id], onDelete: SetNull)
 }
 
 model customers {
@@ -317,8 +347,8 @@ model srs {
   compoundRef      Compound? @relation("CompoundSrs", fields: [compound], references: [slug])
   unit             String?   @db.VarChar(50)
   unitRef          Unit?     @relation("UnitSrs", fields: [unit], references: [slug])
-  userToken        String?   @db.VarChar(12)
-  userRef          User?     @relation("UserSrs", fields: [userToken], references: [generatedToken])
+  clientId         String?
+  clientRef        Client?   @relation("ClientSrs", fields: [clientId], references: [id], onDelete: SetNull)
   propertycode     String?   @db.VarChar(50)
   priority         String?   @db.VarChar(20)
   leasename        String?   @db.VarChar(100)

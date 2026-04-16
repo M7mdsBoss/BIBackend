@@ -18,14 +18,14 @@ export function createUserRouter(prisma: PrismaClient) {
 
       const where = query
         ? {
-          role: 'OWNER',
+          role: 'CLIENT',
           OR: [
             { name: { contains: query, mode: 'insensitive' as const } },
             { email: { contains: query, mode: 'insensitive' as const } },
             { generatedToken: { contains: query, mode: 'insensitive' as const } },
           ],
         }
-        : { role: 'OWNER' };
+        : { role: 'CLIENT' };
 
       const rawUsers = await prisma.user.findMany({ where, take: 5 });
       const users = rawUsers.map(({ password, ...rest }) => rest);
@@ -53,12 +53,12 @@ export function createUserRouter(prisma: PrismaClient) {
 
       const [rawUsers, total] = await Promise.all([
         prisma.user.findMany({
-          where: { role: 'OWNER' as any, confirmed: true },
+          where: { role: 'CLIENT' as any, confirmed: true },
           skip,
           take: limit,
           orderBy: { createdAt: 'desc' },
         }),
-        prisma.user.count({ where: { role: 'OWNER' as any, confirmed: true } }),
+        prisma.user.count({ where: { role: 'CLIENT' as any, confirmed: true } }),
       ]);
 
       const data = rawUsers.map(({ password, ...rest }) => rest);
@@ -72,7 +72,7 @@ export function createUserRouter(prisma: PrismaClient) {
   router.get('/:id', requireAdmin, async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const user = await prisma.user.findFirst({
-        where: { id: req.params.id as string, role: 'OWNER' as any },
+        where: { id: req.params.id as string, role: 'CLIENT' as any },
       });
       if (!user) {
         res.status(404).json({ message: 'User not found' });
