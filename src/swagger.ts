@@ -83,6 +83,7 @@ export const swaggerSpec = {
           contact:    { type: 'string', example: '+966501234567', nullable: true },
           domainName: { type: 'string', example: 'blueinnovation.sa', nullable: true },
           website:    { type: 'string', example: 'https://blueinnovation.sa', nullable: true },
+          note:       { type: 'string', example: 'VIP client', nullable: true },
           adminId:    { type: 'string', format: 'uuid', nullable: true, description: 'ID of the CLIENT-role user who administers this client' },
           createdAt:  { type: 'string', format: 'date-time' },
         },
@@ -471,7 +472,7 @@ export const swaggerSpec = {
         },
         responses: {
           200: {
-            description: 'JWT token and user summary',
+            description: 'JWT token, user summary, and compound names the user has access to',
             content: {
               'application/json': {
                 schema: {
@@ -489,6 +490,12 @@ export const swaggerSpec = {
                         email:    { type: 'string', format: 'email' },
                         role:     { type: 'string', enum: ['CLIENT', 'GUARD', 'ADMIN', 'OPERATION', 'MANAGER'] },
                       },
+                    },
+                    myCompound: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      description: 'Compound names the user has access to. CLIENT: all compounds of their Client. GUARD/OPERATION/MANAGER: only assigned compounds. ADMIN: empty array.',
+                      example: ['Green Valley', 'Palm Residence'],
                     },
                   },
                 },
@@ -558,6 +565,7 @@ export const swaggerSpec = {
                   contact:    { type: 'string', example: '+966501234567' },
                   domainName: { type: 'string', example: 'blueinnovation.sa' },
                   website:    { type: 'string', example: 'https://blueinnovation.sa' },
+                  note:       { type: 'string', example: 'VIP client' },
                 },
               },
             },
@@ -577,37 +585,30 @@ export const swaggerSpec = {
       },
       get: {
         tags: ['Client'],
-        summary: `List all clients with admin info and counts. ${adminNote}`,
+        summary: `List clients with admin info and member counts, paginated. ${adminNote}`,
         security: bearerAuth,
+        parameters: [
+          { in: 'query', name: 'page',  schema: { type: 'integer', default: 1, minimum: 1 } },
+          { in: 'query', name: 'limit', schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
+        ],
         responses: {
           200: {
-            description: 'Array of clients',
+            description: 'Paginated clients',
             content: {
               'application/json': {
-                schema: { type: 'array', items: { $ref: '#/components/schemas/ClientDetail' } },
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data:       { type: 'array', items: { $ref: '#/components/schemas/ClientListItem' } },
+                    pagination: { $ref: '#/components/schemas/Pagination' },
+                  },
+                },
               },
             },
           },
+          400: ValidationError,
           401: { description: 'Unauthorized' },
           403: { description: 'Forbidden – ADMIN only' },
-        },
-      },
-    },
-    '/api/v1/client/me': {
-      get: {
-        tags: ['Client'],
-        summary: `Get the authenticated user's own Client. ${clientNote}`,
-        security: bearerAuth,
-        responses: {
-          200: {
-            description: 'Client detail with admin and members',
-            content: {
-              'application/json': { schema: { $ref: '#/components/schemas/ClientDetail' } },
-            },
-          },
-          401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – CLIENT role required' },
-          404: { description: 'No client found for this user — onboarding not yet complete' },
         },
       },
     },
@@ -626,48 +627,6 @@ export const swaggerSpec = {
               'application/json': { schema: { $ref: '#/components/schemas/ClientDetail' } },
             },
           },
-          401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – ADMIN only' },
-          404: { description: 'Client not found' },
-        },
-      },
-      patch: {
-        tags: ['Client'],
-        summary: `Update client name. ${adminNote}`,
-        security: bearerAuth,
-        parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                type: 'object',
-                properties: {
-                  clientName: { type: 'string', example: 'Blue Innovation LLC' },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          200: { description: 'Updated client' },
-          400: ValidationError,
-          401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – ADMIN only' },
-          404: { description: 'Client not found' },
-        },
-      },
-      delete: {
-        tags: ['Client'],
-        summary: `Delete a client and cascade all associated data. ${adminNote}`,
-        security: bearerAuth,
-        parameters: [
-          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
-        ],
-        responses: {
-          200: { description: 'Client deleted' },
           401: { description: 'Unauthorized' },
           403: { description: 'Forbidden – ADMIN only' },
           404: { description: 'Client not found' },
@@ -712,21 +671,6 @@ export const swaggerSpec = {
         ],
         responses: {
           200: { description: 'Paginated user list (password excluded)' },
-          401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – ADMIN only' },
-        },
-      },
-    },
-    '/api/v1/user/search': {
-      get: {
-        tags: ['User'],
-        summary: `Search CLIENT users by name, email, or token. ${adminNote}`,
-        security: bearerAuth,
-        parameters: [
-          { in: 'query', name: 'q', schema: { type: 'string' }, description: 'Search query (max 5 results)' },
-        ],
-        responses: {
-          200: { description: 'Matching users (password excluded)' },
           401: { description: 'Unauthorized' },
           403: { description: 'Forbidden – ADMIN only' },
         },
@@ -1153,8 +1097,6 @@ export const swaggerSpec = {
                   visitDate:           { type: 'string', format: 'date-time' },
                   visitTime:           { type: 'string', example: '14:30' },
                   compound:            { type: 'string', example: 'COMP_green_valley', description: 'Must match an existing Compound slug' },
-                  pdfUrl:              { type: 'string', format: 'uri' },
-                  qrCode:              { type: 'string' },
                 },
               },
             },
@@ -1165,7 +1107,29 @@ export const swaggerSpec = {
             description: 'Visit created — includes resolved compoundRef, residentUnitRef, pdfUrl, and qrCode',
             content: { 'application/json': { schema: { $ref: '#/components/schemas/Visit' } } },
           },
-          400: ValidationError,
+          400: {
+            description: 'Validation failed',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    message: { type: 'string', example: 'Validation failed' },
+                    errors: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          field:   { type: 'string', example: 'residentFullName' },
+                          message: { type: 'string', example: 'Required' },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           404: { description: 'Unit or Compound slug not found' },
         },
       },
@@ -1327,42 +1291,6 @@ export const swaggerSpec = {
     },
 
     // ── QR Code ───────────────────────────────────────────────────────────────
-    '/api/v1/qr-code': {
-      post: {
-        tags: ['QR Code'],
-        summary: 'Create a visit and generate a QR-code PDF',
-        requestBody: {
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                type: 'object',
-                required: [
-                  'residentFullName', 'residentUnit', 'residentPhone',
-                  'visitorFullName', 'visitorCarType', 'visitorLicensePlate',
-                  'visitDate', 'visitTime',
-                ],
-                properties: {
-                  residentFullName:    { type: 'string' },
-                  residentUnit:        { type: 'string', example: 'UNIT_tower_a_101' },
-                  residentPhone:       { type: 'string' },
-                  visitorFullName:     { type: 'string' },
-                  visitorCarType:      { type: 'string' },
-                  visitorLicensePlate: { type: 'string' },
-                  visitDate:           { type: 'string', format: 'date' },
-                  visitTime:           { type: 'string', example: '14:30' },
-                  compound:            { type: 'string', example: 'COMP_green_valley' },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          201: { description: 'Visit created with pdfUrl and qrCode' },
-          400: ValidationError,
-        },
-      },
-    },
     '/api/v1/qr-code/{id}': {
       get: {
         tags: ['QR Code'],

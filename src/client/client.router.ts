@@ -9,9 +9,6 @@ import {
   createClient,
   getClients,
   getClientById,
-  getClientByAdminId,
-  updateClient,
-  deleteClient,
 } from "./client.service";
 
 // ── Validation schemas ────────────────────────────────────────────────────────
@@ -23,10 +20,7 @@ const adminCreateSchema = z.object({
   contact: z.string().optional(),
   domainName: z.string().optional(),
   website: z.string().optional(),
-});
-
-const updateSchema = z.object({
-  clientName: z.string().min(1).optional(),
+  note: z.string().optional(),
 });
 
 const listQuerySchema = z.object({
@@ -87,51 +81,6 @@ export function createClientRouter(prisma: PrismaClient) {
     async (req: AuthRequest, res: Response, next: NextFunction) => {
       try {
         res.json(await getClientById(prisma, req.params.id as string));
-      } catch (err) {
-        next(err);
-      }
-    },
-  );
-
-  /**
-   * PATCH /api/v1/client/:id
-   * ADMIN only.
-   */
-  router.patch(
-    "/:id",
-    requireAdmin,
-    async (req: AuthRequest, res: Response, next: NextFunction) => {
-      try {
-        const parsed = updateSchema.safeParse(req.body);
-        if (!parsed.success) {
-          res.status(400).json({
-            message: "Validation failed",
-            errors: parsed.error.issues.map((e) => ({
-              field: e.path.join("."),
-              message: e.message,
-            })),
-          });
-          return;
-        }
-        res.json(
-          await updateClient(prisma, req.params.id as string, parsed.data),
-        );
-      } catch (err) {
-        next(err);
-      }
-    },
-  );
-
-  /**
-   * DELETE /api/v1/client/:id
-   * ADMIN only.
-   */
-  router.delete(
-    "/:id",
-    requireAdmin,
-    async (req: AuthRequest, res: Response, next: NextFunction) => {
-      try {
-        res.json(await deleteClient(prisma, req.params.id as string));
       } catch (err) {
         next(err);
       }

@@ -182,7 +182,7 @@ export async function login(
   const user = await prisma.user.findUnique({ where: { email: dto.email } });
 
   if (!user || !user.password) {
-    const err: any = new Error("Invalid-credentials");
+    const err: any = new Error("invalid-credentials");
     err.status = 401;
     throw err;
   }
@@ -192,16 +192,16 @@ export async function login(
     throw err;
   }
 
-  if (!user.clientId && user.role != "ADMIN") {
-    const err: any = new Error("not-onboard");
-    err.status = 404;
+  const isValid = await bcrypt.compare(dto.password, user.password)
+  if (!isValid) {
+    const err: any = new Error("invalid-credentials");
+    err.status = 401;
     throw err;
   }
 
-  const isValid = await bcrypt.compare(dto.password, user.password)
-  if (!isValid) {
-    const err: any = new Error("Invalid-credentials");
-    err.status = 401;
+  if (!user.clientId && user.role != "ADMIN") {
+    const err: any = new Error("not-onboard");
+    err.status = 404;
     throw err;
   }
 
@@ -217,6 +217,28 @@ export async function login(
     clientId = (user as any).clientId ?? null;
   }
 
+  // Compound names scoped by role:
+  // - CLIENT: all compounds owned by the Client
+  // - GUARD/OPERATION/MANAGER: compounds the user is assigned to
+  let myCompound: string[] = [];
+  if (user.role === "CLIENT" && clientId) {
+    const compounds = await prisma.compound.findMany({
+      where: { clientId },
+      select: { name: true },
+    });
+    myCompound = compounds.map((c) => c.name);
+  } else if (
+    user.role === "GUARD" ||
+    user.role === "OPERATION" ||
+    user.role === "MANAGER"
+  ) {
+    const assignments = await prisma.assignedCompound.findMany({
+      where: { guardId: user.id },
+      select: { compound: { select: { name: true } } },
+    });
+    myCompound = assignments.map((a) => a.compound.name);
+  }
+
   const token = jwt.sign(
     { id: user.id, role: user.role, clientId },
     JWT_SECRET,
@@ -225,6 +247,7 @@ export async function login(
   return {
     token,
     user: { id: user.id, name: user.name, email: user.email, role: user.role },
+    myCompound,
   };
 }
 

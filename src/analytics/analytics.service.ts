@@ -62,18 +62,46 @@ async function groupSrsByField(
     where,
   });
 
+  // Group by slug internally; resolve to display name only at output time.
+  // - compound: show compound name
+  // - unit:     show "<compound name> - <unit name>"
+  let labelBySlug: Map<string, string> | null = null;
+  if (field === 'compound' || field === 'unit') {
+    const slugs = [...new Set(
+      rawResults.map((r) => r[field] as string | null).filter((s): s is string => !!s),
+    )];
+    if (slugs.length) {
+      if (field === 'compound') {
+        const rows = await prisma.compound.findMany({
+          where: { slug: { in: slugs } },
+          select: { slug: true, name: true },
+        });
+        labelBySlug = new Map(rows.map((r) => [r.slug, r.name]));
+      } else {
+        const rows = await prisma.unit.findMany({
+          where: { slug: { in: slugs } },
+          select: { slug: true, name: true, compound: { select: { name: true } } },
+        });
+        labelBySlug = new Map(rows.map((r) => [r.slug, `${r.compound.name} - ${r.name}`]));
+      }
+    }
+  }
+
   const map: Record<string, SrsRow> = {};
   for (const item of rawResults) {
-    const key = (item[field] as string | null) ?? 'Unassigned';
-    if (!map[key]) {
-      map[key] = { name: key, value: 0, Open: 0, Closed: 0, 'Work Completed': 0, Cancelled: 0 };
+    const rawKey = (item[field] as string | null) ?? '__unassigned__';
+    if (!map[rawKey]) {
+      const displayName = labelBySlug && item[field]
+        ? labelBySlug.get(item[field] as string) ?? (item[field] as string)
+        : (item[field] as string | null) ?? 'Unassigned';
+      map[rawKey] = { name: displayName, value: 0, Open: 0, Closed: 0, 'Work Completed': 0, Cancelled: 0 };
     }
     const count = (item._count as { _all: number })._all;
-    map[key].value += count;
-    if (item.status === 'Closed') map[key].Closed += count;
-    if (item.status === 'Open') map[key].Open += count;
-    if (item.status === 'Work Completed') map[key]['Work Completed'] += count;
-    if (item.status === 'Cancelled') map[key].Cancelled += count;
+    map[rawKey].value += count;
+    if (item.status === 'Closed') map[rawKey].Closed += count;
+    if (item.status === 'Open') map[rawKey].Open += count;
+    if (item.status === 'Work Completed') map[rawKey]['Work Completed'] += count;
+    if (item.status === 'Cancelled') map[rawKey].Cancelled += count;
   }
 
   return Object.values(map);
@@ -169,7 +197,16 @@ export async function listSrsRequests(
       where: categoryWhere,
     }),
     prisma.srs.findMany({
-      select: { breifdescription: true, category: true, status: true, datetime: true, unit: true, compound: true },
+      select: {
+        breifdescription: true,
+        category:         true,
+        status:           true,
+        datetime:         true,
+        unit:             true,
+        compound:         true,
+        compoundRef: { select: { name: true, slug: true } },
+        unitRef:     { select: { name: true, slug: true } },
+      },
       where,
       skip,
       take: limit,

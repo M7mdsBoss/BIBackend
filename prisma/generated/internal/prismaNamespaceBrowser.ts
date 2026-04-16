@@ -97,6 +97,7 @@ export const ClientScalarFieldEnum = {
   contact: 'contact',
   domainName: 'domainName',
   website: 'website',
+  note: 'note',
   createdAt: 'createdAt',
   adminId: 'adminId'
 } as const

@@ -8,13 +8,13 @@ export interface CreateClientDto {
   contact?: string;
   domainName?: string;
   website?: string;
+  note?: string;
 }
 
 export interface UpdateClientDto {
   clientName?: string;
 }
 
-// ── Create ────────────────────────────────────────────────────────────────────
 
 export async function createClient(prisma: PrismaClient, dto: CreateClientDto) {
   const client = await prisma.client.create({
@@ -26,13 +26,12 @@ export async function createClient(prisma: PrismaClient, dto: CreateClientDto) {
       contact: dto.contact,
       domainName: dto.domainName,
       website: dto.website,
+      note: dto.note,
     },
   });
 
   return { client };
 }
-
-// ── Read ──────────────────────────────────────────────────────────────────────
 
 export async function getClients(
   prisma: PrismaClient,
@@ -81,54 +80,4 @@ export async function getClientById(prisma: PrismaClient, id: string) {
   }
 
   return client;
-}
-
-export async function getClientByAdminId(prisma: PrismaClient, adminId: string) {
-  const client = await prisma.client.findUnique({
-    where: { adminId },
-    include: {
-      admin: { select: { id: true, name: true, email: true } },
-      members: { select: { id: true, name: true, email: true, role: true } },
-      _count: { select: { compounds: true } },
-    },
-  });
-
-  if (!client) {
-    const err: any = new Error('client-not-found');
-    err.status = 404;
-    throw err;
-  }
-
-  return client;
-}
-
-// ── Update ────────────────────────────────────────────────────────────────────
-
-export async function updateClient(prisma: PrismaClient, id: string, dto: UpdateClientDto) {
-  const existing = await prisma.client.findUnique({ where: { id } });
-  if (!existing) {
-    const err: any = new Error('client-not-found');
-    err.status = 404;
-    throw err;
-  }
-
-  return prisma.client.update({
-    where: { id },
-    data: dto,
-    include: { admin: { select: { id: true, name: true, email: true } } },
-  });
-}
-
-// ── Delete ────────────────────────────────────────────────────────────────────
-
-export async function deleteClient(prisma: PrismaClient, id: string) {
-  const existing = await prisma.client.findUnique({ where: { id } });
-  if (!existing) {
-    const err: any = new Error('client-not-found');
-    err.status = 404;
-    throw err;
-  }
-
-  await (prisma as any).client.delete({ where: { id } });
-  return { message: 'client-deleted' };
 }

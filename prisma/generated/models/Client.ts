@@ -32,6 +32,7 @@ export type ClientMinAggregateOutputType = {
   contact: string | null
   domainName: string | null
   website: string | null
+  note: string | null
   createdAt: Date | null
   adminId: string | null
 }
@@ -44,6 +45,7 @@ export type ClientMaxAggregateOutputType = {
   contact: string | null
   domainName: string | null
   website: string | null
+  note: string | null
   createdAt: Date | null
   adminId: string | null
 }
@@ -56,6 +58,7 @@ export type ClientCountAggregateOutputType = {
   contact: number
   domainName: number
   website: number
+  note: number
   createdAt: number
   adminId: number
   _all: number
@@ -70,6 +73,7 @@ export type ClientMinAggregateInputType = {
   contact?: true
   domainName?: true
   website?: true
+  note?: true
   createdAt?: true
   adminId?: true
 }
@@ -82,6 +86,7 @@ export type ClientMaxAggregateInputType = {
   contact?: true
   domainName?: true
   website?: true
+  note?: true
   createdAt?: true
   adminId?: true
 }
@@ -94,6 +99,7 @@ export type ClientCountAggregateInputType = {
   contact?: true
   domainName?: true
   website?: true
+  note?: true
   createdAt?: true
   adminId?: true
   _all?: true
@@ -179,6 +185,7 @@ export type ClientGroupByOutputType = {
   contact: string | null
   domainName: string | null
   website: string | null
+  note: string | null
   createdAt: Date
   adminId: string | null
   _count: ClientCountAggregateOutputType | null
@@ -212,6 +219,7 @@ export type ClientWhereInput = {
   contact?: Prisma.StringNullableFilter<"Client"> | string | null
   domainName?: Prisma.StringNullableFilter<"Client"> | string | null
   website?: Prisma.StringNullableFilter<"Client"> | string | null
+  note?: Prisma.StringNullableFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   adminId?: Prisma.StringNullableFilter<"Client"> | string | null
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -229,6 +237,7 @@ export type ClientOrderByWithRelationInput = {
   contact?: Prisma.SortOrderInput | Prisma.SortOrder
   domainName?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrderInput | Prisma.SortOrder
   admin?: Prisma.UserOrderByWithRelationInput
@@ -250,6 +259,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   contact?: Prisma.StringNullableFilter<"Client"> | string | null
   domainName?: Prisma.StringNullableFilter<"Client"> | string | null
   website?: Prisma.StringNullableFilter<"Client"> | string | null
+  note?: Prisma.StringNullableFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   members?: Prisma.UserListRelationFilter
@@ -266,6 +276,7 @@ export type ClientOrderByWithAggregationInput = {
   contact?: Prisma.SortOrderInput | Prisma.SortOrder
   domainName?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ClientCountOrderByAggregateInput
@@ -284,6 +295,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   contact?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   domainName?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   website?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  note?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
   adminId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
 }
@@ -296,6 +308,7 @@ export type ClientCreateInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
@@ -312,6 +325,7 @@ export type ClientUncheckedCreateInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
@@ -328,6 +342,7 @@ export type ClientUpdateInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
@@ -344,6 +359,7 @@ export type ClientUncheckedUpdateInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
@@ -360,6 +376,7 @@ export type ClientCreateManyInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
 }
@@ -372,6 +389,7 @@ export type ClientUpdateManyMutationInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -383,6 +401,7 @@ export type ClientUncheckedUpdateManyInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -395,6 +414,7 @@ export type ClientCountOrderByAggregateInput = {
   contact?: Prisma.SortOrder
   domainName?: Prisma.SortOrder
   website?: Prisma.SortOrder
+  note?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
 }
@@ -407,6 +427,7 @@ export type ClientMaxOrderByAggregateInput = {
   contact?: Prisma.SortOrder
   domainName?: Prisma.SortOrder
   website?: Prisma.SortOrder
+  note?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
 }
@@ -419,6 +440,7 @@ export type ClientMinOrderByAggregateInput = {
   contact?: Prisma.SortOrder
   domainName?: Prisma.SortOrder
   website?: Prisma.SortOrder
+  note?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
 }
@@ -547,6 +569,7 @@ export type ClientCreateWithoutAdminInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   members?: Prisma.UserCreateNestedManyWithoutClientInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
@@ -562,6 +585,7 @@ export type ClientUncheckedCreateWithoutAdminInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
@@ -582,6 +606,7 @@ export type ClientCreateWithoutMembersInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
@@ -597,6 +622,7 @@ export type ClientUncheckedCreateWithoutMembersInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
@@ -628,6 +654,7 @@ export type ClientUpdateWithoutAdminInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
@@ -643,6 +670,7 @@ export type ClientUncheckedUpdateWithoutAdminInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
@@ -669,6 +697,7 @@ export type ClientUpdateWithoutMembersInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
@@ -684,6 +713,7 @@ export type ClientUncheckedUpdateWithoutMembersInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
@@ -699,6 +729,7 @@ export type ClientCreateWithoutCompoundsInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
@@ -714,6 +745,7 @@ export type ClientUncheckedCreateWithoutCompoundsInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
@@ -745,6 +777,7 @@ export type ClientUpdateWithoutCompoundsInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
@@ -760,6 +793,7 @@ export type ClientUncheckedUpdateWithoutCompoundsInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
@@ -775,6 +809,7 @@ export type ClientCreateWithoutVisitsInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
@@ -790,6 +825,7 @@ export type ClientUncheckedCreateWithoutVisitsInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
@@ -821,6 +857,7 @@ export type ClientUpdateWithoutVisitsInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
@@ -836,6 +873,7 @@ export type ClientUncheckedUpdateWithoutVisitsInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
@@ -851,6 +889,7 @@ export type ClientCreateWithoutSrsRecordsInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
@@ -866,6 +905,7 @@ export type ClientUncheckedCreateWithoutSrsRecordsInput = {
   contact?: string | null
   domainName?: string | null
   website?: string | null
+  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
@@ -897,6 +937,7 @@ export type ClientUpdateWithoutSrsRecordsInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
@@ -912,6 +953,7 @@ export type ClientUncheckedUpdateWithoutSrsRecordsInput = {
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
@@ -985,6 +1027,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   contact?: boolean
   domainName?: boolean
   website?: boolean
+  note?: boolean
   createdAt?: boolean
   adminId?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
@@ -1003,6 +1046,7 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   contact?: boolean
   domainName?: boolean
   website?: boolean
+  note?: boolean
   createdAt?: boolean
   adminId?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
@@ -1016,6 +1060,7 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   contact?: boolean
   domainName?: boolean
   website?: boolean
+  note?: boolean
   createdAt?: boolean
   adminId?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
@@ -1029,11 +1074,12 @@ export type ClientSelectScalar = {
   contact?: boolean
   domainName?: boolean
   website?: boolean
+  note?: boolean
   createdAt?: boolean
   adminId?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientName" | "address" | "crNb" | "contact" | "domainName" | "website" | "createdAt" | "adminId", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientName" | "address" | "crNb" | "contact" | "domainName" | "website" | "note" | "createdAt" | "adminId", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
   members?: boolean | Prisma.Client$membersArgs<ExtArgs>
@@ -1066,6 +1112,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     contact: string | null
     domainName: string | null
     website: string | null
+    note: string | null
     createdAt: Date
     adminId: string | null
   }, ExtArgs["result"]["client"]>
@@ -1503,6 +1550,7 @@ export interface ClientFieldRefs {
   readonly contact: Prisma.FieldRef<"Client", 'String'>
   readonly domainName: Prisma.FieldRef<"Client", 'String'>
   readonly website: Prisma.FieldRef<"Client", 'String'>
+  readonly note: Prisma.FieldRef<"Client", 'String'>
   readonly createdAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly adminId: Prisma.FieldRef<"Client", 'String'>
 }

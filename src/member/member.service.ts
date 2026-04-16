@@ -392,10 +392,6 @@ function buildClientMemberInvitationDetailsEmail(
             <p style="margin: 6px 0;"><strong>Role:</strong> ${role}</p>
           </div>
 
-          <p style="text-align: center; color: #888; font-size: 0.9em;">
-            This link is valid for 7 days.
-          </p>
-
           <hr style="margin: 30px 0;" />
 
           <div dir="rtl" style="text-align: right;">
@@ -410,10 +406,6 @@ function buildClientMemberInvitationDetailsEmail(
               <p style="margin: 6px 0;"><strong>كلمة المرور:</strong> ${password}</p>
               <p style="margin: 6px 0;"><strong>الدور:</strong> ${role}</p>
             </div>
-
-            <p style="text-align: center; color: #888; font-size: 0.9em;">
-              هذا الرابط صالح لمدة 7 أيام.
-            </p>
           </div>
 
           <hr style="margin: 30px 0;" />

@@ -162,7 +162,16 @@ export async function listVisits(
   if (unit) where.residentUnit = { contains: unit, mode: 'insensitive' as const };
 
   const [data, total] = await Promise.all([
-    prisma.visit.findMany({ where, skip, take: limit, orderBy: { createdAt: sort } }),
+    prisma.visit.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: { createdAt: sort },
+      include: {
+        compoundRef:     { select: { name: true, slug: true } },
+        residentUnitRef: { select: { name: true, slug: true } },
+      },
+    }),
     prisma.visit.count({ where }),
   ]);
 
@@ -173,7 +182,13 @@ export async function listVisits(
 }
 
 export async function getVisitById(prisma: PrismaClient, id: string) {
-  const visit = await prisma.visit.findUnique({ where: { id } });
+  const visit = await prisma.visit.findUnique({
+    where: { id },
+    include: {
+      compoundRef:     { select: { name: true, slug: true } },
+      residentUnitRef: { select: { name: true, slug: true } },
+    },
+  });
 
   if (!visit) {
     const err: any = new Error('Visit not found.');
@@ -238,19 +253,53 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
     prisma.visit.groupBy({ by: ['residentUnit'], _count: { _all: true }, where: todayWhere, orderBy: { _count: { residentUnit: 'desc' } } }),
   ]);
 
+  const compoundSlugs = new Set<string>();
+  const unitSlugs = new Set<string>();
+  for (const r of [...perCompound, ...last7DaysPerCompound, ...todayPerCompound]) {
+    if (r.compound) compoundSlugs.add(r.compound);
+  }
+  for (const r of [...perUnit, ...last7DaysPerUnit, ...todayPerUnit]) {
+    if (r.residentUnit) unitSlugs.add(r.residentUnit);
+  }
+
+  const [compoundRows, unitRows] = await Promise.all([
+    compoundSlugs.size
+      ? prisma.compound.findMany({
+          where: { slug: { in: [...compoundSlugs] } },
+          select: { slug: true, name: true },
+        })
+      : Promise.resolve([]),
+    unitSlugs.size
+      ? prisma.unit.findMany({
+          where: { slug: { in: [...unitSlugs] } },
+          select: { slug: true, name: true, compound: { select: { name: true } } },
+        })
+      : Promise.resolve([]),
+  ]);
+
+  const compoundNameBySlug = new Map(compoundRows.map((c) => [c.slug, c.name]));
+  const unitLabelBySlug = new Map(
+    unitRows.map((u) => [u.slug, `${u.compound.name} - ${u.name}`]),
+  );
+
+  const compoundLabel = (slug: string | null) =>
+    (slug && compoundNameBySlug.get(slug)) || slug || 'Unassigned';
+  const unitLabel = (slug: string | null) =>
+    (slug && unitLabelBySlug.get(slug)) || slug || 'Unassigned';
+
   return {
     total,
-    perCompound:  perCompound.map((r) => ({ compound: r.compound, count: r._count._all })),
-    perUnit:      perUnit.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
+    perCompound: perCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+    perUnit:     perUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     last7Days: {
       total: last7DaysTotal,
-      perCompound: last7DaysPerCompound.map((r) => ({ compound: r.compound, count: r._count._all })),
-      perUnit:     last7DaysPerUnit.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
+      perCompound: last7DaysPerCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+      perUnit:     last7DaysPerUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     },
     today: {
       total: todayTotal,
-      perCompound: todayPerCompound.map((r) => ({ compound: r.compound, count: r._count._all })),
-      perUnit:     todayPerUnit.map((r) => ({ unit: r.residentUnit, count: r._count._all })),
+      perCompound: todayPerCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+      perUnit:     todayPerUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     },
   };
 }

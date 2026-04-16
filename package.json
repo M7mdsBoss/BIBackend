@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "seed": "tsx prisma/seed.ts",
     "migrate:client": "tsx prisma/migrate-to-client.ts",

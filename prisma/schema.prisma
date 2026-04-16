@@ -29,6 +29,7 @@ model Client {
   contact    String?
   domainName String?
   website    String?
+  note       String?
   createdAt  DateTime @default(now())
 
   // 1-1: the CLIENT-role user who administers this client
