@@ -7,7 +7,6 @@ import { PUBLIC_URL } from "../helper/const/base";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-// Valid roles a CLIENT admin can assign to their members
 export const MEMBER_ROLES = ["GUARD", "OPERATION", "MANAGER"] as const;
 export type MemberRole = (typeof MEMBER_ROLES)[number];
 
@@ -120,10 +119,7 @@ export async function createMember(
     const emailResult = await sendEmail({
       to: dto.email,
       subject: "You've been invited – The Blue Innovation | تمت دعوتك",
-      htmlBody: buildMemberInvitationEmail(
-        dto.name,
-        confirmationLink,
-      ),
+      htmlBody: buildMemberInvitationEmail(dto.name, confirmationLink),
     });
 
     if (!emailResult.success) {
@@ -136,14 +132,18 @@ export async function createMember(
       throw err;
     }
   } else {
-     const emailResult = await sendEmail({
-      to: dto.email,
+    const clientRecord = await (prisma.client as any).findUnique({
+      where: { id: clientId },
+      select: { admin: { select: { email: true } } },
+    });
+    const emailResult = await sendEmail({
+      to: clientRecord?.admin?.email as string,
       subject: "You've been invited – The Blue Innovation | تمت دعوتك",
       htmlBody: buildClientMemberInvitationDetailsEmail(
         dto.name,
         dto.email,
         dto.password,
-        dto.role
+        dto.role,
       ),
     });
 
@@ -368,12 +368,11 @@ function buildMemberInvitationEmail(
   `;
 }
 
-
 function buildClientMemberInvitationDetailsEmail(
   name: string,
-  password: string,
   email: string,
-  role: string
+  password: string,
+  role: string,
 ): string {
   return `
     <html>
@@ -381,26 +380,47 @@ function buildClientMemberInvitationDetailsEmail(
         <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
           <img src="https://res.cloudinary.com/dcsjywfui/image/upload/v1771925146/bi_bctaie.png" alt="Company Logo" style="max-height: 60px; margin-bottom: 20px;" />
           <h2>Hi ${name || "there"},</h2>
-          <p>You have been invited to join <strong>The Blue Innovation</strong> platform. Your account has been created with the following credentials:</p>
+
+          <p>
+            You have created a member to join <strong>The Blue Innovation</strong> platform as <strong>${role}</strong>.
+            An account has been created for you with the following credentials:
+          </p>
+
           <div style="background-color: #f5f5f5; padding: 16px; border-radius: 6px; margin: 20px 0;">
             <p style="margin: 6px 0;"><strong>Email:</strong> ${email}</p>
             <p style="margin: 6px 0;"><strong>Password:</strong> ${password}</p>
             <p style="margin: 6px 0;"><strong>Role:</strong> ${role}</p>
           </div>
-          <p style="text-align: center; color: #888; font-size: 0.9em;">This link is valid for 7 days.</p>
+
+          <p style="text-align: center; color: #888; font-size: 0.9em;">
+            This link is valid for 7 days.
+          </p>
+
           <hr style="margin: 30px 0;" />
+
           <div dir="rtl" style="text-align: right;">
             <h2>مرحباً ${name || ""}،</h2>
-            <p>تمت دعوتك للانضمام إلى منصة <strong>The Blue Innovation</strong>. تم إنشاء حسابك بالبيانات التالية:</p>
+
+           <p>
+  لقد قمت بإنشاء عضو للانضمام إلى منصة <strong>The Blue Innovation</strong> كـ <strong>${role}</strong>.
+  تم إنشاء حساب له بالبيانات التالية:
+</p>
             <div style="background-color: #f5f5f5; padding: 16px; border-radius: 6px; margin: 20px 0;">
               <p style="margin: 6px 0;"><strong>البريد الإلكتروني:</strong> ${email}</p>
               <p style="margin: 6px 0;"><strong>كلمة المرور:</strong> ${password}</p>
               <p style="margin: 6px 0;"><strong>الدور:</strong> ${role}</p>
             </div>
-            <p style="text-align: center; color: #888; font-size: 0.9em;">هذا الرابط صالح لمدة 7 أيام.</p>
+
+            <p style="text-align: center; color: #888; font-size: 0.9em;">
+              هذا الرابط صالح لمدة 7 أيام.
+            </p>
           </div>
+
           <hr style="margin: 30px 0;" />
-          <p style="font-size: 0.9em;">The Blue Innovation Team<br/>www.theblueinnovation.com</p>
+
+          <p style="font-size: 0.9em;">
+            The Blue Innovation Team<br/>www.theblueinnovation.com
+          </p>
         </div>
       </body>
     </html>
