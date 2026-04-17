@@ -28,7 +28,8 @@ export async function resolveSrsWhere(
   clientId?: string | null,
 ): Promise<Record<string, any>> {
 
-  if (callerRole === 'CLIENT' && clientId) {
+  if (callerRole === 'CLIENT') {
+    if (!clientId) return { id: -1 }; // no client onboarded yet → match nothing
     return { clientId };
   }
 
@@ -38,6 +39,7 @@ export async function resolveSrsWhere(
       include: { compound: { select: { slug: true } } },
     });
     const slugs: string[] = assignments.map((a: any) => a.compound.slug);
+    if (slugs.length === 0) return { id: -1 }; // no assigned compounds → match nothing
     return { compound: { in: slugs } };
   }
 

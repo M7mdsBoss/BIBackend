@@ -31,7 +31,8 @@ export async function resolveVisitWhere(
   prisma: PrismaClient,
   caller: CallerContext,
 ): Promise<Record<string, any>> {
-  if (caller.role === 'CLIENT' && caller.clientId) {
+  if (caller.role === 'CLIENT') {
+    if (!caller.clientId) return { id: '__no_match__' }; // no client onboarded yet → match nothing
     return { clientId: caller.clientId };
   }
 
@@ -41,6 +42,7 @@ export async function resolveVisitWhere(
       include: { compound: { select: { slug: true } } },
     });
     const slugs: string[] = assignments.map((a: any) => a.compound.slug);
+    if (slugs.length === 0) return { id: '__no_match__' }; // no assigned compounds → match nothing
     return { compound: { in: slugs } };
   }
 
