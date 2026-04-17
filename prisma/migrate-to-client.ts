@@ -18,7 +18,7 @@ import 'dotenv/config';
 import pg from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 
-const ADMIN_EMAIL = 'owner@blueinnovation.dev';
+const ADMIN_EMAIL = 'med.wael.gharbi@gmail.com';
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL! });
 
