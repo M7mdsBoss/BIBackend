@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "start": "tsx src/index.ts"
+    "start": "tsx src/index.ts",
+    "migrate:role-security": "tsx prisma/migrations/rename-guard-to-security.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

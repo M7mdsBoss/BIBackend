@@ -139,3 +139,18 @@ export type n8n_vectors_v2 = Prisma.n8n_vectors_v2Model
  * 
  */
 export type srs = Prisma.srsModel
+/**
+ * Model resident_phones
+ * 
+ */
+export type resident_phones = Prisma.resident_phonesModel
+/**
+ * Model residents
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type residents = Prisma.residentsModel
+/**
+ * Model sync_log
+ * 
+ */
+export type sync_log = Prisma.sync_logModel

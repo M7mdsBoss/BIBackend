@@ -27,40 +27,40 @@ export type AggregateClient = {
 export type ClientMinAggregateOutputType = {
   id: string | null
   clientName: string | null
-  address: string | null
-  crNb: string | null
-  contact: string | null
-  domainName: string | null
-  website: string | null
-  note: string | null
   createdAt: Date | null
   adminId: string | null
+  address: string | null
+  contact: string | null
+  crNb: string | null
+  domainName: string | null
+  note: string | null
+  website: string | null
 }
 
 export type ClientMaxAggregateOutputType = {
   id: string | null
   clientName: string | null
-  address: string | null
-  crNb: string | null
-  contact: string | null
-  domainName: string | null
-  website: string | null
-  note: string | null
   createdAt: Date | null
   adminId: string | null
+  address: string | null
+  contact: string | null
+  crNb: string | null
+  domainName: string | null
+  note: string | null
+  website: string | null
 }
 
 export type ClientCountAggregateOutputType = {
   id: number
   clientName: number
-  address: number
-  crNb: number
-  contact: number
-  domainName: number
-  website: number
-  note: number
   createdAt: number
   adminId: number
+  address: number
+  contact: number
+  crNb: number
+  domainName: number
+  note: number
+  website: number
   _all: number
 }
 
@@ -68,40 +68,40 @@ export type ClientCountAggregateOutputType = {
 export type ClientMinAggregateInputType = {
   id?: true
   clientName?: true
-  address?: true
-  crNb?: true
-  contact?: true
-  domainName?: true
-  website?: true
-  note?: true
   createdAt?: true
   adminId?: true
+  address?: true
+  contact?: true
+  crNb?: true
+  domainName?: true
+  note?: true
+  website?: true
 }
 
 export type ClientMaxAggregateInputType = {
   id?: true
   clientName?: true
-  address?: true
-  crNb?: true
-  contact?: true
-  domainName?: true
-  website?: true
-  note?: true
   createdAt?: true
   adminId?: true
+  address?: true
+  contact?: true
+  crNb?: true
+  domainName?: true
+  note?: true
+  website?: true
 }
 
 export type ClientCountAggregateInputType = {
   id?: true
   clientName?: true
-  address?: true
-  crNb?: true
-  contact?: true
-  domainName?: true
-  website?: true
-  note?: true
   createdAt?: true
   adminId?: true
+  address?: true
+  contact?: true
+  crNb?: true
+  domainName?: true
+  note?: true
+  website?: true
   _all?: true
 }
 
@@ -180,14 +180,14 @@ export type ClientGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type ClientGroupByOutputType = {
   id: string
   clientName: string
-  address: string | null
-  crNb: string | null
-  contact: string | null
-  domainName: string | null
-  website: string | null
-  note: string | null
   createdAt: Date
   adminId: string | null
+  address: string | null
+  contact: string | null
+  crNb: string | null
+  domainName: string | null
+  note: string | null
+  website: string | null
   _count: ClientCountAggregateOutputType | null
   _min: ClientMinAggregateOutputType | null
   _max: ClientMaxAggregateOutputType | null
@@ -214,37 +214,37 @@ export type ClientWhereInput = {
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   id?: Prisma.StringFilter<"Client"> | string
   clientName?: Prisma.StringFilter<"Client"> | string
-  address?: Prisma.StringNullableFilter<"Client"> | string | null
-  crNb?: Prisma.StringNullableFilter<"Client"> | string | null
-  contact?: Prisma.StringNullableFilter<"Client"> | string | null
-  domainName?: Prisma.StringNullableFilter<"Client"> | string | null
-  website?: Prisma.StringNullableFilter<"Client"> | string | null
-  note?: Prisma.StringNullableFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   adminId?: Prisma.StringNullableFilter<"Client"> | string | null
+  address?: Prisma.StringNullableFilter<"Client"> | string | null
+  contact?: Prisma.StringNullableFilter<"Client"> | string | null
+  crNb?: Prisma.StringNullableFilter<"Client"> | string | null
+  domainName?: Prisma.StringNullableFilter<"Client"> | string | null
+  note?: Prisma.StringNullableFilter<"Client"> | string | null
+  website?: Prisma.StringNullableFilter<"Client"> | string | null
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  members?: Prisma.UserListRelationFilter
   compounds?: Prisma.CompoundListRelationFilter
-  srsRecords?: Prisma.SrsListRelationFilter
+  members?: Prisma.UserListRelationFilter
   visits?: Prisma.VisitListRelationFilter
+  srsRecords?: Prisma.SrsListRelationFilter
 }
 
 export type ClientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
-  address?: Prisma.SortOrderInput | Prisma.SortOrder
-  crNb?: Prisma.SortOrderInput | Prisma.SortOrder
-  contact?: Prisma.SortOrderInput | Prisma.SortOrder
-  domainName?: Prisma.SortOrderInput | Prisma.SortOrder
-  website?: Prisma.SortOrderInput | Prisma.SortOrder
-  note?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  contact?: Prisma.SortOrderInput | Prisma.SortOrder
+  crNb?: Prisma.SortOrderInput | Prisma.SortOrder
+  domainName?: Prisma.SortOrderInput | Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
   admin?: Prisma.UserOrderByWithRelationInput
-  members?: Prisma.UserOrderByRelationAggregateInput
   compounds?: Prisma.CompoundOrderByRelationAggregateInput
-  srsRecords?: Prisma.srsOrderByRelationAggregateInput
+  members?: Prisma.UserOrderByRelationAggregateInput
   visits?: Prisma.VisitOrderByRelationAggregateInput
+  srsRecords?: Prisma.srsOrderByRelationAggregateInput
 }
 
 export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -254,31 +254,31 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ClientWhereInput[]
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   clientName?: Prisma.StringFilter<"Client"> | string
-  address?: Prisma.StringNullableFilter<"Client"> | string | null
-  crNb?: Prisma.StringNullableFilter<"Client"> | string | null
-  contact?: Prisma.StringNullableFilter<"Client"> | string | null
-  domainName?: Prisma.StringNullableFilter<"Client"> | string | null
-  website?: Prisma.StringNullableFilter<"Client"> | string | null
-  note?: Prisma.StringNullableFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
+  address?: Prisma.StringNullableFilter<"Client"> | string | null
+  contact?: Prisma.StringNullableFilter<"Client"> | string | null
+  crNb?: Prisma.StringNullableFilter<"Client"> | string | null
+  domainName?: Prisma.StringNullableFilter<"Client"> | string | null
+  note?: Prisma.StringNullableFilter<"Client"> | string | null
+  website?: Prisma.StringNullableFilter<"Client"> | string | null
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  members?: Prisma.UserListRelationFilter
   compounds?: Prisma.CompoundListRelationFilter
-  srsRecords?: Prisma.SrsListRelationFilter
+  members?: Prisma.UserListRelationFilter
   visits?: Prisma.VisitListRelationFilter
+  srsRecords?: Prisma.SrsListRelationFilter
 }, "id" | "adminId">
 
 export type ClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
-  address?: Prisma.SortOrderInput | Prisma.SortOrder
-  crNb?: Prisma.SortOrderInput | Prisma.SortOrder
-  contact?: Prisma.SortOrderInput | Prisma.SortOrder
-  domainName?: Prisma.SortOrderInput | Prisma.SortOrder
-  website?: Prisma.SortOrderInput | Prisma.SortOrder
-  note?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  contact?: Prisma.SortOrderInput | Prisma.SortOrder
+  crNb?: Prisma.SortOrderInput | Prisma.SortOrder
+  domainName?: Prisma.SortOrderInput | Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ClientCountOrderByAggregateInput
   _max?: Prisma.ClientMaxOrderByAggregateInput
   _min?: Prisma.ClientMinOrderByAggregateInput
@@ -290,159 +290,159 @@ export type ClientScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ClientScalarWhereWithAggregatesInput | Prisma.ClientScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Client"> | string
   clientName?: Prisma.StringWithAggregatesFilter<"Client"> | string
-  address?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  crNb?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  contact?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  domainName?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  website?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
-  note?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
   adminId?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  contact?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  crNb?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  domainName?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  note?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  website?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
 }
 
 export type ClientCreateInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
-  members?: Prisma.UserCreateNestedManyWithoutClientInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
+  members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUncheckedCreateInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
-  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
-  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
+  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
+  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientCreateManyInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
 }
 
 export type ClientUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClientUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ClientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  crNb?: Prisma.SortOrder
-  contact?: Prisma.SortOrder
-  domainName?: Prisma.SortOrder
-  website?: Prisma.SortOrder
-  note?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  contact?: Prisma.SortOrder
+  crNb?: Prisma.SortOrder
+  domainName?: Prisma.SortOrder
+  note?: Prisma.SortOrder
+  website?: Prisma.SortOrder
 }
 
 export type ClientMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  crNb?: Prisma.SortOrder
-  contact?: Prisma.SortOrder
-  domainName?: Prisma.SortOrder
-  website?: Prisma.SortOrder
-  note?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  contact?: Prisma.SortOrder
+  crNb?: Prisma.SortOrder
+  domainName?: Prisma.SortOrder
+  note?: Prisma.SortOrder
+  website?: Prisma.SortOrder
 }
 
 export type ClientMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  crNb?: Prisma.SortOrder
-  contact?: Prisma.SortOrder
-  domainName?: Prisma.SortOrder
-  website?: Prisma.SortOrder
-  note?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  contact?: Prisma.SortOrder
+  crNb?: Prisma.SortOrder
+  domainName?: Prisma.SortOrder
+  note?: Prisma.SortOrder
+  website?: Prisma.SortOrder
 }
 
 export type ClientNullableScalarRelationFilter = {
@@ -459,12 +459,12 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type ClientCreateNestedOneWithoutAdminInput = {
@@ -564,33 +564,33 @@ export type ClientUpdateOneWithoutSrsRecordsNestedInput = {
 export type ClientCreateWithoutAdminInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
-  members?: Prisma.UserCreateNestedManyWithoutClientInput
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
+  members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUncheckedCreateWithoutAdminInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
-  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientCreateOrConnectWithoutAdminInput = {
@@ -601,33 +601,33 @@ export type ClientCreateOrConnectWithoutAdminInput = {
 export type ClientCreateWithoutMembersInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUncheckedCreateWithoutMembersInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientCreateOrConnectWithoutMembersInput = {
@@ -649,33 +649,33 @@ export type ClientUpdateToOneWithWhereWithoutAdminInput = {
 export type ClientUpdateWithoutAdminInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.UserUpdateManyWithoutClientNestedInput
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
+  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutAdminInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
+  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUpsertWithoutMembersInput = {
@@ -692,65 +692,65 @@ export type ClientUpdateToOneWithWhereWithoutMembersInput = {
 export type ClientUpdateWithoutMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientCreateWithoutCompoundsInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUncheckedCreateWithoutCompoundsInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
-  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientCreateOrConnectWithoutCompoundsInput = {
@@ -772,64 +772,64 @@ export type ClientUpdateToOneWithWhereWithoutCompoundsInput = {
 export type ClientUpdateWithoutCompoundsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutCompoundsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
-  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientCreateWithoutVisitsInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
-  members?: Prisma.UserCreateNestedManyWithoutClientInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  members?: Prisma.UserCreateNestedManyWithoutClientInput
   srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUncheckedCreateWithoutVisitsInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
-  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
 
@@ -852,64 +852,64 @@ export type ClientUpdateToOneWithWhereWithoutVisitsInput = {
 export type ClientUpdateWithoutVisitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
-  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutVisitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientCreateWithoutSrsRecordsInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
-  members?: Prisma.UserCreateNestedManyWithoutClientInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
 }
 
 export type ClientUncheckedCreateWithoutSrsRecordsInput = {
   id: string
   clientName: string
-  address?: string | null
-  crNb?: string | null
-  contact?: string | null
-  domainName?: string | null
-  website?: string | null
-  note?: string | null
   createdAt?: Date | string
   adminId?: string | null
-  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
 }
 
@@ -932,32 +932,32 @@ export type ClientUpdateToOneWithWhereWithoutSrsRecordsInput = {
 export type ClientUpdateWithoutSrsRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
-  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutSrsRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
@@ -967,17 +967,17 @@ export type ClientUncheckedUpdateWithoutSrsRecordsInput = {
  */
 
 export type ClientCountOutputType = {
-  members: number
   compounds: number
-  srsRecords: number
+  members: number
   visits: number
+  srsRecords: number
 }
 
 export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  members?: boolean | ClientCountOutputTypeCountMembersArgs
   compounds?: boolean | ClientCountOutputTypeCountCompoundsArgs
-  srsRecords?: boolean | ClientCountOutputTypeCountSrsRecordsArgs
+  members?: boolean | ClientCountOutputTypeCountMembersArgs
   visits?: boolean | ClientCountOutputTypeCountVisitsArgs
+  srsRecords?: boolean | ClientCountOutputTypeCountSrsRecordsArgs
 }
 
 /**
@@ -993,13 +993,6 @@ export type ClientCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * ClientCountOutputType without action
  */
-export type ClientCountOutputTypeCountMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * ClientCountOutputType without action
- */
 export type ClientCountOutputTypeCountCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CompoundWhereInput
 }
@@ -1007,8 +1000,8 @@ export type ClientCountOutputTypeCountCompoundsArgs<ExtArgs extends runtime.Type
 /**
  * ClientCountOutputType without action
  */
-export type ClientCountOutputTypeCountSrsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.srsWhereInput
+export type ClientCountOutputTypeCountMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
 }
 
 /**
@@ -1018,74 +1011,81 @@ export type ClientCountOutputTypeCountVisitsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.VisitWhereInput
 }
 
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountSrsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.srsWhereInput
+}
+
 
 export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clientName?: boolean
-  address?: boolean
-  crNb?: boolean
-  contact?: boolean
-  domainName?: boolean
-  website?: boolean
-  note?: boolean
   createdAt?: boolean
   adminId?: boolean
+  address?: boolean
+  contact?: boolean
+  crNb?: boolean
+  domainName?: boolean
+  note?: boolean
+  website?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
-  members?: boolean | Prisma.Client$membersArgs<ExtArgs>
   compounds?: boolean | Prisma.Client$compoundsArgs<ExtArgs>
-  srsRecords?: boolean | Prisma.Client$srsRecordsArgs<ExtArgs>
+  members?: boolean | Prisma.Client$membersArgs<ExtArgs>
   visits?: boolean | Prisma.Client$visitsArgs<ExtArgs>
+  srsRecords?: boolean | Prisma.Client$srsRecordsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clientName?: boolean
-  address?: boolean
-  crNb?: boolean
-  contact?: boolean
-  domainName?: boolean
-  website?: boolean
-  note?: boolean
   createdAt?: boolean
   adminId?: boolean
+  address?: boolean
+  contact?: boolean
+  crNb?: boolean
+  domainName?: boolean
+  note?: boolean
+  website?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clientName?: boolean
-  address?: boolean
-  crNb?: boolean
-  contact?: boolean
-  domainName?: boolean
-  website?: boolean
-  note?: boolean
   createdAt?: boolean
   adminId?: boolean
+  address?: boolean
+  contact?: boolean
+  crNb?: boolean
+  domainName?: boolean
+  note?: boolean
+  website?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectScalar = {
   id?: boolean
   clientName?: boolean
-  address?: boolean
-  crNb?: boolean
-  contact?: boolean
-  domainName?: boolean
-  website?: boolean
-  note?: boolean
   createdAt?: boolean
   adminId?: boolean
+  address?: boolean
+  contact?: boolean
+  crNb?: boolean
+  domainName?: boolean
+  note?: boolean
+  website?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientName" | "address" | "crNb" | "contact" | "domainName" | "website" | "note" | "createdAt" | "adminId", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientName" | "createdAt" | "adminId" | "address" | "contact" | "crNb" | "domainName" | "note" | "website", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
-  members?: boolean | Prisma.Client$membersArgs<ExtArgs>
   compounds?: boolean | Prisma.Client$compoundsArgs<ExtArgs>
-  srsRecords?: boolean | Prisma.Client$srsRecordsArgs<ExtArgs>
+  members?: boolean | Prisma.Client$membersArgs<ExtArgs>
   visits?: boolean | Prisma.Client$visitsArgs<ExtArgs>
+  srsRecords?: boolean | Prisma.Client$srsRecordsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1099,22 +1099,22 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Client"
   objects: {
     admin: Prisma.$UserPayload<ExtArgs> | null
-    members: Prisma.$UserPayload<ExtArgs>[]
     compounds: Prisma.$CompoundPayload<ExtArgs>[]
-    srsRecords: Prisma.$srsPayload<ExtArgs>[]
+    members: Prisma.$UserPayload<ExtArgs>[]
     visits: Prisma.$VisitPayload<ExtArgs>[]
+    srsRecords: Prisma.$srsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     clientName: string
-    address: string | null
-    crNb: string | null
-    contact: string | null
-    domainName: string | null
-    website: string | null
-    note: string | null
     createdAt: Date
     adminId: string | null
+    address: string | null
+    contact: string | null
+    crNb: string | null
+    domainName: string | null
+    note: string | null
+    website: string | null
   }, ExtArgs["result"]["client"]>
   composites: {}
 }
@@ -1510,10 +1510,10 @@ readonly fields: ClientFieldRefs;
 export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   admin<T extends Prisma.Client$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$adminArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  members<T extends Prisma.Client$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   compounds<T extends Prisma.Client$compoundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$compoundsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  srsRecords<T extends Prisma.Client$srsRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$srsRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$srsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  members<T extends Prisma.Client$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   visits<T extends Prisma.Client$visitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$visitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VisitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  srsRecords<T extends Prisma.Client$srsRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$srsRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$srsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1545,14 +1545,14 @@ export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.T
 export interface ClientFieldRefs {
   readonly id: Prisma.FieldRef<"Client", 'String'>
   readonly clientName: Prisma.FieldRef<"Client", 'String'>
-  readonly address: Prisma.FieldRef<"Client", 'String'>
-  readonly crNb: Prisma.FieldRef<"Client", 'String'>
-  readonly contact: Prisma.FieldRef<"Client", 'String'>
-  readonly domainName: Prisma.FieldRef<"Client", 'String'>
-  readonly website: Prisma.FieldRef<"Client", 'String'>
-  readonly note: Prisma.FieldRef<"Client", 'String'>
   readonly createdAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly adminId: Prisma.FieldRef<"Client", 'String'>
+  readonly address: Prisma.FieldRef<"Client", 'String'>
+  readonly contact: Prisma.FieldRef<"Client", 'String'>
+  readonly crNb: Prisma.FieldRef<"Client", 'String'>
+  readonly domainName: Prisma.FieldRef<"Client", 'String'>
+  readonly note: Prisma.FieldRef<"Client", 'String'>
+  readonly website: Prisma.FieldRef<"Client", 'String'>
 }
     
 
@@ -1968,30 +1968,6 @@ export type Client$adminArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Client.members
- */
-export type Client$membersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
-  cursor?: Prisma.UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
-}
-
-/**
  * Client.compounds
  */
 export type Client$compoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2016,27 +1992,27 @@ export type Client$compoundsArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Client.srsRecords
+ * Client.members
  */
-export type Client$srsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Client$membersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the srs
+   * Select specific fields to fetch from the User
    */
-  select?: Prisma.srsSelect<ExtArgs> | null
+  select?: Prisma.UserSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the srs
+   * Omit specific fields from the User
    */
-  omit?: Prisma.srsOmit<ExtArgs> | null
+  omit?: Prisma.UserOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.srsInclude<ExtArgs> | null
-  where?: Prisma.srsWhereInput
-  orderBy?: Prisma.srsOrderByWithRelationInput | Prisma.srsOrderByWithRelationInput[]
-  cursor?: Prisma.srsWhereUniqueInput
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SrsScalarFieldEnum | Prisma.SrsScalarFieldEnum[]
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**
@@ -2061,6 +2037,30 @@ export type Client$visitsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.VisitScalarFieldEnum | Prisma.VisitScalarFieldEnum[]
+}
+
+/**
+ * Client.srsRecords
+ */
+export type Client$srsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the srs
+   */
+  select?: Prisma.srsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the srs
+   */
+  omit?: Prisma.srsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.srsInclude<ExtArgs> | null
+  where?: Prisma.srsWhereInput
+  orderBy?: Prisma.srsOrderByWithRelationInput | Prisma.srsOrderByWithRelationInput[]
+  cursor?: Prisma.srsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SrsScalarFieldEnum | Prisma.SrsScalarFieldEnum[]
 }
 
 /**

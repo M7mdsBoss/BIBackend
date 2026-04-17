@@ -219,7 +219,7 @@ export async function login(
 
   // Compound names scoped by role:
   // - CLIENT: all compounds owned by the Client
-  // - GUARD/OPERATION/MANAGER: compounds the user is assigned to
+  // - SECURITY/OPERATION/MANAGER: compounds the user is assigned to
   let myCompound: string[] = [];
   if (user.role === "CLIENT" && clientId) {
     const compounds = await prisma.compound.findMany({
@@ -228,7 +228,7 @@ export async function login(
     });
     myCompound = compounds.map((c) => c.name);
   } else if (
-    user.role === "GUARD" ||
+    user.role === "SECURITY" ||
     user.role === "OPERATION" ||
     user.role === "MANAGER"
   ) {

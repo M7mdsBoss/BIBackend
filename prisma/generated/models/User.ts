@@ -30,7 +30,6 @@ export type UserMinAggregateOutputType = {
   campany: string | null
   industry: string | null
   campanySize: string | null
-  campanyRole: string | null
   website: string | null
   phone: string | null
   email: string | null
@@ -41,6 +40,7 @@ export type UserMinAggregateOutputType = {
   confirmed: boolean | null
   acceptedAuthorize: boolean | null
   acceptedTerms: boolean | null
+  campanyRole: string | null
   clientId: string | null
 }
 
@@ -50,7 +50,6 @@ export type UserMaxAggregateOutputType = {
   campany: string | null
   industry: string | null
   campanySize: string | null
-  campanyRole: string | null
   website: string | null
   phone: string | null
   email: string | null
@@ -61,6 +60,7 @@ export type UserMaxAggregateOutputType = {
   confirmed: boolean | null
   acceptedAuthorize: boolean | null
   acceptedTerms: boolean | null
+  campanyRole: string | null
   clientId: string | null
 }
 
@@ -70,7 +70,6 @@ export type UserCountAggregateOutputType = {
   campany: number
   industry: number
   campanySize: number
-  campanyRole: number
   website: number
   phone: number
   email: number
@@ -81,6 +80,7 @@ export type UserCountAggregateOutputType = {
   confirmed: number
   acceptedAuthorize: number
   acceptedTerms: number
+  campanyRole: number
   clientId: number
   _all: number
 }
@@ -92,7 +92,6 @@ export type UserMinAggregateInputType = {
   campany?: true
   industry?: true
   campanySize?: true
-  campanyRole?: true
   website?: true
   phone?: true
   email?: true
@@ -103,6 +102,7 @@ export type UserMinAggregateInputType = {
   confirmed?: true
   acceptedAuthorize?: true
   acceptedTerms?: true
+  campanyRole?: true
   clientId?: true
 }
 
@@ -112,7 +112,6 @@ export type UserMaxAggregateInputType = {
   campany?: true
   industry?: true
   campanySize?: true
-  campanyRole?: true
   website?: true
   phone?: true
   email?: true
@@ -123,6 +122,7 @@ export type UserMaxAggregateInputType = {
   confirmed?: true
   acceptedAuthorize?: true
   acceptedTerms?: true
+  campanyRole?: true
   clientId?: true
 }
 
@@ -132,7 +132,6 @@ export type UserCountAggregateInputType = {
   campany?: true
   industry?: true
   campanySize?: true
-  campanyRole?: true
   website?: true
   phone?: true
   email?: true
@@ -143,6 +142,7 @@ export type UserCountAggregateInputType = {
   confirmed?: true
   acceptedAuthorize?: true
   acceptedTerms?: true
+  campanyRole?: true
   clientId?: true
   _all?: true
 }
@@ -225,7 +225,6 @@ export type UserGroupByOutputType = {
   campany: string | null
   industry: string | null
   campanySize: string | null
-  campanyRole: string | null
   website: string | null
   phone: string | null
   email: string
@@ -236,6 +235,7 @@ export type UserGroupByOutputType = {
   confirmed: boolean
   acceptedAuthorize: boolean
   acceptedTerms: boolean
+  campanyRole: string | null
   clientId: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -266,7 +266,6 @@ export type UserWhereInput = {
   campany?: Prisma.StringNullableFilter<"User"> | string | null
   industry?: Prisma.StringNullableFilter<"User"> | string | null
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
-  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
@@ -277,10 +276,11 @@ export type UserWhereInput = {
   confirmed?: Prisma.BoolFilter<"User"> | boolean
   acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   clientId?: Prisma.StringNullableFilter<"User"> | string | null
+  assignedCompounds?: Prisma.AssignedCompoundListRelationFilter
   clientAsAdmin?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
-  assignedCompounds?: Prisma.AssignedCompoundListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -289,7 +289,6 @@ export type UserOrderByWithRelationInput = {
   campany?: Prisma.SortOrderInput | Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
   campanySize?: Prisma.SortOrderInput | Prisma.SortOrder
-  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -300,10 +299,11 @@ export type UserOrderByWithRelationInput = {
   confirmed?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  assignedCompounds?: Prisma.AssignedCompoundOrderByRelationAggregateInput
   clientAsAdmin?: Prisma.ClientOrderByWithRelationInput
   client?: Prisma.ClientOrderByWithRelationInput
-  assignedCompounds?: Prisma.AssignedCompoundOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -317,7 +317,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   campany?: Prisma.StringNullableFilter<"User"> | string | null
   industry?: Prisma.StringNullableFilter<"User"> | string | null
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
-  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringFilter<"User"> | string
@@ -326,10 +325,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   confirmed?: Prisma.BoolFilter<"User"> | boolean
   acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   clientId?: Prisma.StringNullableFilter<"User"> | string | null
+  assignedCompounds?: Prisma.AssignedCompoundListRelationFilter
   clientAsAdmin?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
-  assignedCompounds?: Prisma.AssignedCompoundListRelationFilter
 }, "id" | "email" | "generatedToken">
 
 export type UserOrderByWithAggregationInput = {
@@ -338,7 +338,6 @@ export type UserOrderByWithAggregationInput = {
   campany?: Prisma.SortOrderInput | Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
   campanySize?: Prisma.SortOrderInput | Prisma.SortOrder
-  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -349,6 +348,7 @@ export type UserOrderByWithAggregationInput = {
   confirmed?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -364,7 +364,6 @@ export type UserScalarWhereWithAggregatesInput = {
   campany?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   industry?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   campanySize?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  campanyRole?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
@@ -375,6 +374,7 @@ export type UserScalarWhereWithAggregatesInput = {
   confirmed?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   acceptedAuthorize?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   clientId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
@@ -384,7 +384,6 @@ export type UserCreateInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -395,9 +394,10 @@ export type UserCreateInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
+  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
   clientAsAdmin?: Prisma.ClientCreateNestedOneWithoutAdminInput
   client?: Prisma.ClientCreateNestedOneWithoutMembersInput
-  assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -406,7 +406,6 @@ export type UserUncheckedCreateInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -417,9 +416,10 @@ export type UserUncheckedCreateInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
   clientId?: string | null
-  clientAsAdmin?: Prisma.ClientUncheckedCreateNestedOneWithoutAdminInput
   assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  clientAsAdmin?: Prisma.ClientUncheckedCreateNestedOneWithoutAdminInput
 }
 
 export type UserUpdateInput = {
@@ -428,7 +428,6 @@ export type UserUpdateInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -439,9 +438,10 @@ export type UserUpdateInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
   clientAsAdmin?: Prisma.ClientUpdateOneWithoutAdminNestedInput
   client?: Prisma.ClientUpdateOneWithoutMembersNestedInput
-  assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -450,7 +450,6 @@ export type UserUncheckedUpdateInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -461,9 +460,10 @@ export type UserUncheckedUpdateInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientAsAdmin?: Prisma.ClientUncheckedUpdateOneWithoutAdminNestedInput
   assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  clientAsAdmin?: Prisma.ClientUncheckedUpdateOneWithoutAdminNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -472,7 +472,6 @@ export type UserCreateManyInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -483,6 +482,7 @@ export type UserCreateManyInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
   clientId?: string | null
 }
 
@@ -492,7 +492,6 @@ export type UserUpdateManyMutationInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -503,6 +502,7 @@ export type UserUpdateManyMutationInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -511,7 +511,6 @@ export type UserUncheckedUpdateManyInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -522,6 +521,7 @@ export type UserUncheckedUpdateManyInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -546,7 +546,6 @@ export type UserCountOrderByAggregateInput = {
   campany?: Prisma.SortOrder
   industry?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrder
   website?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -557,6 +556,7 @@ export type UserCountOrderByAggregateInput = {
   confirmed?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
 }
 
@@ -566,7 +566,6 @@ export type UserMaxOrderByAggregateInput = {
   campany?: Prisma.SortOrder
   industry?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrder
   website?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -577,6 +576,7 @@ export type UserMaxOrderByAggregateInput = {
   confirmed?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
 }
 
@@ -586,7 +586,6 @@ export type UserMinOrderByAggregateInput = {
   campany?: Prisma.SortOrder
   industry?: Prisma.SortOrder
   campanySize?: Prisma.SortOrder
-  campanyRole?: Prisma.SortOrder
   website?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -597,6 +596,7 @@ export type UserMinOrderByAggregateInput = {
   confirmed?: Prisma.SortOrder
   acceptedAuthorize?: Prisma.SortOrder
   acceptedTerms?: Prisma.SortOrder
+  campanyRole?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
 }
 
@@ -691,7 +691,6 @@ export type UserCreateWithoutClientAsAdminInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -702,8 +701,9 @@ export type UserCreateWithoutClientAsAdminInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  client?: Prisma.ClientCreateNestedOneWithoutMembersInput
+  campanyRole?: string | null
   assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  client?: Prisma.ClientCreateNestedOneWithoutMembersInput
 }
 
 export type UserUncheckedCreateWithoutClientAsAdminInput = {
@@ -712,7 +712,6 @@ export type UserUncheckedCreateWithoutClientAsAdminInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -723,6 +722,7 @@ export type UserUncheckedCreateWithoutClientAsAdminInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
   clientId?: string | null
   assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
 }
@@ -738,7 +738,6 @@ export type UserCreateWithoutClientInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -749,8 +748,9 @@ export type UserCreateWithoutClientInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  clientAsAdmin?: Prisma.ClientCreateNestedOneWithoutAdminInput
+  campanyRole?: string | null
   assignedCompounds?: Prisma.AssignedCompoundCreateNestedManyWithoutGuardInput
+  clientAsAdmin?: Prisma.ClientCreateNestedOneWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutClientInput = {
@@ -759,7 +759,6 @@ export type UserUncheckedCreateWithoutClientInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -770,8 +769,9 @@ export type UserUncheckedCreateWithoutClientInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
-  clientAsAdmin?: Prisma.ClientUncheckedCreateNestedOneWithoutAdminInput
+  campanyRole?: string | null
   assignedCompounds?: Prisma.AssignedCompoundUncheckedCreateNestedManyWithoutGuardInput
+  clientAsAdmin?: Prisma.ClientUncheckedCreateNestedOneWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutClientInput = {
@@ -801,7 +801,6 @@ export type UserUpdateWithoutClientAsAdminInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -812,8 +811,9 @@ export type UserUpdateWithoutClientAsAdminInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  client?: Prisma.ClientUpdateOneWithoutMembersNestedInput
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  client?: Prisma.ClientUpdateOneWithoutMembersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClientAsAdminInput = {
@@ -822,7 +822,6 @@ export type UserUncheckedUpdateWithoutClientAsAdminInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -833,6 +832,7 @@ export type UserUncheckedUpdateWithoutClientAsAdminInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
 }
@@ -862,7 +862,6 @@ export type UserScalarWhereInput = {
   campany?: Prisma.StringNullableFilter<"User"> | string | null
   industry?: Prisma.StringNullableFilter<"User"> | string | null
   campanySize?: Prisma.StringNullableFilter<"User"> | string | null
-  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   website?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
@@ -873,6 +872,7 @@ export type UserScalarWhereInput = {
   confirmed?: Prisma.BoolFilter<"User"> | boolean
   acceptedAuthorize?: Prisma.BoolFilter<"User"> | boolean
   acceptedTerms?: Prisma.BoolFilter<"User"> | boolean
+  campanyRole?: Prisma.StringNullableFilter<"User"> | string | null
   clientId?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
@@ -882,7 +882,6 @@ export type UserCreateWithoutAssignedCompoundsInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -893,6 +892,7 @@ export type UserCreateWithoutAssignedCompoundsInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
   clientAsAdmin?: Prisma.ClientCreateNestedOneWithoutAdminInput
   client?: Prisma.ClientCreateNestedOneWithoutMembersInput
 }
@@ -903,7 +903,6 @@ export type UserUncheckedCreateWithoutAssignedCompoundsInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -914,6 +913,7 @@ export type UserUncheckedCreateWithoutAssignedCompoundsInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
   clientId?: string | null
   clientAsAdmin?: Prisma.ClientUncheckedCreateNestedOneWithoutAdminInput
 }
@@ -940,7 +940,6 @@ export type UserUpdateWithoutAssignedCompoundsInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -951,6 +950,7 @@ export type UserUpdateWithoutAssignedCompoundsInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientAsAdmin?: Prisma.ClientUpdateOneWithoutAdminNestedInput
   client?: Prisma.ClientUpdateOneWithoutMembersNestedInput
 }
@@ -961,7 +961,6 @@ export type UserUncheckedUpdateWithoutAssignedCompoundsInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -972,6 +971,7 @@ export type UserUncheckedUpdateWithoutAssignedCompoundsInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientAsAdmin?: Prisma.ClientUncheckedUpdateOneWithoutAdminNestedInput
 }
@@ -982,7 +982,6 @@ export type UserCreateManyClientInput = {
   campany?: string | null
   industry?: string | null
   campanySize?: string | null
-  campanyRole?: string | null
   website?: string | null
   phone?: string | null
   email: string
@@ -993,6 +992,7 @@ export type UserCreateManyClientInput = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: string | null
 }
 
 export type UserUpdateWithoutClientInput = {
@@ -1001,7 +1001,6 @@ export type UserUpdateWithoutClientInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1012,8 +1011,9 @@ export type UserUpdateWithoutClientInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  clientAsAdmin?: Prisma.ClientUpdateOneWithoutAdminNestedInput
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedCompounds?: Prisma.AssignedCompoundUpdateManyWithoutGuardNestedInput
+  clientAsAdmin?: Prisma.ClientUpdateOneWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClientInput = {
@@ -1022,7 +1022,6 @@ export type UserUncheckedUpdateWithoutClientInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1033,8 +1032,9 @@ export type UserUncheckedUpdateWithoutClientInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  clientAsAdmin?: Prisma.ClientUncheckedUpdateOneWithoutAdminNestedInput
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedCompounds?: Prisma.AssignedCompoundUncheckedUpdateManyWithoutGuardNestedInput
+  clientAsAdmin?: Prisma.ClientUncheckedUpdateOneWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutClientInput = {
@@ -1043,7 +1043,6 @@ export type UserUncheckedUpdateManyWithoutClientInput = {
   campany?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   campanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1054,6 +1053,7 @@ export type UserUncheckedUpdateManyWithoutClientInput = {
   confirmed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedAuthorize?: Prisma.BoolFieldUpdateOperationsInput | boolean
   acceptedTerms?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  campanyRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1093,7 +1093,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   campany?: boolean
   industry?: boolean
   campanySize?: boolean
-  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
@@ -1104,10 +1103,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: boolean
   clientId?: boolean
+  assignedCompounds?: boolean | Prisma.User$assignedCompoundsArgs<ExtArgs>
   clientAsAdmin?: boolean | Prisma.User$clientAsAdminArgs<ExtArgs>
   client?: boolean | Prisma.User$clientArgs<ExtArgs>
-  assignedCompounds?: boolean | Prisma.User$assignedCompoundsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1117,7 +1117,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   campany?: boolean
   industry?: boolean
   campanySize?: boolean
-  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
@@ -1128,6 +1127,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: boolean
   clientId?: boolean
   client?: boolean | Prisma.User$clientArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1138,7 +1138,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   campany?: boolean
   industry?: boolean
   campanySize?: boolean
-  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
@@ -1149,6 +1148,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: boolean
   clientId?: boolean
   client?: boolean | Prisma.User$clientArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1159,7 +1159,6 @@ export type UserSelectScalar = {
   campany?: boolean
   industry?: boolean
   campanySize?: boolean
-  campanyRole?: boolean
   website?: boolean
   phone?: boolean
   email?: boolean
@@ -1170,14 +1169,15 @@ export type UserSelectScalar = {
   confirmed?: boolean
   acceptedAuthorize?: boolean
   acceptedTerms?: boolean
+  campanyRole?: boolean
   clientId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "campany" | "industry" | "campanySize" | "campanyRole" | "website" | "phone" | "email" | "password" | "generatedToken" | "role" | "createdAt" | "confirmed" | "acceptedAuthorize" | "acceptedTerms" | "clientId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "campany" | "industry" | "campanySize" | "website" | "phone" | "email" | "password" | "generatedToken" | "role" | "createdAt" | "confirmed" | "acceptedAuthorize" | "acceptedTerms" | "campanyRole" | "clientId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  assignedCompounds?: boolean | Prisma.User$assignedCompoundsArgs<ExtArgs>
   clientAsAdmin?: boolean | Prisma.User$clientAsAdminArgs<ExtArgs>
   client?: boolean | Prisma.User$clientArgs<ExtArgs>
-  assignedCompounds?: boolean | Prisma.User$assignedCompoundsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1190,9 +1190,9 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    assignedCompounds: Prisma.$AssignedCompoundPayload<ExtArgs>[]
     clientAsAdmin: Prisma.$ClientPayload<ExtArgs> | null
     client: Prisma.$ClientPayload<ExtArgs> | null
-    assignedCompounds: Prisma.$AssignedCompoundPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1200,7 +1200,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     campany: string | null
     industry: string | null
     campanySize: string | null
-    campanyRole: string | null
     website: string | null
     phone: string | null
     email: string
@@ -1211,6 +1210,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     confirmed: boolean
     acceptedAuthorize: boolean
     acceptedTerms: boolean
+    campanyRole: string | null
     clientId: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1606,9 +1606,9 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  assignedCompounds<T extends Prisma.User$assignedCompoundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedCompoundsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssignedCompoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clientAsAdmin<T extends Prisma.User$clientAsAdminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clientAsAdminArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   client<T extends Prisma.User$clientArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clientArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  assignedCompounds<T extends Prisma.User$assignedCompoundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedCompoundsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssignedCompoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1643,7 +1643,6 @@ export interface UserFieldRefs {
   readonly campany: Prisma.FieldRef<"User", 'String'>
   readonly industry: Prisma.FieldRef<"User", 'String'>
   readonly campanySize: Prisma.FieldRef<"User", 'String'>
-  readonly campanyRole: Prisma.FieldRef<"User", 'String'>
   readonly website: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
@@ -1654,6 +1653,7 @@ export interface UserFieldRefs {
   readonly confirmed: Prisma.FieldRef<"User", 'Boolean'>
   readonly acceptedAuthorize: Prisma.FieldRef<"User", 'Boolean'>
   readonly acceptedTerms: Prisma.FieldRef<"User", 'Boolean'>
+  readonly campanyRole: Prisma.FieldRef<"User", 'String'>
   readonly clientId: Prisma.FieldRef<"User", 'String'>
 }
     
@@ -2051,6 +2051,30 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.assignedCompounds
+ */
+export type User$assignedCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssignedCompound
+   */
+  select?: Prisma.AssignedCompoundSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssignedCompound
+   */
+  omit?: Prisma.AssignedCompoundOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssignedCompoundInclude<ExtArgs> | null
+  where?: Prisma.AssignedCompoundWhereInput
+  orderBy?: Prisma.AssignedCompoundOrderByWithRelationInput | Prisma.AssignedCompoundOrderByWithRelationInput[]
+  cursor?: Prisma.AssignedCompoundWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssignedCompoundScalarFieldEnum | Prisma.AssignedCompoundScalarFieldEnum[]
+}
+
+/**
  * User.clientAsAdmin
  */
 export type User$clientAsAdminArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2086,30 +2110,6 @@ export type User$clientArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.ClientInclude<ExtArgs> | null
   where?: Prisma.ClientWhereInput
-}
-
-/**
- * User.assignedCompounds
- */
-export type User$assignedCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AssignedCompound
-   */
-  select?: Prisma.AssignedCompoundSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AssignedCompound
-   */
-  omit?: Prisma.AssignedCompoundOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AssignedCompoundInclude<ExtArgs> | null
-  where?: Prisma.AssignedCompoundWhereInput
-  orderBy?: Prisma.AssignedCompoundOrderByWithRelationInput | Prisma.AssignedCompoundOrderByWithRelationInput[]
-  cursor?: Prisma.AssignedCompoundWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AssignedCompoundScalarFieldEnum | Prisma.AssignedCompoundScalarFieldEnum[]
 }
 
 /**

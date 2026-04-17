@@ -48,7 +48,7 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors/stats
-  router.get('/stats', guard('CLIENT', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/stats', guard('CLIENT', 'SECURITY', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       res.json(await getVisitorStats(prisma, {
         id: req.user!.id,
@@ -61,7 +61,7 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors/:id
-  router.get('/:id', guard('CLIENT', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  router.get('/:id', guard('CLIENT', 'SECURITY', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const visitId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
       res.json(await getVisitById(prisma, visitId));
@@ -71,8 +71,8 @@ export function createVisitorsRouter(prisma: PrismaClient) {
   });
 
   // GET /api/v1/visitors?page=1&limit=10&unit=UNIT_*
-  // CLIENT → their client's visits | GUARD/MANAGER → visits for their assigned compounds
-  router.get('/', guard('CLIENT', 'GUARD', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  // CLIENT → their client's visits | SECURITY/MANAGER → visits for their assigned compounds
+  router.get('/', guard('CLIENT', 'SECURITY', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const parsed = listQuerySchema.safeParse(req.query);
       if (!parsed.success) {

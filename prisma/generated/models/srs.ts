@@ -41,7 +41,6 @@ export type SrsMinAggregateOutputType = {
   resemail: string | null
   compound: string | null
   unit: string | null
-  clientId: string | null
   propertycode: string | null
   priority: string | null
   leasename: string | null
@@ -56,6 +55,7 @@ export type SrsMinAggregateOutputType = {
   closed_at: Date | null
   is_closed: boolean | null
   updated_at: Date | null
+  clientId: string | null
 }
 
 export type SrsMaxAggregateOutputType = {
@@ -65,7 +65,6 @@ export type SrsMaxAggregateOutputType = {
   resemail: string | null
   compound: string | null
   unit: string | null
-  clientId: string | null
   propertycode: string | null
   priority: string | null
   leasename: string | null
@@ -80,6 +79,7 @@ export type SrsMaxAggregateOutputType = {
   closed_at: Date | null
   is_closed: boolean | null
   updated_at: Date | null
+  clientId: string | null
 }
 
 export type SrsCountAggregateOutputType = {
@@ -89,7 +89,6 @@ export type SrsCountAggregateOutputType = {
   resemail: number
   compound: number
   unit: number
-  clientId: number
   propertycode: number
   priority: number
   leasename: number
@@ -104,6 +103,7 @@ export type SrsCountAggregateOutputType = {
   closed_at: number
   is_closed: number
   updated_at: number
+  clientId: number
   _all: number
 }
 
@@ -123,7 +123,6 @@ export type SrsMinAggregateInputType = {
   resemail?: true
   compound?: true
   unit?: true
-  clientId?: true
   propertycode?: true
   priority?: true
   leasename?: true
@@ -138,6 +137,7 @@ export type SrsMinAggregateInputType = {
   closed_at?: true
   is_closed?: true
   updated_at?: true
+  clientId?: true
 }
 
 export type SrsMaxAggregateInputType = {
@@ -147,7 +147,6 @@ export type SrsMaxAggregateInputType = {
   resemail?: true
   compound?: true
   unit?: true
-  clientId?: true
   propertycode?: true
   priority?: true
   leasename?: true
@@ -162,6 +161,7 @@ export type SrsMaxAggregateInputType = {
   closed_at?: true
   is_closed?: true
   updated_at?: true
+  clientId?: true
 }
 
 export type SrsCountAggregateInputType = {
@@ -171,7 +171,6 @@ export type SrsCountAggregateInputType = {
   resemail?: true
   compound?: true
   unit?: true
-  clientId?: true
   propertycode?: true
   priority?: true
   leasename?: true
@@ -186,6 +185,7 @@ export type SrsCountAggregateInputType = {
   closed_at?: true
   is_closed?: true
   updated_at?: true
+  clientId?: true
   _all?: true
 }
 
@@ -282,7 +282,6 @@ export type SrsGroupByOutputType = {
   resemail: string | null
   compound: string | null
   unit: string | null
-  clientId: string | null
   propertycode: string | null
   priority: string | null
   leasename: string | null
@@ -297,6 +296,7 @@ export type SrsGroupByOutputType = {
   closed_at: Date | null
   is_closed: boolean | null
   updated_at: Date | null
+  clientId: string | null
   _count: SrsCountAggregateOutputType | null
   _avg: SrsAvgAggregateOutputType | null
   _sum: SrsSumAggregateOutputType | null
@@ -329,7 +329,6 @@ export type srsWhereInput = {
   resemail?: Prisma.StringNullableFilter<"srs"> | string | null
   compound?: Prisma.StringNullableFilter<"srs"> | string | null
   unit?: Prisma.StringNullableFilter<"srs"> | string | null
-  clientId?: Prisma.StringNullableFilter<"srs"> | string | null
   propertycode?: Prisma.StringNullableFilter<"srs"> | string | null
   priority?: Prisma.StringNullableFilter<"srs"> | string | null
   leasename?: Prisma.StringNullableFilter<"srs"> | string | null
@@ -344,9 +343,10 @@ export type srsWhereInput = {
   closed_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
+  clientId?: Prisma.StringNullableFilter<"srs"> | string | null
+  clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
   unitRef?: Prisma.XOR<Prisma.UnitNullableScalarRelationFilter, Prisma.UnitWhereInput> | null
-  clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
 }
 
 export type srsOrderByWithRelationInput = {
@@ -356,7 +356,6 @@ export type srsOrderByWithRelationInput = {
   resemail?: Prisma.SortOrderInput | Prisma.SortOrder
   compound?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrderInput | Prisma.SortOrder
-  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   propertycode?: Prisma.SortOrderInput | Prisma.SortOrder
   priority?: Prisma.SortOrderInput | Prisma.SortOrder
   leasename?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -371,9 +370,10 @@ export type srsOrderByWithRelationInput = {
   closed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   is_closed?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientRef?: Prisma.ClientOrderByWithRelationInput
   compoundRef?: Prisma.CompoundOrderByWithRelationInput
   unitRef?: Prisma.UnitOrderByWithRelationInput
-  clientRef?: Prisma.ClientOrderByWithRelationInput
 }
 
 export type srsWhereUniqueInput = Prisma.AtLeast<{
@@ -386,7 +386,6 @@ export type srsWhereUniqueInput = Prisma.AtLeast<{
   resemail?: Prisma.StringNullableFilter<"srs"> | string | null
   compound?: Prisma.StringNullableFilter<"srs"> | string | null
   unit?: Prisma.StringNullableFilter<"srs"> | string | null
-  clientId?: Prisma.StringNullableFilter<"srs"> | string | null
   propertycode?: Prisma.StringNullableFilter<"srs"> | string | null
   priority?: Prisma.StringNullableFilter<"srs"> | string | null
   leasename?: Prisma.StringNullableFilter<"srs"> | string | null
@@ -401,9 +400,10 @@ export type srsWhereUniqueInput = Prisma.AtLeast<{
   closed_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
+  clientId?: Prisma.StringNullableFilter<"srs"> | string | null
+  clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
   unitRef?: Prisma.XOR<Prisma.UnitNullableScalarRelationFilter, Prisma.UnitWhereInput> | null
-  clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
 }, "id">
 
 export type srsOrderByWithAggregationInput = {
@@ -413,7 +413,6 @@ export type srsOrderByWithAggregationInput = {
   resemail?: Prisma.SortOrderInput | Prisma.SortOrder
   compound?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrderInput | Prisma.SortOrder
-  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   propertycode?: Prisma.SortOrderInput | Prisma.SortOrder
   priority?: Prisma.SortOrderInput | Prisma.SortOrder
   leasename?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -428,6 +427,7 @@ export type srsOrderByWithAggregationInput = {
   closed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   is_closed?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.srsCountOrderByAggregateInput
   _avg?: Prisma.srsAvgOrderByAggregateInput
   _max?: Prisma.srsMaxOrderByAggregateInput
@@ -445,7 +445,6 @@ export type srsScalarWhereWithAggregatesInput = {
   resemail?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   compound?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   unit?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
-  clientId?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   propertycode?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   priority?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   leasename?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
@@ -460,6 +459,7 @@ export type srsScalarWhereWithAggregatesInput = {
   closed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
   is_closed?: Prisma.BoolNullableWithAggregatesFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
+  clientId?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
 }
 
 export type srsCreateInput = {
@@ -480,9 +480,9 @@ export type srsCreateInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
   compoundRef?: Prisma.CompoundCreateNestedOneWithoutSrsRecordsInput
   unitRef?: Prisma.UnitCreateNestedOneWithoutSrsRecordsInput
-  clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
 }
 
 export type srsUncheckedCreateInput = {
@@ -492,7 +492,6 @@ export type srsUncheckedCreateInput = {
   resemail?: string | null
   compound?: string | null
   unit?: string | null
-  clientId?: string | null
   propertycode?: string | null
   priority?: string | null
   leasename?: string | null
@@ -507,6 +506,7 @@ export type srsUncheckedCreateInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientId?: string | null
 }
 
 export type srsUpdateInput = {
@@ -527,9 +527,9 @@ export type srsUpdateInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
   compoundRef?: Prisma.CompoundUpdateOneWithoutSrsRecordsNestedInput
   unitRef?: Prisma.UnitUpdateOneWithoutSrsRecordsNestedInput
-  clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
 }
 
 export type srsUncheckedUpdateInput = {
@@ -539,7 +539,6 @@ export type srsUncheckedUpdateInput = {
   resemail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertycode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   leasename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -554,6 +553,7 @@ export type srsUncheckedUpdateInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type srsCreateManyInput = {
@@ -563,7 +563,6 @@ export type srsCreateManyInput = {
   resemail?: string | null
   compound?: string | null
   unit?: string | null
-  clientId?: string | null
   propertycode?: string | null
   priority?: string | null
   leasename?: string | null
@@ -578,6 +577,7 @@ export type srsCreateManyInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientId?: string | null
 }
 
 export type srsUpdateManyMutationInput = {
@@ -607,7 +607,6 @@ export type srsUncheckedUpdateManyInput = {
   resemail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertycode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   leasename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -622,6 +621,7 @@ export type srsUncheckedUpdateManyInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SrsListRelationFilter = {
@@ -641,7 +641,6 @@ export type srsCountOrderByAggregateInput = {
   resemail?: Prisma.SortOrder
   compound?: Prisma.SortOrder
   unit?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   propertycode?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   leasename?: Prisma.SortOrder
@@ -656,6 +655,7 @@ export type srsCountOrderByAggregateInput = {
   closed_at?: Prisma.SortOrder
   is_closed?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
 }
 
 export type srsAvgOrderByAggregateInput = {
@@ -669,7 +669,6 @@ export type srsMaxOrderByAggregateInput = {
   resemail?: Prisma.SortOrder
   compound?: Prisma.SortOrder
   unit?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   propertycode?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   leasename?: Prisma.SortOrder
@@ -684,6 +683,7 @@ export type srsMaxOrderByAggregateInput = {
   closed_at?: Prisma.SortOrder
   is_closed?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
 }
 
 export type srsMinOrderByAggregateInput = {
@@ -693,7 +693,6 @@ export type srsMinOrderByAggregateInput = {
   resemail?: Prisma.SortOrder
   compound?: Prisma.SortOrder
   unit?: Prisma.SortOrder
-  clientId?: Prisma.SortOrder
   propertycode?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   leasename?: Prisma.SortOrder
@@ -708,6 +707,7 @@ export type srsMinOrderByAggregateInput = {
   closed_at?: Prisma.SortOrder
   is_closed?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
 }
 
 export type srsSumOrderByAggregateInput = {
@@ -921,7 +921,6 @@ export type srsScalarWhereInput = {
   resemail?: Prisma.StringNullableFilter<"srs"> | string | null
   compound?: Prisma.StringNullableFilter<"srs"> | string | null
   unit?: Prisma.StringNullableFilter<"srs"> | string | null
-  clientId?: Prisma.StringNullableFilter<"srs"> | string | null
   propertycode?: Prisma.StringNullableFilter<"srs"> | string | null
   priority?: Prisma.StringNullableFilter<"srs"> | string | null
   leasename?: Prisma.StringNullableFilter<"srs"> | string | null
@@ -936,6 +935,7 @@ export type srsScalarWhereInput = {
   closed_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
+  clientId?: Prisma.StringNullableFilter<"srs"> | string | null
 }
 
 export type srsCreateWithoutCompoundRefInput = {
@@ -956,8 +956,8 @@ export type srsCreateWithoutCompoundRefInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
-  unitRef?: Prisma.UnitCreateNestedOneWithoutSrsRecordsInput
   clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
+  unitRef?: Prisma.UnitCreateNestedOneWithoutSrsRecordsInput
 }
 
 export type srsUncheckedCreateWithoutCompoundRefInput = {
@@ -966,7 +966,6 @@ export type srsUncheckedCreateWithoutCompoundRefInput = {
   resphone?: string | null
   resemail?: string | null
   unit?: string | null
-  clientId?: string | null
   propertycode?: string | null
   priority?: string | null
   leasename?: string | null
@@ -981,6 +980,7 @@ export type srsUncheckedCreateWithoutCompoundRefInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientId?: string | null
 }
 
 export type srsCreateOrConnectWithoutCompoundRefInput = {
@@ -1027,8 +1027,8 @@ export type srsCreateWithoutUnitRefInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
-  compoundRef?: Prisma.CompoundCreateNestedOneWithoutSrsRecordsInput
   clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
+  compoundRef?: Prisma.CompoundCreateNestedOneWithoutSrsRecordsInput
 }
 
 export type srsUncheckedCreateWithoutUnitRefInput = {
@@ -1037,7 +1037,6 @@ export type srsUncheckedCreateWithoutUnitRefInput = {
   resphone?: string | null
   resemail?: string | null
   compound?: string | null
-  clientId?: string | null
   propertycode?: string | null
   priority?: string | null
   leasename?: string | null
@@ -1052,6 +1051,7 @@ export type srsUncheckedCreateWithoutUnitRefInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientId?: string | null
 }
 
 export type srsCreateOrConnectWithoutUnitRefInput = {
@@ -1177,7 +1177,6 @@ export type srsCreateManyCompoundRefInput = {
   resphone?: string | null
   resemail?: string | null
   unit?: string | null
-  clientId?: string | null
   propertycode?: string | null
   priority?: string | null
   leasename?: string | null
@@ -1192,6 +1191,7 @@ export type srsCreateManyCompoundRefInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientId?: string | null
 }
 
 export type srsUpdateWithoutCompoundRefInput = {
@@ -1212,8 +1212,8 @@ export type srsUpdateWithoutCompoundRefInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  unitRef?: Prisma.UnitUpdateOneWithoutSrsRecordsNestedInput
   clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
+  unitRef?: Prisma.UnitUpdateOneWithoutSrsRecordsNestedInput
 }
 
 export type srsUncheckedUpdateWithoutCompoundRefInput = {
@@ -1222,7 +1222,6 @@ export type srsUncheckedUpdateWithoutCompoundRefInput = {
   resphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resemail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertycode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   leasename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1237,6 +1236,7 @@ export type srsUncheckedUpdateWithoutCompoundRefInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type srsUncheckedUpdateManyWithoutCompoundRefInput = {
@@ -1245,7 +1245,6 @@ export type srsUncheckedUpdateManyWithoutCompoundRefInput = {
   resphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resemail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertycode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   leasename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1260,6 +1259,7 @@ export type srsUncheckedUpdateManyWithoutCompoundRefInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type srsCreateManyUnitRefInput = {
@@ -1268,7 +1268,6 @@ export type srsCreateManyUnitRefInput = {
   resphone?: string | null
   resemail?: string | null
   compound?: string | null
-  clientId?: string | null
   propertycode?: string | null
   priority?: string | null
   leasename?: string | null
@@ -1283,6 +1282,7 @@ export type srsCreateManyUnitRefInput = {
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  clientId?: string | null
 }
 
 export type srsUpdateWithoutUnitRefInput = {
@@ -1303,8 +1303,8 @@ export type srsUpdateWithoutUnitRefInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  compoundRef?: Prisma.CompoundUpdateOneWithoutSrsRecordsNestedInput
   clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
+  compoundRef?: Prisma.CompoundUpdateOneWithoutSrsRecordsNestedInput
 }
 
 export type srsUncheckedUpdateWithoutUnitRefInput = {
@@ -1313,7 +1313,6 @@ export type srsUncheckedUpdateWithoutUnitRefInput = {
   resphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resemail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertycode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   leasename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1328,6 +1327,7 @@ export type srsUncheckedUpdateWithoutUnitRefInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type srsUncheckedUpdateManyWithoutUnitRefInput = {
@@ -1336,7 +1336,6 @@ export type srsUncheckedUpdateManyWithoutUnitRefInput = {
   resphone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resemail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   propertycode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   priority?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   leasename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1351,6 +1350,7 @@ export type srsUncheckedUpdateManyWithoutUnitRefInput = {
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1362,7 +1362,6 @@ export type srsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   resemail?: boolean
   compound?: boolean
   unit?: boolean
-  clientId?: boolean
   propertycode?: boolean
   priority?: boolean
   leasename?: boolean
@@ -1377,9 +1376,10 @@ export type srsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   closed_at?: boolean
   is_closed?: boolean
   updated_at?: boolean
+  clientId?: boolean
+  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
-  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
 }, ExtArgs["result"]["srs"]>
 
 export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1389,7 +1389,6 @@ export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   resemail?: boolean
   compound?: boolean
   unit?: boolean
-  clientId?: boolean
   propertycode?: boolean
   priority?: boolean
   leasename?: boolean
@@ -1404,9 +1403,10 @@ export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   closed_at?: boolean
   is_closed?: boolean
   updated_at?: boolean
+  clientId?: boolean
+  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
-  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
 }, ExtArgs["result"]["srs"]>
 
 export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1416,7 +1416,6 @@ export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   resemail?: boolean
   compound?: boolean
   unit?: boolean
-  clientId?: boolean
   propertycode?: boolean
   priority?: boolean
   leasename?: boolean
@@ -1431,9 +1430,10 @@ export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   closed_at?: boolean
   is_closed?: boolean
   updated_at?: boolean
+  clientId?: boolean
+  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
-  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
 }, ExtArgs["result"]["srs"]>
 
 export type srsSelectScalar = {
@@ -1443,7 +1443,6 @@ export type srsSelectScalar = {
   resemail?: boolean
   compound?: boolean
   unit?: boolean
-  clientId?: boolean
   propertycode?: boolean
   priority?: boolean
   leasename?: boolean
@@ -1458,31 +1457,32 @@ export type srsSelectScalar = {
   closed_at?: boolean
   is_closed?: boolean
   updated_at?: boolean
+  clientId?: boolean
 }
 
-export type srsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "resname" | "resphone" | "resemail" | "compound" | "unit" | "clientId" | "propertycode" | "priority" | "leasename" | "leasecode" | "category" | "subcategory" | "breifdescription" | "timetoenter" | "datetime" | "status" | "yardi_wo_code" | "closed_at" | "is_closed" | "updated_at", ExtArgs["result"]["srs"]>
+export type srsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "resname" | "resphone" | "resemail" | "compound" | "unit" | "propertycode" | "priority" | "leasename" | "leasecode" | "category" | "subcategory" | "breifdescription" | "timetoenter" | "datetime" | "status" | "yardi_wo_code" | "closed_at" | "is_closed" | "updated_at" | "clientId", ExtArgs["result"]["srs"]>
 export type srsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
-  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
 }
 export type srsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
-  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
 }
 export type srsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
-  clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
 }
 
 export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "srs"
   objects: {
+    clientRef: Prisma.$ClientPayload<ExtArgs> | null
     compoundRef: Prisma.$CompoundPayload<ExtArgs> | null
     unitRef: Prisma.$UnitPayload<ExtArgs> | null
-    clientRef: Prisma.$ClientPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1491,7 +1491,6 @@ export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     resemail: string | null
     compound: string | null
     unit: string | null
-    clientId: string | null
     propertycode: string | null
     priority: string | null
     leasename: string | null
@@ -1506,6 +1505,7 @@ export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     closed_at: Date | null
     is_closed: boolean | null
     updated_at: Date | null
+    clientId: string | null
   }, ExtArgs["result"]["srs"]>
   composites: {}
 }
@@ -1900,9 +1900,9 @@ readonly fields: srsFieldRefs;
  */
 export interface Prisma__srsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  clientRef<T extends Prisma.srs$clientRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.srs$clientRefArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   compoundRef<T extends Prisma.srs$compoundRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.srs$compoundRefArgs<ExtArgs>>): Prisma.Prisma__CompoundClient<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   unitRef<T extends Prisma.srs$unitRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.srs$unitRefArgs<ExtArgs>>): Prisma.Prisma__UnitClient<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  clientRef<T extends Prisma.srs$clientRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.srs$clientRefArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1938,7 +1938,6 @@ export interface srsFieldRefs {
   readonly resemail: Prisma.FieldRef<"srs", 'String'>
   readonly compound: Prisma.FieldRef<"srs", 'String'>
   readonly unit: Prisma.FieldRef<"srs", 'String'>
-  readonly clientId: Prisma.FieldRef<"srs", 'String'>
   readonly propertycode: Prisma.FieldRef<"srs", 'String'>
   readonly priority: Prisma.FieldRef<"srs", 'String'>
   readonly leasename: Prisma.FieldRef<"srs", 'String'>
@@ -1953,6 +1952,7 @@ export interface srsFieldRefs {
   readonly closed_at: Prisma.FieldRef<"srs", 'DateTime'>
   readonly is_closed: Prisma.FieldRef<"srs", 'Boolean'>
   readonly updated_at: Prisma.FieldRef<"srs", 'DateTime'>
+  readonly clientId: Prisma.FieldRef<"srs", 'String'>
 }
     
 
@@ -2349,6 +2349,25 @@ export type srsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
+ * srs.clientRef
+ */
+export type srs$clientRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Client
+   */
+  select?: Prisma.ClientSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Client
+   */
+  omit?: Prisma.ClientOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientInclude<ExtArgs> | null
+  where?: Prisma.ClientWhereInput
+}
+
+/**
  * srs.compoundRef
  */
 export type srs$compoundRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2384,25 +2403,6 @@ export type srs$unitRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.UnitInclude<ExtArgs> | null
   where?: Prisma.UnitWhereInput
-}
-
-/**
- * srs.clientRef
- */
-export type srs$clientRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Client
-   */
-  select?: Prisma.ClientSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Client
-   */
-  omit?: Prisma.ClientOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ClientInclude<ExtArgs> | null
-  where?: Prisma.ClientWhereInput
 }
 
 /**

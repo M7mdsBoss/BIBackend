@@ -403,7 +403,10 @@ export const ModelName = {
   whatsapp_messages: 'whatsapp_messages',
   n8n_vectors: 'n8n_vectors',
   n8n_vectors_v2: 'n8n_vectors_v2',
-  srs: 'srs'
+  srs: 'srs',
+  resident_phones: 'resident_phones',
+  residents: 'residents',
+  sync_log: 'sync_log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs"
+    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs" | "resident_phones" | "residents" | "sync_log"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1903,6 +1906,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    resident_phones: {
+      payload: Prisma.$resident_phonesPayload<ExtArgs>
+      fields: Prisma.resident_phonesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.resident_phonesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.resident_phonesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>
+        }
+        findFirst: {
+          args: Prisma.resident_phonesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.resident_phonesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>
+        }
+        findMany: {
+          args: Prisma.resident_phonesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>[]
+        }
+        create: {
+          args: Prisma.resident_phonesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>
+        }
+        createMany: {
+          args: Prisma.resident_phonesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.resident_phonesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>[]
+        }
+        delete: {
+          args: Prisma.resident_phonesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>
+        }
+        update: {
+          args: Prisma.resident_phonesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>
+        }
+        deleteMany: {
+          args: Prisma.resident_phonesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.resident_phonesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.resident_phonesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>[]
+        }
+        upsert: {
+          args: Prisma.resident_phonesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$resident_phonesPayload>
+        }
+        aggregate: {
+          args: Prisma.Resident_phonesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateResident_phones>
+        }
+        groupBy: {
+          args: Prisma.resident_phonesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Resident_phonesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.resident_phonesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Resident_phonesCountAggregateOutputType> | number
+        }
+      }
+    }
+    residents: {
+      payload: Prisma.$residentsPayload<ExtArgs>
+      fields: Prisma.residentsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.residentsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.residentsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>
+        }
+        findFirst: {
+          args: Prisma.residentsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.residentsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>
+        }
+        findMany: {
+          args: Prisma.residentsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>[]
+        }
+        create: {
+          args: Prisma.residentsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>
+        }
+        createMany: {
+          args: Prisma.residentsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.residentsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>[]
+        }
+        delete: {
+          args: Prisma.residentsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>
+        }
+        update: {
+          args: Prisma.residentsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>
+        }
+        deleteMany: {
+          args: Prisma.residentsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.residentsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.residentsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>[]
+        }
+        upsert: {
+          args: Prisma.residentsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$residentsPayload>
+        }
+        aggregate: {
+          args: Prisma.ResidentsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateResidents>
+        }
+        groupBy: {
+          args: Prisma.residentsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ResidentsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.residentsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ResidentsCountAggregateOutputType> | number
+        }
+      }
+    }
+    sync_log: {
+      payload: Prisma.$sync_logPayload<ExtArgs>
+      fields: Prisma.sync_logFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.sync_logFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.sync_logFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>
+        }
+        findFirst: {
+          args: Prisma.sync_logFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.sync_logFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>
+        }
+        findMany: {
+          args: Prisma.sync_logFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>[]
+        }
+        create: {
+          args: Prisma.sync_logCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>
+        }
+        createMany: {
+          args: Prisma.sync_logCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.sync_logCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>[]
+        }
+        delete: {
+          args: Prisma.sync_logDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>
+        }
+        update: {
+          args: Prisma.sync_logUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>
+        }
+        deleteMany: {
+          args: Prisma.sync_logDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.sync_logUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.sync_logUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>[]
+        }
+        upsert: {
+          args: Prisma.sync_logUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$sync_logPayload>
+        }
+        aggregate: {
+          args: Prisma.Sync_logAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSync_log>
+        }
+        groupBy: {
+          args: Prisma.sync_logGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Sync_logGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.sync_logCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Sync_logCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1945,14 +2170,14 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const ClientScalarFieldEnum = {
   id: 'id',
   clientName: 'clientName',
-  address: 'address',
-  crNb: 'crNb',
-  contact: 'contact',
-  domainName: 'domainName',
-  website: 'website',
-  note: 'note',
   createdAt: 'createdAt',
-  adminId: 'adminId'
+  adminId: 'adminId',
+  address: 'address',
+  contact: 'contact',
+  crNb: 'crNb',
+  domainName: 'domainName',
+  note: 'note',
+  website: 'website'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
@@ -1964,7 +2189,6 @@ export const UserScalarFieldEnum = {
   campany: 'campany',
   industry: 'industry',
   campanySize: 'campanySize',
-  campanyRole: 'campanyRole',
   website: 'website',
   phone: 'phone',
   email: 'email',
@@ -1975,6 +2199,7 @@ export const UserScalarFieldEnum = {
   confirmed: 'confirmed',
   acceptedAuthorize: 'acceptedAuthorize',
   acceptedTerms: 'acceptedTerms',
+  campanyRole: 'campanyRole',
   clientId: 'clientId'
 } as const
 
@@ -2043,7 +2268,6 @@ export type SubscriptionRequestScalarFieldEnum = (typeof SubscriptionRequestScal
 
 export const VisitScalarFieldEnum = {
   id: 'id',
-  visitCode: 'visitCode',
   residentFullName: 'residentFullName',
   residentUnit: 'residentUnit',
   residentPhone: 'residentPhone',
@@ -2054,11 +2278,12 @@ export const VisitScalarFieldEnum = {
   visitTime: 'visitTime',
   pdfUrl: 'pdfUrl',
   qrCode: 'qrCode',
-  scanned: 'scanned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isExpired: 'isExpired',
   compound: 'compound',
+  scanned: 'scanned',
+  visitCode: 'visitCode',
   clientId: 'clientId'
 } as const
 
@@ -2265,7 +2490,6 @@ export const SrsScalarFieldEnum = {
   resemail: 'resemail',
   compound: 'compound',
   unit: 'unit',
-  clientId: 'clientId',
   propertycode: 'propertycode',
   priority: 'priority',
   leasename: 'leasename',
@@ -2279,10 +2503,59 @@ export const SrsScalarFieldEnum = {
   yardi_wo_code: 'yardi_wo_code',
   closed_at: 'closed_at',
   is_closed: 'is_closed',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  clientId: 'clientId'
 } as const
 
 export type SrsScalarFieldEnum = (typeof SrsScalarFieldEnum)[keyof typeof SrsScalarFieldEnum]
+
+
+export const Resident_phonesScalarFieldEnum = {
+  id: 'id',
+  resident_id: 'resident_id',
+  phone: 'phone',
+  is_primary: 'is_primary'
+} as const
+
+export type Resident_phonesScalarFieldEnum = (typeof Resident_phonesScalarFieldEnum)[keyof typeof Resident_phonesScalarFieldEnum]
+
+
+export const ResidentsScalarFieldEnum = {
+  id: 'id',
+  tenant_id: 'tenant_id',
+  tenant_code: 'tenant_code',
+  unit_code: 'unit_code',
+  property_code: 'property_code',
+  tenant_status: 'tenant_status',
+  lease_start: 'lease_start',
+  lease_end: 'lease_end',
+  move_in_date: 'move_in_date',
+  move_out_date: 'move_out_date',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  email: 'email',
+  resident_type: 'resident_type',
+  relation: 'relation',
+  roommate_code: 'roommate_code',
+  is_active: 'is_active',
+  synced_at: 'synced_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ResidentsScalarFieldEnum = (typeof ResidentsScalarFieldEnum)[keyof typeof ResidentsScalarFieldEnum]
+
+
+export const Sync_logScalarFieldEnum = {
+  id: 'id',
+  started_at: 'started_at',
+  finished_at: 'finished_at',
+  status: 'status',
+  records_synced: 'records_synced',
+  records_deactivated: 'records_deactivated',
+  error_message: 'error_message'
+} as const
+
+export type Sync_logScalarFieldEnum = (typeof Sync_logScalarFieldEnum)[keyof typeof Sync_logScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2556,6 +2829,9 @@ export type GlobalOmitConfig = {
   n8n_vectors?: Prisma.n8n_vectorsOmit
   n8n_vectors_v2?: Prisma.n8n_vectors_v2Omit
   srs?: Prisma.srsOmit
+  resident_phones?: Prisma.resident_phonesOmit
+  residents?: Prisma.residentsOmit
+  sync_log?: Prisma.sync_logOmit
 }
 
 /* Types for Logging */

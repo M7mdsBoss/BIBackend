@@ -70,7 +70,10 @@ export const ModelName = {
   whatsapp_messages: 'whatsapp_messages',
   n8n_vectors: 'n8n_vectors',
   n8n_vectors_v2: 'n8n_vectors_v2',
-  srs: 'srs'
+  srs: 'srs',
+  resident_phones: 'resident_phones',
+  residents: 'residents',
+  sync_log: 'sync_log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -92,14 +95,14 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const ClientScalarFieldEnum = {
   id: 'id',
   clientName: 'clientName',
-  address: 'address',
-  crNb: 'crNb',
-  contact: 'contact',
-  domainName: 'domainName',
-  website: 'website',
-  note: 'note',
   createdAt: 'createdAt',
-  adminId: 'adminId'
+  adminId: 'adminId',
+  address: 'address',
+  contact: 'contact',
+  crNb: 'crNb',
+  domainName: 'domainName',
+  note: 'note',
+  website: 'website'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
@@ -111,7 +114,6 @@ export const UserScalarFieldEnum = {
   campany: 'campany',
   industry: 'industry',
   campanySize: 'campanySize',
-  campanyRole: 'campanyRole',
   website: 'website',
   phone: 'phone',
   email: 'email',
@@ -122,6 +124,7 @@ export const UserScalarFieldEnum = {
   confirmed: 'confirmed',
   acceptedAuthorize: 'acceptedAuthorize',
   acceptedTerms: 'acceptedTerms',
+  campanyRole: 'campanyRole',
   clientId: 'clientId'
 } as const
 
@@ -190,7 +193,6 @@ export type SubscriptionRequestScalarFieldEnum = (typeof SubscriptionRequestScal
 
 export const VisitScalarFieldEnum = {
   id: 'id',
-  visitCode: 'visitCode',
   residentFullName: 'residentFullName',
   residentUnit: 'residentUnit',
   residentPhone: 'residentPhone',
@@ -201,11 +203,12 @@ export const VisitScalarFieldEnum = {
   visitTime: 'visitTime',
   pdfUrl: 'pdfUrl',
   qrCode: 'qrCode',
-  scanned: 'scanned',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isExpired: 'isExpired',
   compound: 'compound',
+  scanned: 'scanned',
+  visitCode: 'visitCode',
   clientId: 'clientId'
 } as const
 
@@ -412,7 +415,6 @@ export const SrsScalarFieldEnum = {
   resemail: 'resemail',
   compound: 'compound',
   unit: 'unit',
-  clientId: 'clientId',
   propertycode: 'propertycode',
   priority: 'priority',
   leasename: 'leasename',
@@ -426,10 +428,59 @@ export const SrsScalarFieldEnum = {
   yardi_wo_code: 'yardi_wo_code',
   closed_at: 'closed_at',
   is_closed: 'is_closed',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  clientId: 'clientId'
 } as const
 
 export type SrsScalarFieldEnum = (typeof SrsScalarFieldEnum)[keyof typeof SrsScalarFieldEnum]
+
+
+export const Resident_phonesScalarFieldEnum = {
+  id: 'id',
+  resident_id: 'resident_id',
+  phone: 'phone',
+  is_primary: 'is_primary'
+} as const
+
+export type Resident_phonesScalarFieldEnum = (typeof Resident_phonesScalarFieldEnum)[keyof typeof Resident_phonesScalarFieldEnum]
+
+
+export const ResidentsScalarFieldEnum = {
+  id: 'id',
+  tenant_id: 'tenant_id',
+  tenant_code: 'tenant_code',
+  unit_code: 'unit_code',
+  property_code: 'property_code',
+  tenant_status: 'tenant_status',
+  lease_start: 'lease_start',
+  lease_end: 'lease_end',
+  move_in_date: 'move_in_date',
+  move_out_date: 'move_out_date',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  email: 'email',
+  resident_type: 'resident_type',
+  relation: 'relation',
+  roommate_code: 'roommate_code',
+  is_active: 'is_active',
+  synced_at: 'synced_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ResidentsScalarFieldEnum = (typeof ResidentsScalarFieldEnum)[keyof typeof ResidentsScalarFieldEnum]
+
+
+export const Sync_logScalarFieldEnum = {
+  id: 'id',
+  started_at: 'started_at',
+  finished_at: 'finished_at',
+  status: 'status',
+  records_synced: 'records_synced',
+  records_deactivated: 'records_deactivated',
+  error_message: 'error_message'
+} as const
+
+export type Sync_logScalarFieldEnum = (typeof Sync_logScalarFieldEnum)[keyof typeof Sync_logScalarFieldEnum]
 
 
 export const SortOrder = {
