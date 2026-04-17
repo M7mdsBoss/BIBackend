@@ -17,6 +17,7 @@ const createSchema = z.object({
   role: z.enum(MEMBER_ROLES),
   phone: z.string().optional(),
   compoundIds: z.array(z.uuid()).min(1).optional(),
+  password : z.string().optional()
 });
 
 const updateSchema = z.object({
@@ -29,8 +30,8 @@ const updateSchema = z.object({
 export function createMemberRouter(prisma: PrismaClient) {
   const router = Router();
 
-  // All member routes require OWNER role
-  router.use(guard('OWNER'));
+  // All member routes require CLIENT role
+  router.use(guard('CLIENT'));
 
   // POST /api/v1/member
   router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -43,8 +44,7 @@ export function createMemberRouter(prisma: PrismaClient) {
         });
         return;
       }
-
-      const result = await createMember(prisma, req.user!.id, parsed.data);
+      const result = await createMember(prisma, req.user!.clientId!, parsed.data);
       res.status(201).json(result);
     } catch (err) {
       next(err);
@@ -54,7 +54,7 @@ export function createMemberRouter(prisma: PrismaClient) {
   // GET /api/v1/member
   router.get('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const members = await getMembers(prisma, req.user!.id);
+      const members = await getMembers(prisma, req.user!.clientId!);
       res.json(members);
     } catch (err) {
       next(err);
@@ -64,7 +64,7 @@ export function createMemberRouter(prisma: PrismaClient) {
   // GET /api/v1/member/:id
   router.get('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const member = await getMemberById(prisma, req.user!.id, req.params.id as string);
+      const member = await getMemberById(prisma, req.user!.clientId!, req.params.id as string);
       res.json(member);
     } catch (err) {
       next(err);
@@ -83,7 +83,7 @@ export function createMemberRouter(prisma: PrismaClient) {
         return;
       }
 
-      const result = await updateMember(prisma, req.user!.id, req.params.id as string, parsed.data);
+      const result = await updateMember(prisma, req.user!.clientId!, req.params.id as string, parsed.data);
       res.json(result);
     } catch (err) {
       next(err);
@@ -93,7 +93,7 @@ export function createMemberRouter(prisma: PrismaClient) {
   // DELETE /api/v1/member/:id
   router.delete('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const result = await deleteMember(prisma, req.user!.id, req.params.id as string);
+      const result = await deleteMember(prisma, req.user!.clientId!, req.params.id as string);
       res.json(result);
     } catch (err) {
       next(err);

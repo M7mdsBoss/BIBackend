@@ -8,6 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Client.js'
 export type * from './models/User.js'
 export type * from './models/Compound.js'
 export type * from './models/Unit.js'

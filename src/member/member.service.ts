@@ -7,7 +7,6 @@ import { PUBLIC_URL } from "../helper/const/base";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-// Valid roles an OWNER can assign to their members
 export const MEMBER_ROLES = ["GUARD", "OPERATION", "MANAGER"] as const;
 export type MemberRole = (typeof MEMBER_ROLES)[number];
 
@@ -17,6 +16,7 @@ export interface CreateMemberDto {
   role: MemberRole;
   phone?: string;
   compoundIds?: string[];
+  password?: string;
 }
 
 export interface UpdateMemberDto {
@@ -50,7 +50,7 @@ async function generateUniqueToken(prisma: PrismaClient): Promise<string> {
 
 export async function createMember(
   prisma: PrismaClient,
-  ownerId: string,
+  clientId: string,
   dto: CreateMemberDto,
 ) {
   const existing = await prisma.user.findUnique({
@@ -62,14 +62,10 @@ export async function createMember(
     throw err;
   }
 
-  const generatedToken = await generateUniqueToken(prisma);
-  const rawPassword = generateRandomPassword();
-  const hashedPassword = await bcrypt.hash(rawPassword, 10);
-
-  // Validate that all provided compoundIds belong to this owner
+  // Validate that all provided compoundIds belong to this client
   if (dto.compoundIds?.length) {
     const owned = await (prisma.compound as any).count({
-      where: { id: { in: dto.compoundIds }, ownerId },
+      where: { id: { in: dto.compoundIds }, clientId },
     });
     if (owned !== dto.compoundIds.length) {
       const err: any = new Error("compound-not-found");
@@ -78,6 +74,15 @@ export async function createMember(
     }
   }
 
+  let generatedPassword;
+  if (dto.password) {
+    generatedPassword = dto.password;
+  } else {
+    generatedPassword = generateRandomPassword();
+  }
+
+  const generatedToken = await generateUniqueToken(prisma);
+  const hashedPassword = await bcrypt.hash(generatedPassword, 10);
   const memberId = uuidv4();
 
   const member = await (prisma.user as any).create({
@@ -87,12 +92,12 @@ export async function createMember(
       email: dto.email,
       phone: dto.phone,
       role: dto.role,
-      ownerId,
+      clientId,
       generatedToken,
       password: hashedPassword,
-      confirmed: false,
-      acceptedAuthorize: false,
-      acceptedTerms: false,
+      confirmed: dto.password ? true : false,
+      acceptedAuthorize: true,
+      acceptedTerms: true,
     },
   });
 
@@ -105,29 +110,52 @@ export async function createMember(
     });
   }
 
-  const confirmToken = jwt.sign({ id: memberId }, JWT_SECRET, {
-    expiresIn: "60m",
-  });
-  const confirmationLink = `${PUBLIC_URL}/confirm-member/${confirmToken}`;
+  if (!dto.password) {
+    const confirmToken = jwt.sign({ id: memberId }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+    const confirmationLink = `${PUBLIC_URL}/confirm-member/${confirmToken}`;
 
-  const emailResult = await sendEmail({
-    to: dto.email,
-    subject: "You've been invited – The Blue Innovation | تمت دعوتك",
-    htmlBody: buildMemberInvitationEmail(
-      dto.name,
-      confirmationLink,
-      rawPassword,
-    ),
-  });
+    const emailResult = await sendEmail({
+      to: dto.email,
+      subject: "You've been invited – The Blue Innovation | تمت دعوتك",
+      htmlBody: buildMemberInvitationEmail(dto.name, confirmationLink),
+    });
 
-  if (!emailResult.success) {
-    // Roll back the created member if email fails
-    await (prisma.user as any).delete({ where: { id: memberId } });
-    const err: any = new Error(
-      emailResult.error ?? "Failed to send invitation email",
-    );
-    err.status = 500;
-    throw err;
+    if (!emailResult.success) {
+      // Roll back the created member if email fails
+      await (prisma.user as any).delete({ where: { id: memberId } });
+      const err: any = new Error(
+        emailResult.error ?? "Failed to send invitation email",
+      );
+      err.status = 500;
+      throw err;
+    }
+  } else {
+    const clientRecord = await (prisma.client as any).findUnique({
+      where: { id: clientId },
+      select: { admin: { select: { email: true } } },
+    });
+    const emailResult = await sendEmail({
+      to: clientRecord?.admin?.email as string,
+      subject: "You've been invited – The Blue Innovation | تمت دعوتك",
+      htmlBody: buildClientMemberInvitationDetailsEmail(
+        dto.name,
+        dto.email,
+        dto.password,
+        dto.role,
+      ),
+    });
+
+    if (!emailResult.success) {
+      // Roll back the created member if email fails
+      await (prisma.user as any).delete({ where: { id: memberId } });
+      const err: any = new Error(
+        emailResult.error ?? "Failed to send invitation email",
+      );
+      err.status = 500;
+      throw err;
+    }
   }
 
   const { password, ...rest } = member;
@@ -151,7 +179,9 @@ export async function confirmMember(
     throw err;
   }
 
-  const user = await prisma.user.findUnique({ where: { id: payload.id } });
+  const user = await (prisma.user as any).findUnique({
+    where: { id: payload.id },
+  });
   if (!user) {
     const err: any = new Error("user-not-found");
     err.status = 400;
@@ -171,7 +201,7 @@ export async function confirmMember(
   });
 
   const loginToken = jwt.sign(
-    { id: user.id, role: user.role, ownerId: user.ownerId ?? null },
+    { id: user.id, role: user.role, clientId: user.clientId ?? null },
     JWT_SECRET,
   );
   return {
@@ -180,9 +210,14 @@ export async function confirmMember(
   };
 }
 
-export async function getMembers(prisma: PrismaClient, ownerId: string) {
+export async function getMembers(prisma: PrismaClient, clientId: string) {
+  if (!clientId) {
+    const err: any = new Error("not-onboard");
+    err.status = 404;
+    throw err;
+  }
   const members = await (prisma.user as any).findMany({
-    where: { ownerId },
+    where: { clientId, role: { in: MEMBER_ROLES } },
     orderBy: { createdAt: "desc" },
     include: {
       assignedCompounds: {
@@ -196,11 +231,11 @@ export async function getMembers(prisma: PrismaClient, ownerId: string) {
 
 export async function getMemberById(
   prisma: PrismaClient,
-  ownerId: string,
+  clientId: string,
   memberId: string,
 ) {
   const member = await (prisma.user as any).findFirst({
-    where: { id: memberId, ownerId },
+    where: { id: memberId, clientId },
     include: {
       assignedCompounds: true,
     },
@@ -218,12 +253,12 @@ export async function getMemberById(
 
 export async function updateMember(
   prisma: PrismaClient,
-  ownerId: string,
+  clientId: string,
   memberId: string,
   dto: UpdateMemberDto,
 ) {
   const member = await (prisma.user as any).findFirst({
-    where: { id: memberId, ownerId },
+    where: { id: memberId, clientId },
   });
 
   if (!member) {
@@ -245,7 +280,7 @@ export async function updateMember(
   if (dto.compoundIds !== undefined) {
     if (dto.compoundIds.length) {
       const owned = await (prisma.compound as any).count({
-        where: { id: { in: dto.compoundIds }, ownerId },
+        where: { id: { in: dto.compoundIds }, clientId },
       });
       if (owned !== dto.compoundIds.length) {
         const err: any = new Error("compound-not-found");
@@ -280,11 +315,11 @@ export async function updateMember(
 
 export async function deleteMember(
   prisma: PrismaClient,
-  ownerId: string,
+  clientId: string,
   memberId: string,
 ) {
   const member = await (prisma.user as any).findFirst({
-    where: { id: memberId, ownerId },
+    where: { id: memberId, clientId },
   });
 
   if (!member) {
@@ -300,7 +335,6 @@ export async function deleteMember(
 function buildMemberInvitationEmail(
   name: string,
   confirmationLink: string,
-  password: string,
 ): string {
   return `
     <html>
@@ -328,6 +362,57 @@ function buildMemberInvitationEmail(
           </div>
           <hr style="margin: 30px 0;" />
           <p style="font-size: 0.9em;">The Blue Innovation Team<br/>www.theblueinnovation.com</p>
+        </div>
+      </body>
+    </html>
+  `;
+}
+
+function buildClientMemberInvitationDetailsEmail(
+  name: string,
+  email: string,
+  password: string,
+  role: string,
+): string {
+  return `
+    <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <img src="https://res.cloudinary.com/dcsjywfui/image/upload/v1771925146/bi_bctaie.png" alt="Company Logo" style="max-height: 60px; margin-bottom: 20px;" />
+          <h2>Hi ${name || "there"},</h2>
+
+          <p>
+            You have created a member to join <strong>The Blue Innovation</strong> platform as <strong>${role}</strong>.
+            An account has been created for you with the following credentials:
+          </p>
+
+          <div style="background-color: #f5f5f5; padding: 16px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 6px 0;"><strong>Email:</strong> ${email}</p>
+            <p style="margin: 6px 0;"><strong>Password:</strong> ${password}</p>
+            <p style="margin: 6px 0;"><strong>Role:</strong> ${role}</p>
+          </div>
+
+          <hr style="margin: 30px 0;" />
+
+          <div dir="rtl" style="text-align: right;">
+            <h2>مرحباً ${name || ""}،</h2>
+
+           <p>
+  لقد قمت بإنشاء عضو للانضمام إلى منصة <strong>The Blue Innovation</strong> كـ <strong>${role}</strong>.
+  تم إنشاء حساب له بالبيانات التالية:
+</p>
+            <div style="background-color: #f5f5f5; padding: 16px; border-radius: 6px; margin: 20px 0;">
+              <p style="margin: 6px 0;"><strong>البريد الإلكتروني:</strong> ${email}</p>
+              <p style="margin: 6px 0;"><strong>كلمة المرور:</strong> ${password}</p>
+              <p style="margin: 6px 0;"><strong>الدور:</strong> ${role}</p>
+            </div>
+          </div>
+
+          <hr style="margin: 30px 0;" />
+
+          <p style="font-size: 0.9em;">
+            The Blue Innovation Team<br/>www.theblueinnovation.com
+          </p>
         </div>
       </body>
     </html>

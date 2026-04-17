@@ -21,12 +21,12 @@ const listQuerySchema = z.object({
 export function createAnalyticsRouter(prisma: PrismaClient) {
   const router = Router();
 
-  router.use(guard('OWNER', 'OPERATION', 'MANAGER'));
+  router.use(guard('CLIENT', 'OPERATION', 'MANAGER'));
 
   // GET /analytics/requests/by-agent
   router.get('/requests/by-agent', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role);
+      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role, req.user!.clientId);
       const [byCategory, byCompound, byUnit] = await Promise.all([
         getSrsByCategory(prisma, scopedWhere),
         GetSrsByCompound(prisma, scopedWhere),
@@ -41,7 +41,7 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
   // GET /analytics/requests/status
   router.get('/requests/status', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role);
+      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role, req.user!.clientId);
       res.json(await getSrsStatus(prisma, scopedWhere));
     } catch (err) {
       next(err);
@@ -59,7 +59,7 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
         });
         return;
       }
-      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role);
+      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role, req.user!.clientId);
       res.json(await listSrsRequests(prisma, parsed.data, scopedWhere));
     } catch (err) {
       next(err);

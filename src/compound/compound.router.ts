@@ -6,21 +6,21 @@ import { createCompound, getCompounds, getCompoundById, updateCompound, getMyCom
 
 const createSchema = z.object({
   name: z.string().min(1),
-  ownerId: z.uuid(),
+  clientId: z.uuid(),
 });
 
 const updateSchema = z.object({
   name: z.string().min(1).optional(),
-  ownerId: z.uuid().optional(),
+  clientId: z.uuid().optional(),
 });
 
 export function createCompoundRouter(prisma: PrismaClient) {
   const router = Router();
 
-  // GET /api/v1/compound/my  — OWNER only
-  router.get('/my', guard('OWNER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+  // GET /api/v1/compound/my  — CLIENT only
+  router.get('/my', guard('CLIENT'), async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      res.json(await getMyCompounds(prisma, req.user!.id));
+      res.json(await getMyCompounds(prisma, req.user!.clientId!));
     } catch (err) {
       next(err);
     }

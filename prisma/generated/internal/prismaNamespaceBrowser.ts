@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Client: 'Client',
   User: 'User',
   Compound: 'Compound',
   Unit: 'Unit',
@@ -88,6 +89,22 @@ export const TransactionIsolationLevel = {
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  clientName: 'clientName',
+  address: 'address',
+  crNb: 'crNb',
+  contact: 'contact',
+  domainName: 'domainName',
+  website: 'website',
+  note: 'note',
+  createdAt: 'createdAt',
+  adminId: 'adminId'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -105,7 +122,7 @@ export const UserScalarFieldEnum = {
   confirmed: 'confirmed',
   acceptedAuthorize: 'acceptedAuthorize',
   acceptedTerms: 'acceptedTerms',
-  ownerId: 'ownerId'
+  clientId: 'clientId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -116,7 +133,7 @@ export const CompoundScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   createdAt: 'createdAt',
-  ownerId: 'ownerId'
+  clientId: 'clientId'
 } as const
 
 export type CompoundScalarFieldEnum = (typeof CompoundScalarFieldEnum)[keyof typeof CompoundScalarFieldEnum]
@@ -189,7 +206,7 @@ export const VisitScalarFieldEnum = {
   updatedAt: 'updatedAt',
   isExpired: 'isExpired',
   compound: 'compound',
-  userToken: 'userToken'
+  clientId: 'clientId'
 } as const
 
 export type VisitScalarFieldEnum = (typeof VisitScalarFieldEnum)[keyof typeof VisitScalarFieldEnum]
@@ -395,7 +412,7 @@ export const SrsScalarFieldEnum = {
   resemail: 'resemail',
   compound: 'compound',
   unit: 'unit',
-  userToken: 'userToken',
+  clientId: 'clientId',
   propertycode: 'propertycode',
   priority: 'priority',
   leasename: 'leasename',
