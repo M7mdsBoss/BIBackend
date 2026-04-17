@@ -166,16 +166,16 @@ export type AssignedCompoundWhereInput = {
   assignedAt?: Prisma.DateTimeFilter<"AssignedCompound"> | Date | string
   guardId?: Prisma.StringFilter<"AssignedCompound"> | string
   compoundId?: Prisma.StringFilter<"AssignedCompound"> | string
-  guard?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   compound?: Prisma.XOR<Prisma.CompoundScalarRelationFilter, Prisma.CompoundWhereInput>
+  guard?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type AssignedCompoundOrderByWithRelationInput = {
   assignedAt?: Prisma.SortOrder
   guardId?: Prisma.SortOrder
   compoundId?: Prisma.SortOrder
-  guard?: Prisma.UserOrderByWithRelationInput
   compound?: Prisma.CompoundOrderByWithRelationInput
+  guard?: Prisma.UserOrderByWithRelationInput
 }
 
 export type AssignedCompoundWhereUniqueInput = Prisma.AtLeast<{
@@ -186,8 +186,8 @@ export type AssignedCompoundWhereUniqueInput = Prisma.AtLeast<{
   assignedAt?: Prisma.DateTimeFilter<"AssignedCompound"> | Date | string
   guardId?: Prisma.StringFilter<"AssignedCompound"> | string
   compoundId?: Prisma.StringFilter<"AssignedCompound"> | string
-  guard?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   compound?: Prisma.XOR<Prisma.CompoundScalarRelationFilter, Prisma.CompoundWhereInput>
+  guard?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "guardId_compoundId">
 
 export type AssignedCompoundOrderByWithAggregationInput = {
@@ -210,8 +210,8 @@ export type AssignedCompoundScalarWhereWithAggregatesInput = {
 
 export type AssignedCompoundCreateInput = {
   assignedAt?: Date | string
-  guard: Prisma.UserCreateNestedOneWithoutAssignedCompoundsInput
   compound: Prisma.CompoundCreateNestedOneWithoutAssignedMembersInput
+  guard: Prisma.UserCreateNestedOneWithoutAssignedCompoundsInput
 }
 
 export type AssignedCompoundUncheckedCreateInput = {
@@ -222,8 +222,8 @@ export type AssignedCompoundUncheckedCreateInput = {
 
 export type AssignedCompoundUpdateInput = {
   assignedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  guard?: Prisma.UserUpdateOneRequiredWithoutAssignedCompoundsNestedInput
   compound?: Prisma.CompoundUpdateOneRequiredWithoutAssignedMembersNestedInput
+  guard?: Prisma.UserUpdateOneRequiredWithoutAssignedCompoundsNestedInput
 }
 
 export type AssignedCompoundUncheckedUpdateInput = {
@@ -492,24 +492,24 @@ export type AssignedCompoundSelect<ExtArgs extends runtime.Types.Extensions.Inte
   assignedAt?: boolean
   guardId?: boolean
   compoundId?: boolean
-  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
+  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assignedCompound"]>
 
 export type AssignedCompoundSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   assignedAt?: boolean
   guardId?: boolean
   compoundId?: boolean
-  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
+  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assignedCompound"]>
 
 export type AssignedCompoundSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   assignedAt?: boolean
   guardId?: boolean
   compoundId?: boolean
-  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
+  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assignedCompound"]>
 
 export type AssignedCompoundSelectScalar = {
@@ -520,23 +520,23 @@ export type AssignedCompoundSelectScalar = {
 
 export type AssignedCompoundOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"assignedAt" | "guardId" | "compoundId", ExtArgs["result"]["assignedCompound"]>
 export type AssignedCompoundInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
+  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type AssignedCompoundIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
+  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type AssignedCompoundIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
+  guard?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $AssignedCompoundPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AssignedCompound"
   objects: {
-    guard: Prisma.$UserPayload<ExtArgs>
     compound: Prisma.$CompoundPayload<ExtArgs>
+    guard: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     assignedAt: Date
@@ -936,8 +936,8 @@ readonly fields: AssignedCompoundFieldRefs;
  */
 export interface Prisma__AssignedCompoundClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  guard<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   compound<T extends Prisma.CompoundDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompoundDefaultArgs<ExtArgs>>): Prisma.Prisma__CompoundClient<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  guard<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

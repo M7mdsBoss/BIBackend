@@ -7,7 +7,7 @@ import { PUBLIC_URL } from "../helper/const/base";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-export const MEMBER_ROLES = ["GUARD", "OPERATION", "MANAGER"] as const;
+export const MEMBER_ROLES = ["SECURITY", "OPERATION", "MANAGER"] as const;
 export type MemberRole = (typeof MEMBER_ROLES)[number];
 
 export interface CreateMemberDto {

@@ -111,7 +111,7 @@ export const swaggerSpec = {
                     id:    { type: 'string', format: 'uuid' },
                     name:  { type: 'string' },
                     email: { type: 'string', format: 'email' },
-                    role:  { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'] },
+                    role:  { type: 'string', enum: ['SECURITY', 'OPERATION', 'MANAGER'] },
                   },
                 },
               },
@@ -191,7 +191,7 @@ export const swaggerSpec = {
                         id:    { type: 'string', format: 'uuid' },
                         name:  { type: 'string' },
                         email: { type: 'string', format: 'email' },
-                        role:  { type: 'string', example: 'GUARD' },
+                        role:  { type: 'string', example: 'SECURITY' },
                       },
                     },
                   },
@@ -222,7 +222,7 @@ export const swaggerSpec = {
           name:      { type: 'string', example: 'Khalid Guard' },
           email:     { type: 'string', format: 'email' },
           phone:     { type: 'string', example: '+966501234567' },
-          role:      { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'], example: 'GUARD' },
+          role:      { type: 'string', enum: ['SECURITY', 'OPERATION', 'MANAGER'], example: 'SECURITY' },
           clientId:  { type: 'string', format: 'uuid', description: 'Client this member belongs to' },
           createdAt: { type: 'string', format: 'date-time' },
         },
@@ -407,7 +407,7 @@ export const swaggerSpec = {
       post: {
         tags: ['Auth'],
         summary: 'Confirm member invitation — set password and activate account',
-        description: 'Used by invited GUARD / OPERATION / MANAGER users. Returns a JWT with their `clientId` already populated.',
+        description: 'Used by invited SECURITY / OPERATION / MANAGER users. Returns a JWT with their `clientId` already populated.',
         requestBody: {
           required: true,
           content: {
@@ -438,7 +438,7 @@ export const swaggerSpec = {
                         id:    { type: 'string', format: 'uuid' },
                         name:  { type: 'string' },
                         email: { type: 'string', format: 'email' },
-                        role:  { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'] },
+                        role:  { type: 'string', enum: ['SECURITY', 'OPERATION', 'MANAGER'] },
                       },
                     },
                   },
@@ -488,13 +488,13 @@ export const swaggerSpec = {
                         id:       { type: 'string', format: 'uuid' },
                         name:     { type: 'string' },
                         email:    { type: 'string', format: 'email' },
-                        role:     { type: 'string', enum: ['CLIENT', 'GUARD', 'ADMIN', 'OPERATION', 'MANAGER'] },
+                        role:     { type: 'string', enum: ['CLIENT', 'SECURITY', 'ADMIN', 'OPERATION', 'MANAGER'] },
                       },
                     },
                     myCompound: {
                       type: 'array',
                       items: { type: 'string' },
-                      description: 'Compound names the user has access to. CLIENT: all compounds of their Client. GUARD/OPERATION/MANAGER: only assigned compounds. ADMIN: empty array.',
+                      description: 'Compound names the user has access to. CLIENT: all compounds of their Client. SECURITY/OPERATION/MANAGER: only assigned compounds. ADMIN: empty array.',
                       example: ['Green Valley', 'Palm Residence'],
                     },
                   },
@@ -697,7 +697,7 @@ export const swaggerSpec = {
     '/api/v1/member': {
       post: {
         tags: ['Member'],
-        summary: `Create a member (GUARD / OPERATION / MANAGER) under the authenticated Client Admin. ${clientNote}`,
+        summary: `Create a member (SECURITY / OPERATION / MANAGER) under the authenticated Client Admin. ${clientNote}`,
         description: 'An invitation email is sent. The member must follow the link in the email and call `POST /auth/confirm-member` to set their password and activate their account.',
         security: bearerAuth,
         requestBody: {
@@ -710,7 +710,7 @@ export const swaggerSpec = {
                 properties: {
                   name:  { type: 'string', example: 'Khalid Guard' },
                   email: { type: 'string', format: 'email' },
-                  role:  { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'], example: 'GUARD' },
+                  role:  { type: 'string', enum: ['SECURITY', 'OPERATION', 'MANAGER'], example: 'SECURITY' },
                   phone: { type: 'string', example: '+966501234567' },
                   compoundIds: {
                     type: 'array',
@@ -802,7 +802,7 @@ export const swaggerSpec = {
                 properties: {
                   name:        { type: 'string' },
                   phone:       { type: 'string' },
-                  role:        { type: 'string', enum: ['GUARD', 'OPERATION', 'MANAGER'] },
+                  role:        { type: 'string', enum: ['SECURITY', 'OPERATION', 'MANAGER'] },
                   compoundIds: { type: 'array', items: { type: 'string', format: 'uuid' } },
                 },
               },
@@ -1136,7 +1136,7 @@ export const swaggerSpec = {
       get: {
         tags: ['Visitors'],
         summary: `List visits with pagination and optional unit filter. ${authNote}`,
-        description: 'Scoped by role: CLIENT sees all visits for their Client; GUARD/MANAGER see visits for their assigned compounds.',
+        description: 'Scoped by role: CLIENT sees all visits for their Client; SECURITY/MANAGER see visits for their assigned compounds.',
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'page',  schema: { type: 'integer', default: 1 } },
@@ -1160,7 +1160,7 @@ export const swaggerSpec = {
             },
           },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – CLIENT, GUARD, or MANAGER role required' },
+          403: { description: 'Forbidden – CLIENT, SECURITY, or MANAGER role required' },
         },
       },
     },
@@ -1168,12 +1168,12 @@ export const swaggerSpec = {
       get: {
         tags: ['Visitors'],
         summary: `Visitor stats — total, per compound/unit, last 7 days, today. ${authNote}`,
-        description: 'Scoped by role: CLIENT sees stats for their Client; GUARD/MANAGER see stats for their assigned compounds.',
+        description: 'Scoped by role: CLIENT sees stats for their Client; SECURITY/MANAGER see stats for their assigned compounds.',
         security: bearerAuth,
         responses: {
           200: { description: 'Statistics object' },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – CLIENT, GUARD, or MANAGER role required' },
+          403: { description: 'Forbidden – CLIENT, SECURITY, or MANAGER role required' },
         },
       },
     },
@@ -1191,7 +1191,7 @@ export const swaggerSpec = {
             content: { 'application/json': { schema: { $ref: '#/components/schemas/Visit' } } },
           },
           401: { description: 'Unauthorized' },
-          403: { description: 'Forbidden – CLIENT, GUARD, or MANAGER role required' },
+          403: { description: 'Forbidden – CLIENT, SECURITY, or MANAGER role required' },
           404: { description: 'Visit not found' },
         },
       },

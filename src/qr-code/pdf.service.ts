@@ -135,8 +135,8 @@ export async function generateVisitPDF(visit: {
   residentUnit: string;
   residentPhone: string;
   visitorFullName: string;
-  visitorCarType: string;
-  visitorLicensePlate: string;
+  visitorCarType?: string;
+  visitorLicensePlate?: string;
   visitDate: Date;
   visitTime: string;
   createdAt: Date;

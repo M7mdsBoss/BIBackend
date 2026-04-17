@@ -7,145 +7,109 @@ datasource db {
   provider = "postgresql"
 }
 
-enum UserRole {
-  ADMIN
-  CLIENT
-  GUARD
-  OPERATION
-  MANAGER
-}
-
-
-// ── Client ────────────────────────────────────────────────────────────────────
-// Top-level business owner. One CLIENT user is the admin; all business data
-// (compounds, visits, srs) belongs here — not to User directly.
-
 model Client {
-  id         String   @id
+  id         String     @id
   clientName String
-  address    String? 
-  crNb       String?
+  createdAt  DateTime   @default(now())
+  adminId    String?    @unique
+  address    String?
   contact    String?
+  crNb       String?
   domainName String?
-  website    String?
   note       String?
-  createdAt  DateTime @default(now())
-
-  // 1-1: the CLIENT-role user who administers this client
-  adminId    String?  @unique
-  admin      User?    @relation("ClientAdmin", fields: [adminId], references: [id])
-
-  members    User[]   @relation("ClientMembers")
-
+  website    String?
+  admin      User?      @relation("ClientAdmin", fields: [adminId], references: [id])
   compounds  Compound[]
-  srsRecords srs[]    @relation("ClientSrs")
-  visits     Visit[]  @relation("ClientVisit")
+  members    User[]     @relation("ClientMembers")
+  visits     Visit[]    @relation("ClientVisit")
+  srsRecords srs[]      @relation("ClientSrs")
 }
 
 model User {
-  id                String    @id
+  id                String             @id
   name              String
   campany           String?
   industry          String?
-  campanySize       String?   @db.VarChar(10)
-  campanyRole       String?
+  campanySize       String?            @db.VarChar(10)
   website           String?
   phone             String?
-  email             String    @unique
+  email             String             @unique
   password          String
-  generatedToken    String    @unique
-  role              UserRole  @default(CLIENT)
-  createdAt         DateTime  @default(now())
-  confirmed         Boolean   @default(false)
-  acceptedAuthorize Boolean   @default(false)
-  acceptedTerms     Boolean   @default(false)
-
-  // If role=CLIENT: back-relation to the Client this user clent admin (1-1)
-  clientAsAdmin     Client?   @relation("ClientAdmin")
-
-  // If role=GUARD/OPERATION/MANAGER: the Client they belong to
+  generatedToken    String             @unique
+  role              UserRole           @default(CLIENT)
+  createdAt         DateTime           @default(now())
+  confirmed         Boolean            @default(false)
+  acceptedAuthorize Boolean            @default(false)
+  acceptedTerms     Boolean            @default(false)
+  campanyRole       String?
   clientId          String?
-  client            Client?   @relation("ClientMembers", fields: [clientId], references: [id], onDelete: SetNull)
-
-  // GUARD/OPERATION/MANAGER → Compounds they are assigned to
   assignedCompounds AssignedCompound[]
+  clientAsAdmin     Client?            @relation("ClientAdmin")
+  client            Client?            @relation("ClientMembers", fields: [clientId], references: [id])
 }
 
-// ── Compound & Unit ───────────────────────────────────────────────────────────
-
 model Compound {
-  id        String   @id
-  name      String
-  slug      String   @unique // COMP_{normalized_name}
-  createdAt DateTime @default(now())
-
-  clientId  String
-  client    Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
-
-  units           Unit[]
+  id              String             @id
+  name            String
+  slug            String             @unique
+  createdAt       DateTime           @default(now())
+  clientId        String
   assignedMembers AssignedCompound[]
-  srsRecords      srs[]   @relation("CompoundSrs")
-  visits          Visit[] @relation("CompoundVisit")
+  client          Client             @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  units           Unit[]
+  visits          Visit[]            @relation("CompoundVisit")
+  srsRecords      srs[]              @relation("CompoundSrs")
 }
 
 model Unit {
-  id        String   @id
-  name      String
-  slug      String   @unique // UNIT_{normalized_name}
-  createdAt DateTime @default(now())
-
+  id         String   @id
+  name       String
+  slug       String   @unique
+  createdAt  DateTime @default(now())
   compoundId String
   compound   Compound @relation(fields: [compoundId], references: [id], onDelete: Cascade)
-
-  srsRecords srs[]   @relation("UnitSrs")
-  visits     Visit[] @relation("UnitVisit")
+  visits     Visit[]  @relation("UnitVisit")
+  srsRecords srs[]    @relation("UnitSrs")
 }
 
-// Junction: Member ↔ Compound (many-to-many, scoped to the same Owner)
 model AssignedCompound {
   assignedAt DateTime @default(now())
-
-  guardId String
-  guard   User   @relation(fields: [guardId], references: [id], onDelete: Cascade)
-
+  guardId    String
   compoundId String
   compound   Compound @relation(fields: [compoundId], references: [id], onDelete: Cascade)
+  guard      User     @relation(fields: [guardId], references: [id], onDelete: Cascade)
 
   @@id([guardId, compoundId])
 }
 
-// ── SubscriptionRequest ───────────────────────────────────────────────────────
-
 model SubscriptionRequest {
-  id              String   @id
-  name            String
-  campany         String?
-  industry        String?
-  city            String?
-  country         String?
-  totalBranches   String?
-  chatVolume      String?  @db.VarChar(10)
-  aiIntegration   String?  @db.VarChar(3)
-  campanySize     String?
-  website         String?
-  phone           String?
-  email           String   @unique
-  password        String
-  generatedToken  String   @unique
-  role            String   @default("User") @db.VarChar(10)
-  createdAt       DateTime @default(now())
-  whatsapp        String?
-  confirmed       Boolean  @default(false)
-  acceptedAuthorize Boolean @default(false)
-  acceptedTerms     Boolean @default(false)
-  campanyRole     String
+  id                String   @id
+  name              String
+  campany           String?
+  industry          String?
+  city              String?
+  country           String?
+  totalBranches     String?
+  chatVolume        String?  @db.VarChar(10)
+  aiIntegration     String?  @db.VarChar(3)
+  campanySize       String?
+  website           String?
+  phone             String?
+  email             String   @unique
+  password          String
+  generatedToken    String   @unique
+  role              String   @default("User") @db.VarChar(10)
+  createdAt         DateTime @default(now())
+  whatsapp          String?
+  confirmed         Boolean  @default(false)
+  acceptedAuthorize Boolean  @default(false)
+  acceptedTerms     Boolean  @default(false)
+  campanyRole       String
   plan              String
- 
 }
 
 model Visit {
-  id                  String   @id
-  visitCode           String   @unique
+  id                  String    @id
   residentFullName    String
   residentUnit        String
   residentPhone       String
@@ -156,15 +120,16 @@ model Visit {
   visitTime           String
   pdfUrl              String?
   qrCode              String?
-  scanned             Boolean @default(false)
-  createdAt           DateTime @default(now())
+  createdAt           DateTime  @default(now())
   updatedAt           DateTime
-  isExpired           Boolean  @default(false)
+  isExpired           Boolean   @default(false)
   compound            String?
-  compoundRef         Compound? @relation("CompoundVisit", fields: [compound], references: [slug])
-  residentUnitRef     Unit?     @relation("UnitVisit", fields: [residentUnit], references: [slug])
+  scanned             Boolean   @default(false)
+  visitCode           String    @unique
   clientId            String?
-  clientRef           Client?   @relation("ClientVisit", fields: [clientId], references: [id], onDelete: SetNull)
+  clientRef           Client?   @relation("ClientVisit", fields: [clientId], references: [id])
+  compoundRef         Compound? @relation("CompoundVisit", fields: [compound], references: [slug])
+  residentUnitRef     Unit      @relation("UnitVisit", fields: [residentUnit], references: [slug])
 }
 
 model customers {
@@ -344,11 +309,7 @@ model srs {
   resphone         String?   @db.VarChar(20)
   resemail         String?   @db.VarChar(100)
   compound         String?   @db.VarChar(100)
-  compoundRef      Compound? @relation("CompoundSrs", fields: [compound], references: [slug])
   unit             String?   @db.VarChar(50)
-  unitRef          Unit?     @relation("UnitSrs", fields: [unit], references: [slug])
-  clientId         String?
-  clientRef        Client?   @relation("ClientSrs", fields: [clientId], references: [id], onDelete: SetNull)
   propertycode     String?   @db.VarChar(50)
   priority         String?   @db.VarChar(20)
   leasename        String?   @db.VarChar(100)
@@ -363,6 +324,65 @@ model srs {
   closed_at        DateTime? @db.Timestamp(6)
   is_closed        Boolean?  @default(false)
   updated_at       DateTime? @db.Timestamp(6)
+  clientId         String?
+  clientRef        Client?   @relation("ClientSrs", fields: [clientId], references: [id])
+  compoundRef      Compound? @relation("CompoundSrs", fields: [compound], references: [slug])
+  unitRef          Unit?     @relation("UnitSrs", fields: [unit], references: [slug])
 
   @@index([yardi_wo_code], map: "idx_srs_yardi_wo_code")
+}
+
+model resident_phones {
+  id          Int       @id @default(autoincrement())
+  resident_id Int
+  phone       String    @db.VarChar(20)
+  is_primary  Boolean?  @default(false)
+  residents   residents @relation(fields: [resident_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([resident_id, phone], map: "uq_resident_phone")
+  @@index([phone], map: "idx_resident_phones_phone")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model residents {
+  id              Int               @id @default(autoincrement())
+  tenant_id       Int?
+  tenant_code     String            @db.VarChar(50)
+  unit_code       String            @db.VarChar(50)
+  property_code   String?           @db.VarChar(20)
+  tenant_status   String?           @db.VarChar(30)
+  lease_start     DateTime?         @db.Date
+  lease_end       DateTime?         @db.Date
+  move_in_date    DateTime?         @db.Date
+  move_out_date   DateTime?         @db.Date
+  first_name      String?           @db.VarChar(100)
+  last_name       String?           @db.VarChar(100)
+  email           String?           @db.VarChar(150)
+  resident_type   String            @db.VarChar(20)
+  relation        String?           @db.VarChar(50)
+  roommate_code   String?           @db.VarChar(50)
+  is_active       Boolean?          @default(true)
+  synced_at       DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  resident_phones resident_phones[]
+
+  @@index([is_active], map: "idx_residents_is_active")
+}
+
+model sync_log {
+  id                  Int       @id @default(autoincrement())
+  started_at          DateTime? @default(now()) @db.Timestamp(6)
+  finished_at         DateTime? @db.Timestamp(6)
+  status              String?   @db.VarChar(20)
+  records_synced      Int?
+  records_deactivated Int?
+  error_message       String?
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+  SECURITY
+  OPERATION
+  MANAGER
 }

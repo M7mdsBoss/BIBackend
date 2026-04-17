@@ -183,8 +183,8 @@ export type UnitWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
   compoundId?: Prisma.StringFilter<"Unit"> | string
   compound?: Prisma.XOR<Prisma.CompoundScalarRelationFilter, Prisma.CompoundWhereInput>
-  srsRecords?: Prisma.SrsListRelationFilter
   visits?: Prisma.VisitListRelationFilter
+  srsRecords?: Prisma.SrsListRelationFilter
 }
 
 export type UnitOrderByWithRelationInput = {
@@ -194,8 +194,8 @@ export type UnitOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   compoundId?: Prisma.SortOrder
   compound?: Prisma.CompoundOrderByWithRelationInput
-  srsRecords?: Prisma.srsOrderByRelationAggregateInput
   visits?: Prisma.VisitOrderByRelationAggregateInput
+  srsRecords?: Prisma.srsOrderByRelationAggregateInput
 }
 
 export type UnitWhereUniqueInput = Prisma.AtLeast<{
@@ -208,8 +208,8 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string
   compoundId?: Prisma.StringFilter<"Unit"> | string
   compound?: Prisma.XOR<Prisma.CompoundScalarRelationFilter, Prisma.CompoundWhereInput>
-  srsRecords?: Prisma.SrsListRelationFilter
   visits?: Prisma.VisitListRelationFilter
+  srsRecords?: Prisma.SrsListRelationFilter
 }, "id" | "slug">
 
 export type UnitOrderByWithAggregationInput = {
@@ -240,8 +240,8 @@ export type UnitCreateInput = {
   slug: string
   createdAt?: Date | string
   compound: Prisma.CompoundCreateNestedOneWithoutUnitsInput
-  srsRecords?: Prisma.srsCreateNestedManyWithoutUnitRefInput
   visits?: Prisma.VisitCreateNestedManyWithoutResidentUnitRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUnitRefInput
 }
 
 export type UnitUncheckedCreateInput = {
@@ -250,8 +250,8 @@ export type UnitUncheckedCreateInput = {
   slug: string
   createdAt?: Date | string
   compoundId: string
-  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUnitRefInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutResidentUnitRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUnitRefInput
 }
 
 export type UnitUpdateInput = {
@@ -260,8 +260,8 @@ export type UnitUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   compound?: Prisma.CompoundUpdateOneRequiredWithoutUnitsNestedInput
-  srsRecords?: Prisma.srsUpdateManyWithoutUnitRefNestedInput
   visits?: Prisma.VisitUpdateManyWithoutResidentUnitRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUnitRefNestedInput
 }
 
 export type UnitUncheckedUpdateInput = {
@@ -270,8 +270,8 @@ export type UnitUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   compoundId?: Prisma.StringFieldUpdateOperationsInput | string
-  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUnitRefNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutResidentUnitRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUnitRefNestedInput
 }
 
 export type UnitCreateManyInput = {
@@ -331,6 +331,11 @@ export type UnitMinOrderByAggregateInput = {
   compoundId?: Prisma.SortOrder
 }
 
+export type UnitScalarRelationFilter = {
+  is?: Prisma.UnitWhereInput
+  isNot?: Prisma.UnitWhereInput
+}
+
 export type UnitNullableScalarRelationFilter = {
   is?: Prisma.UnitWhereInput | null
   isNot?: Prisma.UnitWhereInput | null
@@ -384,12 +389,10 @@ export type UnitCreateNestedOneWithoutVisitsInput = {
   connect?: Prisma.UnitWhereUniqueInput
 }
 
-export type UnitUpdateOneWithoutVisitsNestedInput = {
+export type UnitUpdateOneRequiredWithoutVisitsNestedInput = {
   create?: Prisma.XOR<Prisma.UnitCreateWithoutVisitsInput, Prisma.UnitUncheckedCreateWithoutVisitsInput>
   connectOrCreate?: Prisma.UnitCreateOrConnectWithoutVisitsInput
   upsert?: Prisma.UnitUpsertWithoutVisitsInput
-  disconnect?: Prisma.UnitWhereInput | boolean
-  delete?: Prisma.UnitWhereInput | boolean
   connect?: Prisma.UnitWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutVisitsInput, Prisma.UnitUpdateWithoutVisitsInput>, Prisma.UnitUncheckedUpdateWithoutVisitsInput>
 }
@@ -415,8 +418,8 @@ export type UnitCreateWithoutCompoundInput = {
   name: string
   slug: string
   createdAt?: Date | string
-  srsRecords?: Prisma.srsCreateNestedManyWithoutUnitRefInput
   visits?: Prisma.VisitCreateNestedManyWithoutResidentUnitRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutUnitRefInput
 }
 
 export type UnitUncheckedCreateWithoutCompoundInput = {
@@ -424,8 +427,8 @@ export type UnitUncheckedCreateWithoutCompoundInput = {
   name: string
   slug: string
   createdAt?: Date | string
-  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUnitRefInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutResidentUnitRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutUnitRefInput
 }
 
 export type UnitCreateOrConnectWithoutCompoundInput = {
@@ -581,8 +584,8 @@ export type UnitUpdateWithoutCompoundInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  srsRecords?: Prisma.srsUpdateManyWithoutUnitRefNestedInput
   visits?: Prisma.VisitUpdateManyWithoutResidentUnitRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutUnitRefNestedInput
 }
 
 export type UnitUncheckedUpdateWithoutCompoundInput = {
@@ -590,8 +593,8 @@ export type UnitUncheckedUpdateWithoutCompoundInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUnitRefNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutResidentUnitRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutUnitRefNestedInput
 }
 
 export type UnitUncheckedUpdateManyWithoutCompoundInput = {
@@ -607,13 +610,13 @@ export type UnitUncheckedUpdateManyWithoutCompoundInput = {
  */
 
 export type UnitCountOutputType = {
-  srsRecords: number
   visits: number
+  srsRecords: number
 }
 
 export type UnitCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  srsRecords?: boolean | UnitCountOutputTypeCountSrsRecordsArgs
   visits?: boolean | UnitCountOutputTypeCountVisitsArgs
+  srsRecords?: boolean | UnitCountOutputTypeCountSrsRecordsArgs
 }
 
 /**
@@ -629,15 +632,15 @@ export type UnitCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UnitCountOutputType without action
  */
-export type UnitCountOutputTypeCountSrsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.srsWhereInput
+export type UnitCountOutputTypeCountVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VisitWhereInput
 }
 
 /**
  * UnitCountOutputType without action
  */
-export type UnitCountOutputTypeCountVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.VisitWhereInput
+export type UnitCountOutputTypeCountSrsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.srsWhereInput
 }
 
 
@@ -648,8 +651,8 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   compoundId?: boolean
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
-  srsRecords?: boolean | Prisma.Unit$srsRecordsArgs<ExtArgs>
   visits?: boolean | Prisma.Unit$visitsArgs<ExtArgs>
+  srsRecords?: boolean | Prisma.Unit$srsRecordsArgs<ExtArgs>
   _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["unit"]>
 
@@ -682,8 +685,8 @@ export type UnitSelectScalar = {
 export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "createdAt" | "compoundId", ExtArgs["result"]["unit"]>
 export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   compound?: boolean | Prisma.CompoundDefaultArgs<ExtArgs>
-  srsRecords?: boolean | Prisma.Unit$srsRecordsArgs<ExtArgs>
   visits?: boolean | Prisma.Unit$visitsArgs<ExtArgs>
+  srsRecords?: boolean | Prisma.Unit$srsRecordsArgs<ExtArgs>
   _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UnitIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -697,8 +700,8 @@ export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Unit"
   objects: {
     compound: Prisma.$CompoundPayload<ExtArgs>
-    srsRecords: Prisma.$srsPayload<ExtArgs>[]
     visits: Prisma.$VisitPayload<ExtArgs>[]
+    srsRecords: Prisma.$srsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1101,8 +1104,8 @@ readonly fields: UnitFieldRefs;
 export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   compound<T extends Prisma.CompoundDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompoundDefaultArgs<ExtArgs>>): Prisma.Prisma__CompoundClient<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  srsRecords<T extends Prisma.Unit$srsRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$srsRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$srsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   visits<T extends Prisma.Unit$visitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$visitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VisitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  srsRecords<T extends Prisma.Unit$srsRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$srsRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$srsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1533,30 +1536,6 @@ export type UnitDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Unit.srsRecords
- */
-export type Unit$srsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the srs
-   */
-  select?: Prisma.srsSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the srs
-   */
-  omit?: Prisma.srsOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.srsInclude<ExtArgs> | null
-  where?: Prisma.srsWhereInput
-  orderBy?: Prisma.srsOrderByWithRelationInput | Prisma.srsOrderByWithRelationInput[]
-  cursor?: Prisma.srsWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SrsScalarFieldEnum | Prisma.SrsScalarFieldEnum[]
-}
-
-/**
  * Unit.visits
  */
 export type Unit$visitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1578,6 +1557,30 @@ export type Unit$visitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.VisitScalarFieldEnum | Prisma.VisitScalarFieldEnum[]
+}
+
+/**
+ * Unit.srsRecords
+ */
+export type Unit$srsRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the srs
+   */
+  select?: Prisma.srsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the srs
+   */
+  omit?: Prisma.srsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.srsInclude<ExtArgs> | null
+  where?: Prisma.srsWhereInput
+  orderBy?: Prisma.srsOrderByWithRelationInput | Prisma.srsOrderByWithRelationInput[]
+  cursor?: Prisma.srsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SrsScalarFieldEnum | Prisma.SrsScalarFieldEnum[]
 }
 
 /**

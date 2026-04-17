@@ -26,7 +26,6 @@ export type AggregateVisit = {
 
 export type VisitMinAggregateOutputType = {
   id: string | null
-  visitCode: string | null
   residentFullName: string | null
   residentUnit: string | null
   residentPhone: string | null
@@ -37,17 +36,17 @@ export type VisitMinAggregateOutputType = {
   visitTime: string | null
   pdfUrl: string | null
   qrCode: string | null
-  scanned: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
   isExpired: boolean | null
   compound: string | null
+  scanned: boolean | null
+  visitCode: string | null
   clientId: string | null
 }
 
 export type VisitMaxAggregateOutputType = {
   id: string | null
-  visitCode: string | null
   residentFullName: string | null
   residentUnit: string | null
   residentPhone: string | null
@@ -58,17 +57,17 @@ export type VisitMaxAggregateOutputType = {
   visitTime: string | null
   pdfUrl: string | null
   qrCode: string | null
-  scanned: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
   isExpired: boolean | null
   compound: string | null
+  scanned: boolean | null
+  visitCode: string | null
   clientId: string | null
 }
 
 export type VisitCountAggregateOutputType = {
   id: number
-  visitCode: number
   residentFullName: number
   residentUnit: number
   residentPhone: number
@@ -79,11 +78,12 @@ export type VisitCountAggregateOutputType = {
   visitTime: number
   pdfUrl: number
   qrCode: number
-  scanned: number
   createdAt: number
   updatedAt: number
   isExpired: number
   compound: number
+  scanned: number
+  visitCode: number
   clientId: number
   _all: number
 }
@@ -91,7 +91,6 @@ export type VisitCountAggregateOutputType = {
 
 export type VisitMinAggregateInputType = {
   id?: true
-  visitCode?: true
   residentFullName?: true
   residentUnit?: true
   residentPhone?: true
@@ -102,17 +101,17 @@ export type VisitMinAggregateInputType = {
   visitTime?: true
   pdfUrl?: true
   qrCode?: true
-  scanned?: true
   createdAt?: true
   updatedAt?: true
   isExpired?: true
   compound?: true
+  scanned?: true
+  visitCode?: true
   clientId?: true
 }
 
 export type VisitMaxAggregateInputType = {
   id?: true
-  visitCode?: true
   residentFullName?: true
   residentUnit?: true
   residentPhone?: true
@@ -123,17 +122,17 @@ export type VisitMaxAggregateInputType = {
   visitTime?: true
   pdfUrl?: true
   qrCode?: true
-  scanned?: true
   createdAt?: true
   updatedAt?: true
   isExpired?: true
   compound?: true
+  scanned?: true
+  visitCode?: true
   clientId?: true
 }
 
 export type VisitCountAggregateInputType = {
   id?: true
-  visitCode?: true
   residentFullName?: true
   residentUnit?: true
   residentPhone?: true
@@ -144,11 +143,12 @@ export type VisitCountAggregateInputType = {
   visitTime?: true
   pdfUrl?: true
   qrCode?: true
-  scanned?: true
   createdAt?: true
   updatedAt?: true
   isExpired?: true
   compound?: true
+  scanned?: true
+  visitCode?: true
   clientId?: true
   _all?: true
 }
@@ -227,7 +227,6 @@ export type VisitGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type VisitGroupByOutputType = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -238,11 +237,12 @@ export type VisitGroupByOutputType = {
   visitTime: string
   pdfUrl: string | null
   qrCode: string | null
-  scanned: boolean
   createdAt: Date
   updatedAt: Date
   isExpired: boolean
   compound: string | null
+  scanned: boolean
+  visitCode: string
   clientId: string | null
   _count: VisitCountAggregateOutputType | null
   _min: VisitMinAggregateOutputType | null
@@ -269,7 +269,6 @@ export type VisitWhereInput = {
   OR?: Prisma.VisitWhereInput[]
   NOT?: Prisma.VisitWhereInput | Prisma.VisitWhereInput[]
   id?: Prisma.StringFilter<"Visit"> | string
-  visitCode?: Prisma.StringFilter<"Visit"> | string
   residentFullName?: Prisma.StringFilter<"Visit"> | string
   residentUnit?: Prisma.StringFilter<"Visit"> | string
   residentPhone?: Prisma.StringFilter<"Visit"> | string
@@ -280,20 +279,20 @@ export type VisitWhereInput = {
   visitTime?: Prisma.StringFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableFilter<"Visit"> | string | null
-  scanned?: Prisma.BoolFilter<"Visit"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolFilter<"Visit"> | boolean
   compound?: Prisma.StringNullableFilter<"Visit"> | string | null
+  scanned?: Prisma.BoolFilter<"Visit"> | boolean
+  visitCode?: Prisma.StringFilter<"Visit"> | string
   clientId?: Prisma.StringNullableFilter<"Visit"> | string | null
-  compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
-  residentUnitRef?: Prisma.XOR<Prisma.UnitNullableScalarRelationFilter, Prisma.UnitWhereInput> | null
   clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
+  residentUnitRef?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
 }
 
 export type VisitOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  visitCode?: Prisma.SortOrder
   residentFullName?: Prisma.SortOrder
   residentUnit?: Prisma.SortOrder
   residentPhone?: Prisma.SortOrder
@@ -304,15 +303,16 @@ export type VisitOrderByWithRelationInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   qrCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  scanned?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
   compound?: Prisma.SortOrderInput | Prisma.SortOrder
+  scanned?: Prisma.SortOrder
+  visitCode?: Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientRef?: Prisma.ClientOrderByWithRelationInput
   compoundRef?: Prisma.CompoundOrderByWithRelationInput
   residentUnitRef?: Prisma.UnitOrderByWithRelationInput
-  clientRef?: Prisma.ClientOrderByWithRelationInput
 }
 
 export type VisitWhereUniqueInput = Prisma.AtLeast<{
@@ -331,20 +331,19 @@ export type VisitWhereUniqueInput = Prisma.AtLeast<{
   visitTime?: Prisma.StringFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableFilter<"Visit"> | string | null
-  scanned?: Prisma.BoolFilter<"Visit"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolFilter<"Visit"> | boolean
   compound?: Prisma.StringNullableFilter<"Visit"> | string | null
+  scanned?: Prisma.BoolFilter<"Visit"> | boolean
   clientId?: Prisma.StringNullableFilter<"Visit"> | string | null
-  compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
-  residentUnitRef?: Prisma.XOR<Prisma.UnitNullableScalarRelationFilter, Prisma.UnitWhereInput> | null
   clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
+  residentUnitRef?: Prisma.XOR<Prisma.UnitScalarRelationFilter, Prisma.UnitWhereInput>
 }, "id" | "visitCode">
 
 export type VisitOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  visitCode?: Prisma.SortOrder
   residentFullName?: Prisma.SortOrder
   residentUnit?: Prisma.SortOrder
   residentPhone?: Prisma.SortOrder
@@ -355,11 +354,12 @@ export type VisitOrderByWithAggregationInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   qrCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  scanned?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
   compound?: Prisma.SortOrderInput | Prisma.SortOrder
+  scanned?: Prisma.SortOrder
+  visitCode?: Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.VisitCountOrderByAggregateInput
   _max?: Prisma.VisitMaxOrderByAggregateInput
@@ -371,7 +371,6 @@ export type VisitScalarWhereWithAggregatesInput = {
   OR?: Prisma.VisitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.VisitScalarWhereWithAggregatesInput | Prisma.VisitScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Visit"> | string
-  visitCode?: Prisma.StringWithAggregatesFilter<"Visit"> | string
   residentFullName?: Prisma.StringWithAggregatesFilter<"Visit"> | string
   residentUnit?: Prisma.StringWithAggregatesFilter<"Visit"> | string
   residentPhone?: Prisma.StringWithAggregatesFilter<"Visit"> | string
@@ -382,17 +381,17 @@ export type VisitScalarWhereWithAggregatesInput = {
   visitTime?: Prisma.StringWithAggregatesFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
-  scanned?: Prisma.BoolWithAggregatesFilter<"Visit"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolWithAggregatesFilter<"Visit"> | boolean
   compound?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
+  scanned?: Prisma.BoolWithAggregatesFilter<"Visit"> | boolean
+  visitCode?: Prisma.StringWithAggregatesFilter<"Visit"> | string
   clientId?: Prisma.StringNullableWithAggregatesFilter<"Visit"> | string | null
 }
 
 export type VisitCreateInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentPhone: string
   visitorFullName: string
@@ -402,18 +401,18 @@ export type VisitCreateInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
-  compoundRef?: Prisma.CompoundCreateNestedOneWithoutVisitsInput
-  residentUnitRef?: Prisma.UnitCreateNestedOneWithoutVisitsInput
+  scanned?: boolean
+  visitCode: string
   clientRef?: Prisma.ClientCreateNestedOneWithoutVisitsInput
+  compoundRef?: Prisma.CompoundCreateNestedOneWithoutVisitsInput
+  residentUnitRef: Prisma.UnitCreateNestedOneWithoutVisitsInput
 }
 
 export type VisitUncheckedCreateInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -424,17 +423,17 @@ export type VisitUncheckedCreateInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
   compound?: string | null
+  scanned?: boolean
+  visitCode: string
   clientId?: string | null
 }
 
 export type VisitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -444,18 +443,18 @@ export type VisitUpdateInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  compoundRef?: Prisma.CompoundUpdateOneWithoutVisitsNestedInput
-  residentUnitRef?: Prisma.UnitUpdateOneWithoutVisitsNestedInput
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientRef?: Prisma.ClientUpdateOneWithoutVisitsNestedInput
+  compoundRef?: Prisma.CompoundUpdateOneWithoutVisitsNestedInput
+  residentUnitRef?: Prisma.UnitUpdateOneRequiredWithoutVisitsNestedInput
 }
 
 export type VisitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentUnit?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -466,17 +465,17 @@ export type VisitUncheckedUpdateInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisitCreateManyInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -487,17 +486,17 @@ export type VisitCreateManyInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
   compound?: string | null
+  scanned?: boolean
+  visitCode: string
   clientId?: string | null
 }
 
 export type VisitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -507,15 +506,15 @@ export type VisitUpdateManyMutationInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentUnit?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -526,11 +525,12 @@ export type VisitUncheckedUpdateManyInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -546,7 +546,6 @@ export type VisitOrderByRelationAggregateInput = {
 
 export type VisitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  visitCode?: Prisma.SortOrder
   residentFullName?: Prisma.SortOrder
   residentUnit?: Prisma.SortOrder
   residentPhone?: Prisma.SortOrder
@@ -557,17 +556,17 @@ export type VisitCountOrderByAggregateInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  scanned?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
   compound?: Prisma.SortOrder
+  scanned?: Prisma.SortOrder
+  visitCode?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
 }
 
 export type VisitMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  visitCode?: Prisma.SortOrder
   residentFullName?: Prisma.SortOrder
   residentUnit?: Prisma.SortOrder
   residentPhone?: Prisma.SortOrder
@@ -578,17 +577,17 @@ export type VisitMaxOrderByAggregateInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  scanned?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
   compound?: Prisma.SortOrder
+  scanned?: Prisma.SortOrder
+  visitCode?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
 }
 
 export type VisitMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  visitCode?: Prisma.SortOrder
   residentFullName?: Prisma.SortOrder
   residentUnit?: Prisma.SortOrder
   residentPhone?: Prisma.SortOrder
@@ -599,11 +598,12 @@ export type VisitMinOrderByAggregateInput = {
   visitTime?: Prisma.SortOrder
   pdfUrl?: Prisma.SortOrder
   qrCode?: Prisma.SortOrder
-  scanned?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isExpired?: Prisma.SortOrder
   compound?: Prisma.SortOrder
+  scanned?: Prisma.SortOrder
+  visitCode?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
 }
 
@@ -735,7 +735,6 @@ export type VisitUncheckedUpdateManyWithoutResidentUnitRefNestedInput = {
 
 export type VisitCreateWithoutClientRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentPhone: string
   visitorFullName: string
@@ -745,17 +744,17 @@ export type VisitCreateWithoutClientRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
+  scanned?: boolean
+  visitCode: string
   compoundRef?: Prisma.CompoundCreateNestedOneWithoutVisitsInput
-  residentUnitRef?: Prisma.UnitCreateNestedOneWithoutVisitsInput
+  residentUnitRef: Prisma.UnitCreateNestedOneWithoutVisitsInput
 }
 
 export type VisitUncheckedCreateWithoutClientRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -766,11 +765,12 @@ export type VisitUncheckedCreateWithoutClientRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
   compound?: string | null
+  scanned?: boolean
+  visitCode: string
 }
 
 export type VisitCreateOrConnectWithoutClientRefInput = {
@@ -804,7 +804,6 @@ export type VisitScalarWhereInput = {
   OR?: Prisma.VisitScalarWhereInput[]
   NOT?: Prisma.VisitScalarWhereInput | Prisma.VisitScalarWhereInput[]
   id?: Prisma.StringFilter<"Visit"> | string
-  visitCode?: Prisma.StringFilter<"Visit"> | string
   residentFullName?: Prisma.StringFilter<"Visit"> | string
   residentUnit?: Prisma.StringFilter<"Visit"> | string
   residentPhone?: Prisma.StringFilter<"Visit"> | string
@@ -815,17 +814,17 @@ export type VisitScalarWhereInput = {
   visitTime?: Prisma.StringFilter<"Visit"> | string
   pdfUrl?: Prisma.StringNullableFilter<"Visit"> | string | null
   qrCode?: Prisma.StringNullableFilter<"Visit"> | string | null
-  scanned?: Prisma.BoolFilter<"Visit"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Visit"> | Date | string
   isExpired?: Prisma.BoolFilter<"Visit"> | boolean
   compound?: Prisma.StringNullableFilter<"Visit"> | string | null
+  scanned?: Prisma.BoolFilter<"Visit"> | boolean
+  visitCode?: Prisma.StringFilter<"Visit"> | string
   clientId?: Prisma.StringNullableFilter<"Visit"> | string | null
 }
 
 export type VisitCreateWithoutCompoundRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentPhone: string
   visitorFullName: string
@@ -835,17 +834,17 @@ export type VisitCreateWithoutCompoundRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
-  residentUnitRef?: Prisma.UnitCreateNestedOneWithoutVisitsInput
+  scanned?: boolean
+  visitCode: string
   clientRef?: Prisma.ClientCreateNestedOneWithoutVisitsInput
+  residentUnitRef: Prisma.UnitCreateNestedOneWithoutVisitsInput
 }
 
 export type VisitUncheckedCreateWithoutCompoundRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -856,10 +855,11 @@ export type VisitUncheckedCreateWithoutCompoundRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
+  scanned?: boolean
+  visitCode: string
   clientId?: string | null
 }
 
@@ -891,7 +891,6 @@ export type VisitUpdateManyWithWhereWithoutCompoundRefInput = {
 
 export type VisitCreateWithoutResidentUnitRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentPhone: string
   visitorFullName: string
@@ -901,17 +900,17 @@ export type VisitCreateWithoutResidentUnitRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
-  compoundRef?: Prisma.CompoundCreateNestedOneWithoutVisitsInput
+  scanned?: boolean
+  visitCode: string
   clientRef?: Prisma.ClientCreateNestedOneWithoutVisitsInput
+  compoundRef?: Prisma.CompoundCreateNestedOneWithoutVisitsInput
 }
 
 export type VisitUncheckedCreateWithoutResidentUnitRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentPhone: string
   visitorFullName: string
@@ -921,11 +920,12 @@ export type VisitUncheckedCreateWithoutResidentUnitRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
   compound?: string | null
+  scanned?: boolean
+  visitCode: string
   clientId?: string | null
 }
 
@@ -957,7 +957,6 @@ export type VisitUpdateManyWithWhereWithoutResidentUnitRefInput = {
 
 export type VisitCreateManyClientRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -968,16 +967,16 @@ export type VisitCreateManyClientRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
   compound?: string | null
+  scanned?: boolean
+  visitCode: string
 }
 
 export type VisitUpdateWithoutClientRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -987,17 +986,17 @@ export type VisitUpdateWithoutClientRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   compoundRef?: Prisma.CompoundUpdateOneWithoutVisitsNestedInput
-  residentUnitRef?: Prisma.UnitUpdateOneWithoutVisitsNestedInput
+  residentUnitRef?: Prisma.UnitUpdateOneRequiredWithoutVisitsNestedInput
 }
 
 export type VisitUncheckedUpdateWithoutClientRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentUnit?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1008,16 +1007,16 @@ export type VisitUncheckedUpdateWithoutClientRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisitUncheckedUpdateManyWithoutClientRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentUnit?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1028,16 +1027,16 @@ export type VisitUncheckedUpdateManyWithoutClientRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type VisitCreateManyCompoundRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentUnit: string
   residentPhone: string
@@ -1048,16 +1047,16 @@ export type VisitCreateManyCompoundRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
+  scanned?: boolean
+  visitCode: string
   clientId?: string | null
 }
 
 export type VisitUpdateWithoutCompoundRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1067,17 +1066,17 @@ export type VisitUpdateWithoutCompoundRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  residentUnitRef?: Prisma.UnitUpdateOneWithoutVisitsNestedInput
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientRef?: Prisma.ClientUpdateOneWithoutVisitsNestedInput
+  residentUnitRef?: Prisma.UnitUpdateOneRequiredWithoutVisitsNestedInput
 }
 
 export type VisitUncheckedUpdateWithoutCompoundRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentUnit?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1088,16 +1087,16 @@ export type VisitUncheckedUpdateWithoutCompoundRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisitUncheckedUpdateManyWithoutCompoundRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentUnit?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1108,16 +1107,16 @@ export type VisitUncheckedUpdateManyWithoutCompoundRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisitCreateManyResidentUnitRefInput = {
   id: string
-  visitCode: string
   residentFullName: string
   residentPhone: string
   visitorFullName: string
@@ -1127,17 +1126,17 @@ export type VisitCreateManyResidentUnitRefInput = {
   visitTime: string
   pdfUrl?: string | null
   qrCode?: string | null
-  scanned?: boolean
   createdAt?: Date | string
   updatedAt: Date | string
   isExpired?: boolean
   compound?: string | null
+  scanned?: boolean
+  visitCode: string
   clientId?: string | null
 }
 
 export type VisitUpdateWithoutResidentUnitRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1147,17 +1146,17 @@ export type VisitUpdateWithoutResidentUnitRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  compoundRef?: Prisma.CompoundUpdateOneWithoutVisitsNestedInput
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientRef?: Prisma.ClientUpdateOneWithoutVisitsNestedInput
+  compoundRef?: Prisma.CompoundUpdateOneWithoutVisitsNestedInput
 }
 
 export type VisitUncheckedUpdateWithoutResidentUnitRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1167,17 +1166,17 @@ export type VisitUncheckedUpdateWithoutResidentUnitRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type VisitUncheckedUpdateManyWithoutResidentUnitRefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   residentFullName?: Prisma.StringFieldUpdateOperationsInput | string
   residentPhone?: Prisma.StringFieldUpdateOperationsInput | string
   visitorFullName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1187,11 +1186,12 @@ export type VisitUncheckedUpdateManyWithoutResidentUnitRefInput = {
   visitTime?: Prisma.StringFieldUpdateOperationsInput | string
   pdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isExpired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scanned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visitCode?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -1199,7 +1199,6 @@ export type VisitUncheckedUpdateManyWithoutResidentUnitRefInput = {
 
 export type VisitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  visitCode?: boolean
   residentFullName?: boolean
   residentUnit?: boolean
   residentPhone?: boolean
@@ -1210,20 +1209,20 @@ export type VisitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
-  scanned?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
   compound?: boolean
+  scanned?: boolean
+  visitCode?: boolean
   clientId?: boolean
-  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
-  residentUnitRef?: boolean | Prisma.Visit$residentUnitRefArgs<ExtArgs>
   clientRef?: boolean | Prisma.Visit$clientRefArgs<ExtArgs>
+  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
+  residentUnitRef?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["visit"]>
 
 export type VisitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  visitCode?: boolean
   residentFullName?: boolean
   residentUnit?: boolean
   residentPhone?: boolean
@@ -1234,20 +1233,20 @@ export type VisitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
-  scanned?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
   compound?: boolean
+  scanned?: boolean
+  visitCode?: boolean
   clientId?: boolean
-  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
-  residentUnitRef?: boolean | Prisma.Visit$residentUnitRefArgs<ExtArgs>
   clientRef?: boolean | Prisma.Visit$clientRefArgs<ExtArgs>
+  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
+  residentUnitRef?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["visit"]>
 
 export type VisitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  visitCode?: boolean
   residentFullName?: boolean
   residentUnit?: boolean
   residentPhone?: boolean
@@ -1258,20 +1257,20 @@ export type VisitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
-  scanned?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
   compound?: boolean
+  scanned?: boolean
+  visitCode?: boolean
   clientId?: boolean
-  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
-  residentUnitRef?: boolean | Prisma.Visit$residentUnitRefArgs<ExtArgs>
   clientRef?: boolean | Prisma.Visit$clientRefArgs<ExtArgs>
+  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
+  residentUnitRef?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["visit"]>
 
 export type VisitSelectScalar = {
   id?: boolean
-  visitCode?: boolean
   residentFullName?: boolean
   residentUnit?: boolean
   residentPhone?: boolean
@@ -1282,41 +1281,41 @@ export type VisitSelectScalar = {
   visitTime?: boolean
   pdfUrl?: boolean
   qrCode?: boolean
-  scanned?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isExpired?: boolean
   compound?: boolean
+  scanned?: boolean
+  visitCode?: boolean
   clientId?: boolean
 }
 
-export type VisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "visitCode" | "residentFullName" | "residentUnit" | "residentPhone" | "visitorFullName" | "visitorCarType" | "visitorLicensePlate" | "visitDate" | "visitTime" | "pdfUrl" | "qrCode" | "scanned" | "createdAt" | "updatedAt" | "isExpired" | "compound" | "clientId", ExtArgs["result"]["visit"]>
+export type VisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "residentFullName" | "residentUnit" | "residentPhone" | "visitorFullName" | "visitorCarType" | "visitorLicensePlate" | "visitDate" | "visitTime" | "pdfUrl" | "qrCode" | "createdAt" | "updatedAt" | "isExpired" | "compound" | "scanned" | "visitCode" | "clientId", ExtArgs["result"]["visit"]>
 export type VisitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
-  residentUnitRef?: boolean | Prisma.Visit$residentUnitRefArgs<ExtArgs>
   clientRef?: boolean | Prisma.Visit$clientRefArgs<ExtArgs>
+  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
+  residentUnitRef?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }
 export type VisitIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
-  residentUnitRef?: boolean | Prisma.Visit$residentUnitRefArgs<ExtArgs>
   clientRef?: boolean | Prisma.Visit$clientRefArgs<ExtArgs>
+  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
+  residentUnitRef?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }
 export type VisitIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
-  residentUnitRef?: boolean | Prisma.Visit$residentUnitRefArgs<ExtArgs>
   clientRef?: boolean | Prisma.Visit$clientRefArgs<ExtArgs>
+  compoundRef?: boolean | Prisma.Visit$compoundRefArgs<ExtArgs>
+  residentUnitRef?: boolean | Prisma.UnitDefaultArgs<ExtArgs>
 }
 
 export type $VisitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Visit"
   objects: {
-    compoundRef: Prisma.$CompoundPayload<ExtArgs> | null
-    residentUnitRef: Prisma.$UnitPayload<ExtArgs> | null
     clientRef: Prisma.$ClientPayload<ExtArgs> | null
+    compoundRef: Prisma.$CompoundPayload<ExtArgs> | null
+    residentUnitRef: Prisma.$UnitPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    visitCode: string
     residentFullName: string
     residentUnit: string
     residentPhone: string
@@ -1327,11 +1326,12 @@ export type $VisitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     visitTime: string
     pdfUrl: string | null
     qrCode: string | null
-    scanned: boolean
     createdAt: Date
     updatedAt: Date
     isExpired: boolean
     compound: string | null
+    scanned: boolean
+    visitCode: string
     clientId: string | null
   }, ExtArgs["result"]["visit"]>
   composites: {}
@@ -1727,9 +1727,9 @@ readonly fields: VisitFieldRefs;
  */
 export interface Prisma__VisitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  compoundRef<T extends Prisma.Visit$compoundRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Visit$compoundRefArgs<ExtArgs>>): Prisma.Prisma__CompoundClient<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  residentUnitRef<T extends Prisma.Visit$residentUnitRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Visit$residentUnitRefArgs<ExtArgs>>): Prisma.Prisma__UnitClient<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   clientRef<T extends Prisma.Visit$clientRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Visit$clientRefArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  compoundRef<T extends Prisma.Visit$compoundRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Visit$compoundRefArgs<ExtArgs>>): Prisma.Prisma__CompoundClient<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  residentUnitRef<T extends Prisma.UnitDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UnitDefaultArgs<ExtArgs>>): Prisma.Prisma__UnitClient<runtime.Types.Result.GetResult<Prisma.$UnitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1760,7 +1760,6 @@ export interface Prisma__VisitClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface VisitFieldRefs {
   readonly id: Prisma.FieldRef<"Visit", 'String'>
-  readonly visitCode: Prisma.FieldRef<"Visit", 'String'>
   readonly residentFullName: Prisma.FieldRef<"Visit", 'String'>
   readonly residentUnit: Prisma.FieldRef<"Visit", 'String'>
   readonly residentPhone: Prisma.FieldRef<"Visit", 'String'>
@@ -1771,11 +1770,12 @@ export interface VisitFieldRefs {
   readonly visitTime: Prisma.FieldRef<"Visit", 'String'>
   readonly pdfUrl: Prisma.FieldRef<"Visit", 'String'>
   readonly qrCode: Prisma.FieldRef<"Visit", 'String'>
-  readonly scanned: Prisma.FieldRef<"Visit", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Visit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Visit", 'DateTime'>
   readonly isExpired: Prisma.FieldRef<"Visit", 'Boolean'>
   readonly compound: Prisma.FieldRef<"Visit", 'String'>
+  readonly scanned: Prisma.FieldRef<"Visit", 'Boolean'>
+  readonly visitCode: Prisma.FieldRef<"Visit", 'String'>
   readonly clientId: Prisma.FieldRef<"Visit", 'String'>
 }
     
@@ -2173,44 +2173,6 @@ export type VisitDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Visit.compoundRef
- */
-export type Visit$compoundRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Compound
-   */
-  select?: Prisma.CompoundSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Compound
-   */
-  omit?: Prisma.CompoundOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CompoundInclude<ExtArgs> | null
-  where?: Prisma.CompoundWhereInput
-}
-
-/**
- * Visit.residentUnitRef
- */
-export type Visit$residentUnitRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Unit
-   */
-  select?: Prisma.UnitSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Unit
-   */
-  omit?: Prisma.UnitOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UnitInclude<ExtArgs> | null
-  where?: Prisma.UnitWhereInput
-}
-
-/**
  * Visit.clientRef
  */
 export type Visit$clientRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2227,6 +2189,25 @@ export type Visit$clientRefArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.ClientInclude<ExtArgs> | null
   where?: Prisma.ClientWhereInput
+}
+
+/**
+ * Visit.compoundRef
+ */
+export type Visit$compoundRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Compound
+   */
+  select?: Prisma.CompoundSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Compound
+   */
+  omit?: Prisma.CompoundOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompoundInclude<ExtArgs> | null
+  where?: Prisma.CompoundWhereInput
 }
 
 /**

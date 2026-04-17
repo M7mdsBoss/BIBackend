@@ -25,7 +25,7 @@ export interface CallerContext {
 
 // ── Scoped where clause ───────────────────────────────────────────────────────
 // CLIENT → visits whose clientId matches their Client entity
-// GUARD/MANAGER → visits whose compound is in their assigned compounds
+// SECURITY/MANAGER → visits whose compound is in their assigned compounds
 // ADMIN/OPERATION → no filter (sees all)
 export async function resolveVisitWhere(
   prisma: PrismaClient,
@@ -36,7 +36,7 @@ export async function resolveVisitWhere(
     return { clientId: caller.clientId };
   }
 
-  if (caller.role === 'GUARD' || caller.role === 'MANAGER') {
+  if (caller.role === 'SECURITY' || caller.role === 'MANAGER') {
     const assignments = await (prisma.assignedCompound as any).findMany({
       where: { guardId: caller.id },
       include: { compound: { select: { slug: true } } },
@@ -68,8 +68,6 @@ export async function createVisit(
     throw err;
   }
 
-  console.log("compount response",compound)
-
   const unit = await prisma.unit.findUnique({ where: { slug: dto.residentUnit } });
   if (!unit) {
     const err: any = new Error('unit-not-found');
@@ -77,13 +75,12 @@ export async function createVisit(
     throw err;
   }
 
-  console.log("unit response",unit)
 
-  if (unit.compoundId !== compound.id) {
-    const err: any = new Error('unit-not-in-compound');
-    err.status = 400;
-    throw err;
-  }
+  // if (unit.compoundId !== compound.id) {
+  //   const err: any = new Error('unit-not-in-compound');
+  //   err.status = 400;
+  //   throw err;
+  // }
 
   // Derive clientId from the compound — data belongs to the Client, not a User
   const clientId: string = compound.clientId;
