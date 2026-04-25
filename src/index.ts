@@ -19,6 +19,7 @@ import { createMemberRouter } from "./member/member.router";
 import { createCompoundRouter } from "./compound/compound.router";
 import { createClientRouter } from "./client/client.router";
 import { createUnitRouter } from "./unit/unit.router";
+import { createInstructionRouter } from "./instruction/instruction.router";
 import { startVisitCleanupCron } from "./qr-code/visit-cleanup.service";
 import { errorHandler } from "./middleware/error-handler";
 import { swaggerSpec } from "./swagger";
@@ -76,6 +77,7 @@ app.use("/api/v1/client", createClientRouter(prisma));
 app.use("/api/v1/member", createMemberRouter(prisma));
 app.use("/api/v1/compound", createCompoundRouter(prisma));
 app.use("/api/v1/unit", createUnitRouter(prisma));
+app.use("/api/v1/instruction", createInstructionRouter(prisma));
 
 // ── Global error handler (must be last) ───────────────────────────────────────
 app.use(errorHandler);

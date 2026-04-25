@@ -219,6 +219,56 @@ function sevenDaysAgo(): Date {
   return d;
 }
 
+// Baseline: compounds the caller is allowed to see, regardless of whether
+// they have visits yet. Used to seed compound stats with zero entries so
+// newly-created compounds still appear on the dashboard.
+async function resolveVisitCompoundBaseline(
+  prisma: PrismaClient,
+  caller: CallerContext,
+): Promise<Map<string, string>> {
+  let compoundWhere: any | null = null;
+
+  if (caller.role === 'CLIENT') {
+    if (!caller.clientId) return new Map();
+    compoundWhere = { clientId: caller.clientId };
+  } else if (caller.role === 'SECURITY' || caller.role === 'MANAGER') {
+    const assignments = await (prisma.assignedCompound as any).findMany({
+      where: { guardId: caller.id },
+      select: { compoundId: true },
+    });
+    const ids: string[] = assignments.map((a: any) => a.compoundId);
+    if (ids.length === 0) return new Map();
+    compoundWhere = { id: { in: ids } };
+  }
+  // ADMIN / OPERATION → compoundWhere stays null (no filter, see all)
+
+  const compounds = await prisma.compound.findMany({
+    where: compoundWhere ?? undefined,
+    select: { slug: true, name: true },
+  });
+  return new Map(compounds.map((c) => [c.slug, c.name]));
+}
+
+function buildPerCompound(
+  groupRows: Array<{ compound: string | null; _count: { _all: number } }>,
+  labelBySlug: Map<string, string>,
+): Array<{ compound: string; count: number }> {
+  const counts = new Map<string, number>();
+  labelBySlug.forEach((_name, slug) => counts.set(slug, 0));
+  let unassigned = 0;
+  for (const r of groupRows) {
+    const count = r._count._all;
+    if (!r.compound) { unassigned += count; continue; }
+    counts.set(r.compound, (counts.get(r.compound) ?? 0) + count);
+  }
+  const out = Array.from(counts, ([slug, count]) => ({
+    compound: labelBySlug.get(slug) ?? slug,
+    count,
+  })).sort((a, b) => b.count - a.count);
+  if (unassigned > 0) out.push({ compound: 'Unassigned', count: unassigned });
+  return out;
+}
+
 export async function getVisitorStats(prisma: PrismaClient, caller: CallerContext) {
   const todayStart  = startOfToday();
   const todayEnd    = startOfTomorrow();
@@ -231,6 +281,7 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
   const todayWhere = { ...scopedWhere, visitDate: { gte: todayStart, lt: todayEnd } };
 
   const [
+    compoundLabelBySlug,
     total,
     perCompound,
     perUnit,
@@ -241,6 +292,7 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
     todayPerCompound,
     todayPerUnit,
   ] = await Promise.all([
+    resolveVisitCompoundBaseline(prisma, caller),
     prisma.visit.count({ where: allTime }),
     prisma.visit.groupBy({ by: ['compound'], _count: { _all: true }, where: allTime,  orderBy: { _count: { compound: 'desc' } } }),
     prisma.visit.groupBy({ by: ['residentUnit'], _count: { _all: true }, where: allTime,  orderBy: { _count: { residentUnit: 'desc' } } }),
@@ -252,52 +304,36 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
     prisma.visit.groupBy({ by: ['residentUnit'], _count: { _all: true }, where: todayWhere, orderBy: { _count: { residentUnit: 'desc' } } }),
   ]);
 
-  const compoundSlugs = new Set<string>();
+  // Unit labels: resolved only for units that actually appear in groupBy
+  // results (no zero-seeding for units).
   const unitSlugs = new Set<string>();
-  for (const r of [...perCompound, ...last7DaysPerCompound, ...todayPerCompound]) {
-    if (r.compound) compoundSlugs.add(r.compound);
-  }
   for (const r of [...perUnit, ...last7DaysPerUnit, ...todayPerUnit]) {
     if (r.residentUnit) unitSlugs.add(r.residentUnit);
   }
-
-  const [compoundRows, unitRows] = await Promise.all([
-    compoundSlugs.size
-      ? prisma.compound.findMany({
-          where: { slug: { in: [...compoundSlugs] } },
-          select: { slug: true, name: true },
-        })
-      : Promise.resolve([]),
-    unitSlugs.size
-      ? prisma.unit.findMany({
-          where: { slug: { in: [...unitSlugs] } },
-          select: { slug: true, name: true, compound: { select: { name: true } } },
-        })
-      : Promise.resolve([]),
-  ]);
-
-  const compoundNameBySlug = new Map(compoundRows.map((c) => [c.slug, c.name]));
+  const unitRows = unitSlugs.size
+    ? await prisma.unit.findMany({
+        where: { slug: { in: Array.from(unitSlugs) } },
+        select: { slug: true, name: true, compound: { select: { name: true } } },
+      })
+    : [];
   const unitLabelBySlug = new Map(
     unitRows.map((u) => [u.slug, `${u.compound.name} - ${u.name}`]),
   );
-
-  const compoundLabel = (slug: string | null) =>
-    (slug && compoundNameBySlug.get(slug)) || slug || 'Unassigned';
   const unitLabel = (slug: string | null) =>
     (slug && unitLabelBySlug.get(slug)) || slug || 'Unassigned';
 
   return {
     total,
-    perCompound: perCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+    perCompound: buildPerCompound(perCompound, compoundLabelBySlug),
     perUnit:     perUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     last7Days: {
       total: last7DaysTotal,
-      perCompound: last7DaysPerCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+      perCompound: buildPerCompound(last7DaysPerCompound, compoundLabelBySlug),
       perUnit:     last7DaysPerUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     },
     today: {
       total: todayTotal,
-      perCompound: todayPerCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+      perCompound: buildPerCompound(todayPerCompound, compoundLabelBySlug),
       perUnit:     todayPerUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     },
   };

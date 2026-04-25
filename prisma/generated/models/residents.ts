@@ -29,11 +29,15 @@ export type AggregateResidents = {
 export type ResidentsAvgAggregateOutputType = {
   id: number | null
   tenant_id: number | null
+  property_id: number | null
+  unit_id: number | null
 }
 
 export type ResidentsSumAggregateOutputType = {
   id: number | null
   tenant_id: number | null
+  property_id: number | null
+  unit_id: number | null
 }
 
 export type ResidentsMinAggregateOutputType = {
@@ -56,6 +60,11 @@ export type ResidentsMinAggregateOutputType = {
   is_active: boolean | null
   synced_at: Date | null
   updated_at: Date | null
+  compound: string | null
+  property_id: number | null
+  unit_id: number | null
+  notice_date: Date | null
+  leasing_agent: string | null
 }
 
 export type ResidentsMaxAggregateOutputType = {
@@ -78,6 +87,11 @@ export type ResidentsMaxAggregateOutputType = {
   is_active: boolean | null
   synced_at: Date | null
   updated_at: Date | null
+  compound: string | null
+  property_id: number | null
+  unit_id: number | null
+  notice_date: Date | null
+  leasing_agent: string | null
 }
 
 export type ResidentsCountAggregateOutputType = {
@@ -100,6 +114,11 @@ export type ResidentsCountAggregateOutputType = {
   is_active: number
   synced_at: number
   updated_at: number
+  compound: number
+  property_id: number
+  unit_id: number
+  notice_date: number
+  leasing_agent: number
   _all: number
 }
 
@@ -107,11 +126,15 @@ export type ResidentsCountAggregateOutputType = {
 export type ResidentsAvgAggregateInputType = {
   id?: true
   tenant_id?: true
+  property_id?: true
+  unit_id?: true
 }
 
 export type ResidentsSumAggregateInputType = {
   id?: true
   tenant_id?: true
+  property_id?: true
+  unit_id?: true
 }
 
 export type ResidentsMinAggregateInputType = {
@@ -134,6 +157,11 @@ export type ResidentsMinAggregateInputType = {
   is_active?: true
   synced_at?: true
   updated_at?: true
+  compound?: true
+  property_id?: true
+  unit_id?: true
+  notice_date?: true
+  leasing_agent?: true
 }
 
 export type ResidentsMaxAggregateInputType = {
@@ -156,6 +184,11 @@ export type ResidentsMaxAggregateInputType = {
   is_active?: true
   synced_at?: true
   updated_at?: true
+  compound?: true
+  property_id?: true
+  unit_id?: true
+  notice_date?: true
+  leasing_agent?: true
 }
 
 export type ResidentsCountAggregateInputType = {
@@ -178,6 +211,11 @@ export type ResidentsCountAggregateInputType = {
   is_active?: true
   synced_at?: true
   updated_at?: true
+  compound?: true
+  property_id?: true
+  unit_id?: true
+  notice_date?: true
+  leasing_agent?: true
   _all?: true
 }
 
@@ -287,6 +325,11 @@ export type ResidentsGroupByOutputType = {
   is_active: boolean | null
   synced_at: Date | null
   updated_at: Date | null
+  compound: string | null
+  property_id: number | null
+  unit_id: number | null
+  notice_date: Date | null
+  leasing_agent: string | null
   _count: ResidentsCountAggregateOutputType | null
   _avg: ResidentsAvgAggregateOutputType | null
   _sum: ResidentsSumAggregateOutputType | null
@@ -332,6 +375,11 @@ export type residentsWhereInput = {
   is_active?: Prisma.BoolNullableFilter<"residents"> | boolean | null
   synced_at?: Prisma.DateTimeNullableFilter<"residents"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"residents"> | Date | string | null
+  compound?: Prisma.StringNullableFilter<"residents"> | string | null
+  property_id?: Prisma.IntNullableFilter<"residents"> | number | null
+  unit_id?: Prisma.IntNullableFilter<"residents"> | number | null
+  notice_date?: Prisma.DateTimeNullableFilter<"residents"> | Date | string | null
+  leasing_agent?: Prisma.StringNullableFilter<"residents"> | string | null
   resident_phones?: Prisma.Resident_phonesListRelationFilter
 }
 
@@ -355,6 +403,11 @@ export type residentsOrderByWithRelationInput = {
   is_active?: Prisma.SortOrderInput | Prisma.SortOrder
   synced_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  compound?: Prisma.SortOrderInput | Prisma.SortOrder
+  property_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  unit_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  notice_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  leasing_agent?: Prisma.SortOrderInput | Prisma.SortOrder
   resident_phones?: Prisma.resident_phonesOrderByRelationAggregateInput
 }
 
@@ -381,6 +434,11 @@ export type residentsWhereUniqueInput = Prisma.AtLeast<{
   is_active?: Prisma.BoolNullableFilter<"residents"> | boolean | null
   synced_at?: Prisma.DateTimeNullableFilter<"residents"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"residents"> | Date | string | null
+  compound?: Prisma.StringNullableFilter<"residents"> | string | null
+  property_id?: Prisma.IntNullableFilter<"residents"> | number | null
+  unit_id?: Prisma.IntNullableFilter<"residents"> | number | null
+  notice_date?: Prisma.DateTimeNullableFilter<"residents"> | Date | string | null
+  leasing_agent?: Prisma.StringNullableFilter<"residents"> | string | null
   resident_phones?: Prisma.Resident_phonesListRelationFilter
 }, "id">
 
@@ -404,6 +462,11 @@ export type residentsOrderByWithAggregationInput = {
   is_active?: Prisma.SortOrderInput | Prisma.SortOrder
   synced_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  compound?: Prisma.SortOrderInput | Prisma.SortOrder
+  property_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  unit_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  notice_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  leasing_agent?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.residentsCountOrderByAggregateInput
   _avg?: Prisma.residentsAvgOrderByAggregateInput
   _max?: Prisma.residentsMaxOrderByAggregateInput
@@ -434,6 +497,11 @@ export type residentsScalarWhereWithAggregatesInput = {
   is_active?: Prisma.BoolNullableWithAggregatesFilter<"residents"> | boolean | null
   synced_at?: Prisma.DateTimeNullableWithAggregatesFilter<"residents"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"residents"> | Date | string | null
+  compound?: Prisma.StringNullableWithAggregatesFilter<"residents"> | string | null
+  property_id?: Prisma.IntNullableWithAggregatesFilter<"residents"> | number | null
+  unit_id?: Prisma.IntNullableWithAggregatesFilter<"residents"> | number | null
+  notice_date?: Prisma.DateTimeNullableWithAggregatesFilter<"residents"> | Date | string | null
+  leasing_agent?: Prisma.StringNullableWithAggregatesFilter<"residents"> | string | null
 }
 
 export type residentsCreateInput = {
@@ -455,6 +523,11 @@ export type residentsCreateInput = {
   is_active?: boolean | null
   synced_at?: Date | string | null
   updated_at?: Date | string | null
+  compound?: string | null
+  property_id?: number | null
+  unit_id?: number | null
+  notice_date?: Date | string | null
+  leasing_agent?: string | null
   resident_phones?: Prisma.resident_phonesCreateNestedManyWithoutResidentsInput
 }
 
@@ -478,6 +551,11 @@ export type residentsUncheckedCreateInput = {
   is_active?: boolean | null
   synced_at?: Date | string | null
   updated_at?: Date | string | null
+  compound?: string | null
+  property_id?: number | null
+  unit_id?: number | null
+  notice_date?: Date | string | null
+  leasing_agent?: string | null
   resident_phones?: Prisma.resident_phonesUncheckedCreateNestedManyWithoutResidentsInput
 }
 
@@ -500,6 +578,11 @@ export type residentsUpdateInput = {
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   synced_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  property_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unit_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notice_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leasing_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resident_phones?: Prisma.resident_phonesUpdateManyWithoutResidentsNestedInput
 }
 
@@ -523,6 +606,11 @@ export type residentsUncheckedUpdateInput = {
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   synced_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  property_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unit_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notice_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leasing_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resident_phones?: Prisma.resident_phonesUncheckedUpdateManyWithoutResidentsNestedInput
 }
 
@@ -546,6 +634,11 @@ export type residentsCreateManyInput = {
   is_active?: boolean | null
   synced_at?: Date | string | null
   updated_at?: Date | string | null
+  compound?: string | null
+  property_id?: number | null
+  unit_id?: number | null
+  notice_date?: Date | string | null
+  leasing_agent?: string | null
 }
 
 export type residentsUpdateManyMutationInput = {
@@ -567,6 +660,11 @@ export type residentsUpdateManyMutationInput = {
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   synced_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  property_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unit_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notice_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leasing_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type residentsUncheckedUpdateManyInput = {
@@ -589,6 +687,11 @@ export type residentsUncheckedUpdateManyInput = {
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   synced_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  property_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unit_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notice_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leasing_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ResidentsScalarRelationFilter = {
@@ -616,11 +719,18 @@ export type residentsCountOrderByAggregateInput = {
   is_active?: Prisma.SortOrder
   synced_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  compound?: Prisma.SortOrder
+  property_id?: Prisma.SortOrder
+  unit_id?: Prisma.SortOrder
+  notice_date?: Prisma.SortOrder
+  leasing_agent?: Prisma.SortOrder
 }
 
 export type residentsAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenant_id?: Prisma.SortOrder
+  property_id?: Prisma.SortOrder
+  unit_id?: Prisma.SortOrder
 }
 
 export type residentsMaxOrderByAggregateInput = {
@@ -643,6 +753,11 @@ export type residentsMaxOrderByAggregateInput = {
   is_active?: Prisma.SortOrder
   synced_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  compound?: Prisma.SortOrder
+  property_id?: Prisma.SortOrder
+  unit_id?: Prisma.SortOrder
+  notice_date?: Prisma.SortOrder
+  leasing_agent?: Prisma.SortOrder
 }
 
 export type residentsMinOrderByAggregateInput = {
@@ -665,11 +780,18 @@ export type residentsMinOrderByAggregateInput = {
   is_active?: Prisma.SortOrder
   synced_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  compound?: Prisma.SortOrder
+  property_id?: Prisma.SortOrder
+  unit_id?: Prisma.SortOrder
+  notice_date?: Prisma.SortOrder
+  leasing_agent?: Prisma.SortOrder
 }
 
 export type residentsSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tenant_id?: Prisma.SortOrder
+  property_id?: Prisma.SortOrder
+  unit_id?: Prisma.SortOrder
 }
 
 export type residentsCreateNestedOneWithoutResident_phonesInput = {
@@ -705,6 +827,11 @@ export type residentsCreateWithoutResident_phonesInput = {
   is_active?: boolean | null
   synced_at?: Date | string | null
   updated_at?: Date | string | null
+  compound?: string | null
+  property_id?: number | null
+  unit_id?: number | null
+  notice_date?: Date | string | null
+  leasing_agent?: string | null
 }
 
 export type residentsUncheckedCreateWithoutResident_phonesInput = {
@@ -727,6 +854,11 @@ export type residentsUncheckedCreateWithoutResident_phonesInput = {
   is_active?: boolean | null
   synced_at?: Date | string | null
   updated_at?: Date | string | null
+  compound?: string | null
+  property_id?: number | null
+  unit_id?: number | null
+  notice_date?: Date | string | null
+  leasing_agent?: string | null
 }
 
 export type residentsCreateOrConnectWithoutResident_phonesInput = {
@@ -764,6 +896,11 @@ export type residentsUpdateWithoutResident_phonesInput = {
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   synced_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  property_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unit_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notice_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leasing_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type residentsUncheckedUpdateWithoutResident_phonesInput = {
@@ -786,6 +923,11 @@ export type residentsUncheckedUpdateWithoutResident_phonesInput = {
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   synced_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  compound?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  property_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  unit_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  notice_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leasing_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -839,6 +981,11 @@ export type residentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   is_active?: boolean
   synced_at?: boolean
   updated_at?: boolean
+  compound?: boolean
+  property_id?: boolean
+  unit_id?: boolean
+  notice_date?: boolean
+  leasing_agent?: boolean
   resident_phones?: boolean | Prisma.residents$resident_phonesArgs<ExtArgs>
   _count?: boolean | Prisma.ResidentsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["residents"]>
@@ -863,6 +1010,11 @@ export type residentsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   is_active?: boolean
   synced_at?: boolean
   updated_at?: boolean
+  compound?: boolean
+  property_id?: boolean
+  unit_id?: boolean
+  notice_date?: boolean
+  leasing_agent?: boolean
 }, ExtArgs["result"]["residents"]>
 
 export type residentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -885,6 +1037,11 @@ export type residentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   is_active?: boolean
   synced_at?: boolean
   updated_at?: boolean
+  compound?: boolean
+  property_id?: boolean
+  unit_id?: boolean
+  notice_date?: boolean
+  leasing_agent?: boolean
 }, ExtArgs["result"]["residents"]>
 
 export type residentsSelectScalar = {
@@ -907,9 +1064,14 @@ export type residentsSelectScalar = {
   is_active?: boolean
   synced_at?: boolean
   updated_at?: boolean
+  compound?: boolean
+  property_id?: boolean
+  unit_id?: boolean
+  notice_date?: boolean
+  leasing_agent?: boolean
 }
 
-export type residentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "tenant_code" | "unit_code" | "property_code" | "tenant_status" | "lease_start" | "lease_end" | "move_in_date" | "move_out_date" | "first_name" | "last_name" | "email" | "resident_type" | "relation" | "roommate_code" | "is_active" | "synced_at" | "updated_at", ExtArgs["result"]["residents"]>
+export type residentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenant_id" | "tenant_code" | "unit_code" | "property_code" | "tenant_status" | "lease_start" | "lease_end" | "move_in_date" | "move_out_date" | "first_name" | "last_name" | "email" | "resident_type" | "relation" | "roommate_code" | "is_active" | "synced_at" | "updated_at" | "compound" | "property_id" | "unit_id" | "notice_date" | "leasing_agent", ExtArgs["result"]["residents"]>
 export type residentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   resident_phones?: boolean | Prisma.residents$resident_phonesArgs<ExtArgs>
   _count?: boolean | Prisma.ResidentsCountOutputTypeDefaultArgs<ExtArgs>
@@ -942,6 +1104,11 @@ export type $residentsPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     is_active: boolean | null
     synced_at: Date | null
     updated_at: Date | null
+    compound: string | null
+    property_id: number | null
+    unit_id: number | null
+    notice_date: Date | null
+    leasing_agent: string | null
   }, ExtArgs["result"]["residents"]>
   composites: {}
 }
@@ -1385,6 +1552,11 @@ export interface residentsFieldRefs {
   readonly is_active: Prisma.FieldRef<"residents", 'Boolean'>
   readonly synced_at: Prisma.FieldRef<"residents", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"residents", 'DateTime'>
+  readonly compound: Prisma.FieldRef<"residents", 'String'>
+  readonly property_id: Prisma.FieldRef<"residents", 'Int'>
+  readonly unit_id: Prisma.FieldRef<"residents", 'Int'>
+  readonly notice_date: Prisma.FieldRef<"residents", 'DateTime'>
+  readonly leasing_agent: Prisma.FieldRef<"residents", 'String'>
 }
     
 

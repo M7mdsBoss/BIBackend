@@ -406,7 +406,8 @@ export const ModelName = {
   srs: 'srs',
   resident_phones: 'resident_phones',
   residents: 'residents',
-  sync_log: 'sync_log'
+  sync_log: 'sync_log',
+  Instruction: 'Instruction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs" | "resident_phones" | "residents" | "sync_log"
+    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs" | "resident_phones" | "residents" | "sync_log" | "instruction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2128,6 +2129,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Instruction: {
+      payload: Prisma.$InstructionPayload<ExtArgs>
+      fields: Prisma.InstructionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InstructionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InstructionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>
+        }
+        findFirst: {
+          args: Prisma.InstructionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InstructionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>
+        }
+        findMany: {
+          args: Prisma.InstructionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>[]
+        }
+        create: {
+          args: Prisma.InstructionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>
+        }
+        createMany: {
+          args: Prisma.InstructionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InstructionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>[]
+        }
+        delete: {
+          args: Prisma.InstructionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>
+        }
+        update: {
+          args: Prisma.InstructionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>
+        }
+        deleteMany: {
+          args: Prisma.InstructionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InstructionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InstructionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>[]
+        }
+        upsert: {
+          args: Prisma.InstructionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InstructionPayload>
+        }
+        aggregate: {
+          args: Prisma.InstructionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInstruction>
+        }
+        groupBy: {
+          args: Prisma.InstructionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstructionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InstructionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InstructionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2497,14 +2572,14 @@ export const SrsScalarFieldEnum = {
   category: 'category',
   subcategory: 'subcategory',
   breifdescription: 'breifdescription',
-  timetoenter: 'timetoenter',
   datetime: 'datetime',
   status: 'status',
   yardi_wo_code: 'yardi_wo_code',
   closed_at: 'closed_at',
   is_closed: 'is_closed',
   updated_at: 'updated_at',
-  clientId: 'clientId'
+  clientId: 'clientId',
+  timetoenter: 'timetoenter'
 } as const
 
 export type SrsScalarFieldEnum = (typeof SrsScalarFieldEnum)[keyof typeof SrsScalarFieldEnum]
@@ -2539,7 +2614,12 @@ export const ResidentsScalarFieldEnum = {
   roommate_code: 'roommate_code',
   is_active: 'is_active',
   synced_at: 'synced_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  compound: 'compound',
+  property_id: 'property_id',
+  unit_id: 'unit_id',
+  notice_date: 'notice_date',
+  leasing_agent: 'leasing_agent'
 } as const
 
 export type ResidentsScalarFieldEnum = (typeof ResidentsScalarFieldEnum)[keyof typeof ResidentsScalarFieldEnum]
@@ -2556,6 +2636,16 @@ export const Sync_logScalarFieldEnum = {
 } as const
 
 export type Sync_logScalarFieldEnum = (typeof Sync_logScalarFieldEnum)[keyof typeof Sync_logScalarFieldEnum]
+
+
+export const InstructionScalarFieldEnum = {
+  id: 'id',
+  instruction: 'instruction',
+  createdAt: 'createdAt',
+  clientId: 'clientId'
+} as const
+
+export type InstructionScalarFieldEnum = (typeof InstructionScalarFieldEnum)[keyof typeof InstructionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2832,6 +2922,7 @@ export type GlobalOmitConfig = {
   resident_phones?: Prisma.resident_phonesOmit
   residents?: Prisma.residentsOmit
   sync_log?: Prisma.sync_logOmit
+  instruction?: Prisma.InstructionOmit
 }
 
 /* Types for Logging */

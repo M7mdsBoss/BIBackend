@@ -56,6 +56,7 @@ export const swaggerSpec = {
     { name: 'Visitors',             description: 'Visit records' },
     { name: 'Subscription Request', description: 'Pre-registration subscription requests' },
     { name: 'Analytics',            description: 'SRS analytics' },
+    { name: 'Instruction',          description: 'Client-scoped instructions CRUD' },
     { name: 'QR Code',              description: 'QR code generation' },
     { name: 'PDF',                  description: 'PDF downloads' },
     { name: 'Contact',              description: 'Contact / inquiry form' },
@@ -316,6 +317,18 @@ export const swaggerSpec = {
           allTime:   { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
           last7Days: { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
           today:     { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
+        },
+      },
+
+      // ── Instruction ──────────────────────────────────────────────────────────
+      Instruction: {
+        type: 'object',
+        properties: {
+          id:          { type: 'string', format: 'uuid' },
+          instruction: { type: 'string', example: 'Always check visitor ID before allowing entry.' },
+          clientId:    { type: 'string', format: 'uuid', description: 'Owning Client — scoped automatically from JWT' },
+          createdAt:   { type: 'string', format: 'date-time' },
+          updatedAt:   { type: 'string', format: 'date-time' },
         },
       },
     },
@@ -1376,6 +1389,130 @@ export const swaggerSpec = {
           400: { description: 'Invalid query parameters' },
           401: { description: 'Unauthorized' },
           403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
+        },
+      },
+    },
+
+    // ── Instruction ───────────────────────────────────────────────────────────
+    '/api/v1/instruction': {
+      post: {
+        tags: ['Instruction'],
+        summary: `Create an instruction under the authenticated Client. ${clientNote}`,
+        description: 'The `clientId` is taken from the JWT — the caller can only create instructions for their own Client.',
+        security: bearerAuth,
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['instruction'],
+                properties: {
+                  instruction: { type: 'string', example: 'Always check visitor ID before allowing entry.' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: 'Instruction created',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Instruction' } } },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+        },
+      },
+      get: {
+        tags: ['Instruction'],
+        summary: `List all instructions belonging to the authenticated Client. ${clientNote}`,
+        security: bearerAuth,
+        responses: {
+          200: {
+            description: 'Array of instructions (newest first)',
+            content: {
+              'application/json': {
+                schema: { type: 'array', items: { $ref: '#/components/schemas/Instruction' } },
+              },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+        },
+      },
+    },
+    '/api/v1/instruction/{id}': {
+      get: {
+        tags: ['Instruction'],
+        summary: `Get an instruction by ID (must belong to the authenticated Client). ${clientNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: {
+            description: 'Instruction',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Instruction' } } },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+          404: { description: 'Instruction not found (or belongs to another Client)' },
+        },
+      },
+      patch: {
+        tags: ['Instruction'],
+        summary: `Update an instruction (must belong to the authenticated Client). ${clientNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  instruction: { type: 'string', example: 'Updated instruction text.' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: 'Updated instruction',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Instruction' } } },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+          404: { description: 'Instruction not found (or belongs to another Client)' },
+        },
+      },
+      delete: {
+        tags: ['Instruction'],
+        summary: `Delete an instruction (must belong to the authenticated Client). ${clientNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: {
+            description: 'Instruction deleted',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: { message: { type: 'string', example: 'instruction-deleted' } },
+                },
+              },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+          404: { description: 'Instruction not found (or belongs to another Client)' },
         },
       },
     },

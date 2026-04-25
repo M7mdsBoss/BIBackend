@@ -8,6 +8,7 @@ import {
   GetSrsByUnit,
   getSrsStatus,
   listSrsRequests,
+  resolveSrsCompoundBaseline,
   resolveSrsWhere,
 } from './analytics.service';
 
@@ -26,10 +27,14 @@ export function createAnalyticsRouter(prisma: PrismaClient) {
   // GET /analytics/requests/by-agent
   router.get('/requests/by-agent', async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
-      const scopedWhere = await resolveSrsWhere(prisma, req.user!.id, req.user!.role, req.user!.clientId);
+      const caller = { id: req.user!.id, role: req.user!.role, clientId: req.user!.clientId };
+      const [scopedWhere, compoundLabelBySlug] = await Promise.all([
+        resolveSrsWhere(prisma, caller.id, caller.role, caller.clientId),
+        resolveSrsCompoundBaseline(prisma, caller),
+      ]);
       const [byCategory, byCompound, byUnit] = await Promise.all([
         getSrsByCategory(prisma, scopedWhere),
-        GetSrsByCompound(prisma, scopedWhere),
+        GetSrsByCompound(prisma, scopedWhere, compoundLabelBySlug),
         GetSrsByUnit(prisma, scopedWhere),
       ]);
       res.json({ byCategory, byCompound, byUnit });

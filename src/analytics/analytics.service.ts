@@ -47,11 +47,54 @@ export async function resolveSrsWhere(
   return { id: -1 };
 }
 
+// ── Baseline ──────────────────────────────────────────────────────────────────
+// Compounds the caller is allowed to see, independent of whether they have
+// SRS records. Used to seed compound groupings with zero rows so newly-created
+// compounds still appear on the dashboard.
+export interface SrsCaller {
+  id: string;
+  role: string;
+  clientId?: string | null;
+}
+
+export async function resolveSrsCompoundBaseline(
+  prisma: PrismaClient,
+  caller: SrsCaller,
+): Promise<Map<string, string>> {
+  let compoundWhere: any | null = null;
+
+  if (caller.role === 'CLIENT') {
+    if (!caller.clientId) return new Map();
+    compoundWhere = { clientId: caller.clientId };
+  } else if (caller.role === 'OPERATION' || caller.role === 'MANAGER') {
+    const assignments = await (prisma.assignedCompound as any).findMany({
+      where: { guardId: caller.id },
+      select: { compoundId: true },
+    });
+    const ids: string[] = assignments.map((a: any) => a.compoundId);
+    if (ids.length === 0) return new Map();
+    compoundWhere = { id: { in: ids } };
+  } else {
+    return new Map();
+  }
+
+  const compounds = await prisma.compound.findMany({
+    where: compoundWhere,
+    select: { slug: true, name: true },
+  });
+  return new Map(compounds.map((c) => [c.slug, c.name]));
+}
+
 // ── Grouping ──────────────────────────────────────────────────────────────────
+function emptyRow(name: string): SrsRow {
+  return { name, value: 0, Open: 0, Closed: 0, 'Work Completed': 0, Cancelled: 0 };
+}
+
 async function groupSrsByField(
   prisma: PrismaClient,
   field: SrsGroupField,
   scopedWhere: Record<string, any>,
+  baselineLabels: Map<string, string> | null,
   since?: Date,
 ): Promise<SrsRow[]> {
   const where: any = { ...scopedWhere };
@@ -64,14 +107,16 @@ async function groupSrsByField(
     where,
   });
 
-  // Group by slug internally; resolve to display name only at output time.
-  // - compound: show compound name
-  // - unit:     show "<compound name> - <unit name>"
-  let labelBySlug: Map<string, string> | null = null;
-  if (field === 'compound' || field === 'unit') {
-    const slugs = [...new Set(
+  // Label resolution:
+  // - If a baseline map is supplied (compound), use it and also seed zero rows
+  //   for every compound the caller owns.
+  // - Otherwise, for compound/unit fields, fetch display labels on-demand from
+  //   the slugs that appear in the groupBy result (no zero-seeding).
+  let labelBySlug: Map<string, string> | null = baselineLabels;
+  if (!labelBySlug && (field === 'compound' || field === 'unit')) {
+    const slugs = Array.from(new Set(
       rawResults.map((r) => r[field] as string | null).filter((s): s is string => !!s),
-    )];
+    ));
     if (slugs.length) {
       if (field === 'compound') {
         const rows = await prisma.compound.findMany({
@@ -90,13 +135,19 @@ async function groupSrsByField(
   }
 
   const map: Record<string, SrsRow> = {};
+  if (baselineLabels) {
+    baselineLabels.forEach((name, slug) => {
+      map[slug] = emptyRow(name);
+    });
+  }
+
   for (const item of rawResults) {
     const rawKey = (item[field] as string | null) ?? '__unassigned__';
     if (!map[rawKey]) {
       const displayName = labelBySlug && item[field]
         ? labelBySlug.get(item[field] as string) ?? (item[field] as string)
         : (item[field] as string | null) ?? 'Unassigned';
-      map[rawKey] = { name: displayName, value: 0, Open: 0, Closed: 0, 'Work Completed': 0, Cancelled: 0 };
+      map[rawKey] = emptyRow(displayName);
     }
     const count = (item._count as { _all: number })._all;
     map[rawKey].value += count;
@@ -106,19 +157,20 @@ async function groupSrsByField(
     if (item.status === 'Cancelled') map[rawKey].Cancelled += count;
   }
 
-  return Object.values(map);
+  return Object.values(map).sort((a, b) => b.value - a.value);
 }
 
 async function getSrsByFieldWithRanges(
   prisma: PrismaClient,
   field: SrsGroupField,
   scopedWhere: Record<string, any>,
+  baselineLabels: Map<string, string> | null,
 ) {
   const last7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const [allTime, last7DaysData, todayData] = await Promise.all([
-    groupSrsByField(prisma, field, scopedWhere),
-    groupSrsByField(prisma, field, scopedWhere, last7Days),
-    groupSrsByField(prisma, field, scopedWhere, startOfToday()),
+    groupSrsByField(prisma, field, scopedWhere, baselineLabels),
+    groupSrsByField(prisma, field, scopedWhere, baselineLabels, last7Days),
+    groupSrsByField(prisma, field, scopedWhere, baselineLabels, startOfToday()),
   ]);
   return { allTime, last7Days: last7DaysData, today: todayData };
 }
@@ -127,21 +179,22 @@ export async function getSrsByCategory(
   prisma: PrismaClient,
   scopedWhere: Record<string, any>,
 ) {
-  return getSrsByFieldWithRanges(prisma, 'category', scopedWhere);
+  return getSrsByFieldWithRanges(prisma, 'category', scopedWhere, null);
 }
 
 export async function GetSrsByCompound(
   prisma: PrismaClient,
   scopedWhere: Record<string, any>,
+  compoundLabelBySlug: Map<string, string>,
 ) {
-  return getSrsByFieldWithRanges(prisma, 'compound', scopedWhere);
+  return getSrsByFieldWithRanges(prisma, 'compound', scopedWhere, compoundLabelBySlug);
 }
 
 export async function GetSrsByUnit(
   prisma: PrismaClient,
   scopedWhere: Record<string, any>,
 ) {
-  return getSrsByFieldWithRanges(prisma, 'unit', scopedWhere);
+  return getSrsByFieldWithRanges(prisma, 'unit', scopedWhere, null);
 }
 
 export async function getSrsStatus(

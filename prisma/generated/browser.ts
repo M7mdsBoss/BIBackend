@@ -132,3 +132,8 @@ export type residents = Prisma.residentsModel
  * 
  */
 export type sync_log = Prisma.sync_logModel
+/**
+ * Model Instruction
+ * 
+ */
+export type Instruction = Prisma.InstructionModel
