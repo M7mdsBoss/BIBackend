@@ -74,7 +74,8 @@ export const ModelName = {
   resident_phones: 'resident_phones',
   residents: 'residents',
   sync_log: 'sync_log',
-  Instruction: 'Instruction'
+  Instruction: 'Instruction',
+  api_audit_log: 'api_audit_log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -497,6 +498,22 @@ export const InstructionScalarFieldEnum = {
 } as const
 
 export type InstructionScalarFieldEnum = (typeof InstructionScalarFieldEnum)[keyof typeof InstructionScalarFieldEnum]
+
+
+export const Api_audit_logScalarFieldEnum = {
+  id: 'id',
+  endpoint: 'endpoint',
+  method: 'method',
+  ip_address: 'ip_address',
+  status_code: 'status_code',
+  duration_ms: 'duration_ms',
+  timestamp: 'timestamp',
+  request_body: 'request_body',
+  response_body: 'response_body',
+  headers: 'headers'
+} as const
+
+export type Api_audit_logScalarFieldEnum = (typeof Api_audit_logScalarFieldEnum)[keyof typeof Api_audit_logScalarFieldEnum]
 
 
 export const SortOrder = {

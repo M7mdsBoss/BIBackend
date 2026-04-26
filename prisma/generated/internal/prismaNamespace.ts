@@ -407,7 +407,8 @@ export const ModelName = {
   resident_phones: 'resident_phones',
   residents: 'residents',
   sync_log: 'sync_log',
-  Instruction: 'Instruction'
+  Instruction: 'Instruction',
+  api_audit_log: 'api_audit_log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs" | "resident_phones" | "residents" | "sync_log" | "instruction"
+    modelProps: "client" | "user" | "compound" | "unit" | "assignedCompound" | "subscriptionRequest" | "visit" | "customers" | "dashborad_Insights" | "dashborad_data_q_r_" | "n8n_chat_histories" | "payment_events" | "payments" | "requests" | "template_sent" | "tiktok_messages" | "whatsapp_messages" | "n8n_vectors" | "n8n_vectors_v2" | "srs" | "resident_phones" | "residents" | "sync_log" | "instruction" | "api_audit_log"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2203,6 +2204,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    api_audit_log: {
+      payload: Prisma.$api_audit_logPayload<ExtArgs>
+      fields: Prisma.api_audit_logFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.api_audit_logFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.api_audit_logFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>
+        }
+        findFirst: {
+          args: Prisma.api_audit_logFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.api_audit_logFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>
+        }
+        findMany: {
+          args: Prisma.api_audit_logFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>[]
+        }
+        create: {
+          args: Prisma.api_audit_logCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>
+        }
+        createMany: {
+          args: Prisma.api_audit_logCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.api_audit_logCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>[]
+        }
+        delete: {
+          args: Prisma.api_audit_logDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>
+        }
+        update: {
+          args: Prisma.api_audit_logUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>
+        }
+        deleteMany: {
+          args: Prisma.api_audit_logDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.api_audit_logUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.api_audit_logUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>[]
+        }
+        upsert: {
+          args: Prisma.api_audit_logUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$api_audit_logPayload>
+        }
+        aggregate: {
+          args: Prisma.Api_audit_logAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateApi_audit_log>
+        }
+        groupBy: {
+          args: Prisma.api_audit_logGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Api_audit_logGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.api_audit_logCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Api_audit_logCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2648,6 +2723,22 @@ export const InstructionScalarFieldEnum = {
 export type InstructionScalarFieldEnum = (typeof InstructionScalarFieldEnum)[keyof typeof InstructionScalarFieldEnum]
 
 
+export const Api_audit_logScalarFieldEnum = {
+  id: 'id',
+  endpoint: 'endpoint',
+  method: 'method',
+  ip_address: 'ip_address',
+  status_code: 'status_code',
+  duration_ms: 'duration_ms',
+  timestamp: 'timestamp',
+  request_body: 'request_body',
+  response_body: 'response_body',
+  headers: 'headers'
+} as const
+
+export type Api_audit_logScalarFieldEnum = (typeof Api_audit_logScalarFieldEnum)[keyof typeof Api_audit_logScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2923,6 +3014,7 @@ export type GlobalOmitConfig = {
   residents?: Prisma.residentsOmit
   sync_log?: Prisma.sync_logOmit
   instruction?: Prisma.InstructionOmit
+  api_audit_log?: Prisma.api_audit_logOmit
 }
 
 /* Types for Logging */

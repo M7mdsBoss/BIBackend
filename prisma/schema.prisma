@@ -8,23 +8,22 @@ datasource db {
 }
 
 model Client {
-  id         String     @id
-  clientName String
-  createdAt  DateTime   @default(now())
-  adminId    String?    @unique
-  address    String?
-  contact    String?
-  crNb       String?
-  domainName String?
-  note       String?
-  website    String?
-  admin      User?      @relation("ClientAdmin", fields: [adminId], references: [id])
-  compounds  Compound[]
-  members    User[]     @relation("ClientMembers")
-  visits     Visit[]    @relation("ClientVisit")
-  srsRecords srs[]      @relation("ClientSrs")
-
+  id           String        @id
+  clientName   String
+  createdAt    DateTime      @default(now())
+  adminId      String?       @unique
+  address      String?
+  contact      String?
+  crNb         String?
+  domainName   String?
+  note         String?
+  website      String?
+  admin        User?         @relation("ClientAdmin", fields: [adminId], references: [id])
+  compounds    Compound[]
   instructions Instruction[] @relation("ClientInstruction")
+  members      User[]        @relation("ClientMembers")
+  visits       Visit[]       @relation("ClientVisit")
+  srsRecords   srs[]         @relation("ClientSrs")
 }
 
 model User {
@@ -386,19 +385,37 @@ model sync_log {
   error_message       String?
 }
 
+model Instruction {
+  id          String   @id
+  instruction String
+  createdAt   DateTime @default(now())
+  clientId    String
+  clientRef   Client   @relation("ClientInstruction", fields: [clientId], references: [id])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model api_audit_log {
+  id            Int       @id @default(autoincrement())
+  endpoint      String    @db.VarChar(255)
+  method        String    @db.VarChar(10)
+  ip_address    String?   @db.VarChar(45)
+  status_code   Int?
+  duration_ms   Int?
+  timestamp     DateTime? @default(now()) @db.Timestamp(6)
+  request_body  String?
+  response_body String?
+  headers       Json?
+
+  @@index([endpoint], map: "idx_audit_endpoint")
+  @@index([ip_address], map: "idx_audit_ip")
+  @@index([status_code], map: "idx_audit_status")
+  @@index([timestamp(sort: Desc)], map: "idx_audit_timestamp")
+}
+
 enum UserRole {
   ADMIN
   CLIENT
   SECURITY
   OPERATION
   MANAGER
-}
-
-
-model Instruction {
-  id                  String    @id
-  instruction         String
-  createdAt           DateTime  @default(now())
-  clientId            String
-  clientRef           Client   @relation("ClientInstruction", fields: [clientId], references: [id])
 }
