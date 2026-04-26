@@ -340,9 +340,10 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
 }
 
 // ── Paginated visits per unit ────────────────────────────────────────────────
-// Mirror of SRS units analytics: zero-seeded list of every in-scope unit with
-// visit counts, then sort by total and paginate. Search is case-insensitive on
-// the full "Compound - Unit" label (OR-ed across unit.name and compound.name).
+// Group visits first, then resolve labels only for unit slugs that actually
+// appear in the result set. Units with zero visits in the period are skipped —
+// faster than hauling the whole unit table for every call. Search is
+// case-insensitive on unit.name OR compound.name.
 export type VisitsByUnitPeriod = 'all' | 'last7days' | 'today';
 
 export interface ListVisitsByUnitQuery {
@@ -379,63 +380,50 @@ export async function listVisitsByUnit(
 ) {
   const { page, limit, sort, period, search } = query;
 
-  // 1. Unit scope by role. ADMIN / OPERATION are blocked at the route level so
-  //    we only handle CLIENT / SECURITY / MANAGER here.
-  let unitWhere: any;
-  if (caller.role === 'CLIENT') {
-    if (!caller.clientId) return emptyVisitsUnitsResult(page, limit);
-    unitWhere = { compound: { clientId: caller.clientId } };
-  } else if (caller.role === 'SECURITY' || caller.role === 'MANAGER') {
-    const assignments = await (prisma.assignedCompound as any).findMany({
-      where: { guardId: caller.id },
-      select: { compoundId: true },
-    });
-    const compoundIds: string[] = assignments.map((a: any) => a.compoundId);
-    if (compoundIds.length === 0) return emptyVisitsUnitsResult(page, limit);
-    unitWhere = { compoundId: { in: compoundIds } };
-  } else {
-    return emptyVisitsUnitsResult(page, limit);
-  }
+  // 1. Scope visits by the caller's role (CLIENT → clientId,
+  //    SECURITY/MANAGER → assigned compound slugs, others blocked at route).
+  const scopedWhere = await resolveVisitWhere(prisma, caller);
 
-  // 2. Layer search filter on top of scope.
-  if (search) {
-    unitWhere = {
-      AND: [
-        unitWhere,
-        {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' } },
-            { compound: { name: { contains: search, mode: 'insensitive' } } },
-          ],
-        },
-      ],
-    };
-  }
-
-  // 3. Fetch every in-scope unit so zero-visit units still appear.
-  const units = await prisma.unit.findMany({
-    where: unitWhere,
-    select: { slug: true, name: true, compound: { select: { name: true } } },
-  });
-
-  if (units.length === 0) return emptyVisitsUnitsResult(page, limit);
-
-  // 4. Group visits by unit in a single query, restricted to those slugs and
-  //    the chosen period (visitDate window).
-  const slugs = units.map((u) => u.slug);
   const range = visitsPeriodRange(period);
-  const visitWhere: any = { residentUnit: { in: slugs } };
+  const visitWhere: any = { ...scopedWhere };
   if (range) visitWhere.visitDate = range;
 
+  // 2. Group first — only units with at least one visit in the period survive.
   const grouped = await prisma.visit.groupBy({
     by: ['residentUnit'],
     _count: { _all: true },
     where: visitWhere,
   });
 
-  // 5. Seed every unit with a zero total, then fill in group counts.
+  if (grouped.length === 0) return emptyVisitsUnitsResult(page, limit);
+
+  // 3. Resolve labels only for slugs that appear, with the optional search
+  //    filter pushed to the DB (slugs without a matching label are dropped —
+  //    handles both orphaned slugs and search misses in one pass).
+  const slugsWithData = Array.from(
+    new Set(grouped.map((g) => g.residentUnit).filter((s): s is string => !!s)),
+  );
+
+  const labels = await prisma.unit.findMany({
+    where: {
+      slug: { in: slugsWithData },
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' as const } },
+              { compound: { name: { contains: search, mode: 'insensitive' as const } } },
+            ],
+          }
+        : {}),
+    },
+    select: { slug: true, name: true, compound: { select: { name: true } } },
+  });
+
+  if (labels.length === 0) return emptyVisitsUnitsResult(page, limit);
+
+  // 4. Build rows from labels, then merge group counts in.
   const rowBySlug = new Map<string, VisitsUnitRow>();
-  for (const u of units) {
+  for (const u of labels) {
     rowBySlug.set(u.slug, {
       name: `${u.compound.name} - ${u.name}`,
       slug: u.slug,
@@ -446,11 +434,11 @@ export async function listVisitsByUnit(
   for (const item of grouped) {
     if (!item.residentUnit) continue;
     const row = rowBySlug.get(item.residentUnit);
-    if (!row) continue;
+    if (!row) continue; // dropped by label filter
     row.value += (item._count as { _all: number })._all;
   }
 
-  // 6. Sort by total then paginate.
+  // 5. Sort by total then paginate.
   const sorted = Array.from(rowBySlug.values()).sort((a, b) =>
     sort === 'asc' ? a.value - b.value : b.value - a.value,
   );

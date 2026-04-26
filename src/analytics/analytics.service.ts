@@ -198,9 +198,11 @@ export async function GetSrsByUnit(
 }
 
 // ── Paginated units analytics ─────────────────────────────────────────────────
-// Returns all units the caller can see (zero-seeded), with their SRS status
-// breakdown, then sorts by total and paginates. Search matches case-insensitive
-// on the full "compound - unit" label by OR-ing unit.name and compound.name.
+// Group SRS first, then resolve labels only for unit slugs that actually
+// appear in the result set. Units with zero requests in the period are
+// skipped — both faster and avoids hauling the whole unit table for every call.
+// Search matches case-insensitive on unit.name OR compound.name (covers any
+// half of the "Compound - Unit" label).
 export type UnitsAnalyticsPeriod = 'all' | 'last7days' | 'today';
 
 export interface ListUnitsAnalyticsQuery {
@@ -233,64 +235,50 @@ export async function listSrsUnitsAnalytics(
 ) {
   const { page, limit, sort, search, period } = query;
 
-  // 1. Resolve the unit scope from the caller's role.
-  let unitWhere: any;
-  if (caller.role === 'CLIENT') {
-    if (!caller.clientId) return emptyUnitsResult(page, limit);
-    unitWhere = { compound: { clientId: caller.clientId } };
-  } else if (caller.role === 'OPERATION' || caller.role === 'MANAGER') {
-    const assignments = await (prisma.assignedCompound as any).findMany({
-      where: { guardId: caller.id },
-      select: { compoundId: true },
-    });
-    const compoundIds: string[] = assignments.map((a: any) => a.compoundId);
-    if (compoundIds.length === 0) return emptyUnitsResult(page, limit);
-    unitWhere = { compoundId: { in: compoundIds } };
-  } else {
-    return emptyUnitsResult(page, limit);
-  }
+  // 1. Scope SRS records by the caller's role (CLIENT → clientId,
+  //    OPERATION/MANAGER → assigned compound slugs, others → nothing).
+  const scopedWhere = await resolveSrsWhere(prisma, caller.id, caller.role, caller.clientId);
 
-  // 2. Layer the search filter on top of scope. Matches "compound - unit"
-  //    by OR-ing unit.name and compound.name (covers both halves of the label).
-  if (search) {
-    unitWhere = {
-      AND: [
-        unitWhere,
-        {
-          OR: [
-            { name: { contains: search, mode: 'insensitive' } },
-            { compound: { name: { contains: search, mode: 'insensitive' } } },
-          ],
-        },
-      ],
-    };
-  }
-
-  // 3. Fetch every in-scope unit so zero-request units still appear.
-  const units = await prisma.unit.findMany({
-    where: unitWhere,
-    select: { slug: true, name: true, compound: { select: { name: true } } },
-  });
-
-  if (units.length === 0) return emptyUnitsResult(page, limit);
-
-  // 4. Single groupBy across the full set of in-scope unit slugs (no N+1).
-  //    `period` narrows the SRS records counted; the unit list stays full so
-  //    units with zero requests in the period still show up.
-  const slugs = units.map((u) => u.slug);
   const since = periodSince(period);
-  const srsWhere: any = { unit: { in: slugs } };
+  const srsWhere: any = { ...scopedWhere, unit: { not: null } };
   if (since) srsWhere.datetime = { gte: since };
 
+  // 2. Group first — only units with at least one SRS in the period survive.
   const grouped = await prisma.srs.groupBy({
     by: ['unit', 'status'],
     _count: { _all: true },
     where: srsWhere,
   });
 
-  // 5. Seed every unit with zeroed counts, then merge group results.
+  if (grouped.length === 0) return emptyUnitsResult(page, limit);
+
+  // 3. Resolve labels only for slugs that appear, with the optional search
+  //    filter pushed to the DB (slugs without a matching label are dropped —
+  //    handles both orphaned slugs and search misses in one pass).
+  const slugsWithData = Array.from(
+    new Set(grouped.map((g) => g.unit).filter((s): s is string => !!s)),
+  );
+
+  const labels = await prisma.unit.findMany({
+    where: {
+      slug: { in: slugsWithData },
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' as const } },
+              { compound: { name: { contains: search, mode: 'insensitive' as const } } },
+            ],
+          }
+        : {}),
+    },
+    select: { slug: true, name: true, compound: { select: { name: true } } },
+  });
+
+  if (labels.length === 0) return emptyUnitsResult(page, limit);
+
+  // 4. Build rows from labels, then merge group counts in.
   const rowBySlug = new Map<string, SrsUnitRow>();
-  for (const u of units) {
+  for (const u of labels) {
     rowBySlug.set(u.slug, {
       name: `${u.compound.name} - ${u.name}`,
       slug: u.slug,
@@ -305,7 +293,7 @@ export async function listSrsUnitsAnalytics(
   for (const item of grouped) {
     if (!item.unit) continue;
     const row = rowBySlug.get(item.unit);
-    if (!row) continue;
+    if (!row) continue; // dropped by label filter
     const count = (item._count as { _all: number })._all;
     row.value += count;
     if (item.status === 'Open') row.Open += count;
@@ -314,7 +302,7 @@ export async function listSrsUnitsAnalytics(
     else if (item.status === 'Cancelled') row.Cancelled += count;
   }
 
-  // 6. Sort by total then paginate the filtered, sorted set.
+  // 5. Sort by total then paginate the filtered, sorted set.
   const sorted = Array.from(rowBySlug.values()).sort((a, b) =>
     sort === 'asc' ? a.value - b.value : b.value - a.value,
   );

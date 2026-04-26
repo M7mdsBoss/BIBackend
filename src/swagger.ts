@@ -1215,15 +1215,16 @@ export const swaggerSpec = {
         tags: ['Visitors'],
         summary: `Paginated visit stats per unit, sorted by total. ${authNote}`,
         description:
-          'Returns every unit the caller can see (zero-seeded) with its total visit count, sorted by total and paginated. ' +
+          'Returns units that have at least one visit in the selected period, with their total visit count, sorted by total and paginated. ' +
+          'Units with zero visits in the period are omitted (for performance). ' +
           'Search is case-insensitive and matches either the unit name or the parent compound name. ' +
-          'Scoped by role: CLIENT sees units in compounds owned by their Client; SECURITY/MANAGER see units in their assigned compounds.',
+          'Scoped by role: CLIENT sees their Client\'s visits; SECURITY/MANAGER see visits for their assigned compounds.',
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'page',   schema: { type: 'integer', default: 1, minimum: 1 } },
           { in: 'query', name: 'limit',  schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
           { in: 'query', name: 'sort',   schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' }, description: 'Sort by total visits' },
-          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to visitDate (units stay full so zero-rows still appear)' },
+          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to visitDate' },
           { in: 'query', name: 'search', schema: { type: 'string' }, description: 'Case-insensitive substring match on unit name or compound name' },
         ],
         responses: {
@@ -1435,15 +1436,16 @@ export const swaggerSpec = {
         tags: ['Analytics'],
         summary: `Paginated SRS stats per unit, sorted by total. ${clientNote}`,
         description:
-          'Returns every unit the caller can see (zero-seeded) with its SRS status breakdown, then sorts by total request count and paginates. ' +
+          'Returns units that have at least one SRS in the selected period, with their status breakdown, sorted by total and paginated. ' +
+          'Units with zero requests in the period are omitted (for performance). ' +
           'Search is case-insensitive and matches either the unit name or the parent compound name (covers any half of the "Compound - Unit" label). ' +
-          'Scoped by role: CLIENT sees units in compounds owned by their Client; OPERATION/MANAGER see units in their assigned compounds.',
+          'Scoped by role: CLIENT sees their Client\'s SRS; OPERATION/MANAGER see SRS for their assigned compounds.',
         security: bearerAuth,
         parameters: [
           { in: 'query', name: 'page',   schema: { type: 'integer', default: 1, minimum: 1 } },
           { in: 'query', name: 'limit',  schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
           { in: 'query', name: 'sort',   schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' }, description: 'Sort by total request count' },
-          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to SRS records (units stay full so zero-rows still appear)' },
+          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to SRS records' },
           { in: 'query', name: 'search', schema: { type: 'string' }, description: 'Case-insensitive substring match on unit name or compound name' },
         ],
         responses: {
