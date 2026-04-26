@@ -319,6 +319,26 @@ export const swaggerSpec = {
           today:     { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
         },
       },
+      VisitsUnitRow: {
+        type: 'object',
+        properties: {
+          name:  { type: 'string', example: 'Green Valley - Tower A 101', description: 'Combined "Compound - Unit" label' },
+          slug:  { type: 'string', example: 'UNIT_tower_a_101' },
+          value: { type: 'integer', example: 12, description: 'Total visits in the selected period' },
+        },
+      },
+      SrsUnitRow: {
+        allOf: [
+          { $ref: '#/components/schemas/SrsRow' },
+          {
+            type: 'object',
+            properties: {
+              slug: { type: 'string', example: 'UNIT_tower_a_101' },
+              name: { type: 'string', example: 'Green Valley - Tower A 101', description: 'Combined "Compound - Unit" label' },
+            },
+          },
+        ],
+      },
 
       // ── Instruction ──────────────────────────────────────────────────────────
       Instruction: {
@@ -1190,6 +1210,43 @@ export const swaggerSpec = {
         },
       },
     },
+    '/api/v1/visitors/units': {
+      get: {
+        tags: ['Visitors'],
+        summary: `Paginated visit stats per unit, sorted by total. ${authNote}`,
+        description:
+          'Returns every unit the caller can see (zero-seeded) with its total visit count, sorted by total and paginated. ' +
+          'Search is case-insensitive and matches either the unit name or the parent compound name. ' +
+          'Scoped by role: CLIENT sees units in compounds owned by their Client; SECURITY/MANAGER see units in their assigned compounds.',
+        security: bearerAuth,
+        parameters: [
+          { in: 'query', name: 'page',   schema: { type: 'integer', default: 1, minimum: 1 } },
+          { in: 'query', name: 'limit',  schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
+          { in: 'query', name: 'sort',   schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' }, description: 'Sort by total visits' },
+          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to visitDate (units stay full so zero-rows still appear)' },
+          { in: 'query', name: 'search', schema: { type: 'string' }, description: 'Case-insensitive substring match on unit name or compound name' },
+        ],
+        responses: {
+          200: {
+            description: 'Paginated unit visit stats',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data:       { type: 'array', items: { $ref: '#/components/schemas/VisitsUnitRow' } },
+                    pagination: { $ref: '#/components/schemas/Pagination' },
+                  },
+                },
+              },
+            },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, SECURITY, or MANAGER role required' },
+        },
+      },
+    },
     '/api/v1/visitors/{id}': {
       get: {
         tags: ['Visitors'],
@@ -1368,6 +1425,43 @@ export const swaggerSpec = {
         security: bearerAuth,
         responses: {
           200: { description: 'Status breakdown' },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
+        },
+      },
+    },
+    '/api/v1/analytics/requests/units': {
+      get: {
+        tags: ['Analytics'],
+        summary: `Paginated SRS stats per unit, sorted by total. ${clientNote}`,
+        description:
+          'Returns every unit the caller can see (zero-seeded) with its SRS status breakdown, then sorts by total request count and paginates. ' +
+          'Search is case-insensitive and matches either the unit name or the parent compound name (covers any half of the "Compound - Unit" label). ' +
+          'Scoped by role: CLIENT sees units in compounds owned by their Client; OPERATION/MANAGER see units in their assigned compounds.',
+        security: bearerAuth,
+        parameters: [
+          { in: 'query', name: 'page',   schema: { type: 'integer', default: 1, minimum: 1 } },
+          { in: 'query', name: 'limit',  schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
+          { in: 'query', name: 'sort',   schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' }, description: 'Sort by total request count' },
+          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to SRS records (units stay full so zero-rows still appear)' },
+          { in: 'query', name: 'search', schema: { type: 'string' }, description: 'Case-insensitive substring match on unit name or compound name' },
+        ],
+        responses: {
+          200: {
+            description: 'Paginated unit stats',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data:       { type: 'array', items: { $ref: '#/components/schemas/SrsUnitRow' } },
+                    pagination: { $ref: '#/components/schemas/Pagination' },
+                  },
+                },
+              },
+            },
+          },
+          400: ValidationError,
           401: { description: 'Unauthorized' },
           403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
         },

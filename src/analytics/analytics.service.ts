@@ -197,6 +197,138 @@ export async function GetSrsByUnit(
   return getSrsByFieldWithRanges(prisma, 'unit', scopedWhere, null);
 }
 
+// ── Paginated units analytics ─────────────────────────────────────────────────
+// Returns all units the caller can see (zero-seeded), with their SRS status
+// breakdown, then sorts by total and paginates. Search matches case-insensitive
+// on the full "compound - unit" label by OR-ing unit.name and compound.name.
+export type UnitsAnalyticsPeriod = 'all' | 'last7days' | 'today';
+
+export interface ListUnitsAnalyticsQuery {
+  page: number;
+  limit: number;
+  sort: 'asc' | 'desc';
+  period: UnitsAnalyticsPeriod;
+  search?: string;
+}
+
+function periodSince(period: UnitsAnalyticsPeriod): Date | null {
+  if (period === 'today') return startOfToday();
+  if (period === 'last7days') return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  return null;
+}
+
+type SrsUnitRow = SrsRow & { slug: string };
+
+function emptyUnitsResult(page: number, limit: number) {
+  return {
+    data: [] as SrsUnitRow[],
+    pagination: { page, limit, total: 0, totalPages: 0 },
+  };
+}
+
+export async function listSrsUnitsAnalytics(
+  prisma: PrismaClient,
+  caller: SrsCaller,
+  query: ListUnitsAnalyticsQuery,
+) {
+  const { page, limit, sort, search, period } = query;
+
+  // 1. Resolve the unit scope from the caller's role.
+  let unitWhere: any;
+  if (caller.role === 'CLIENT') {
+    if (!caller.clientId) return emptyUnitsResult(page, limit);
+    unitWhere = { compound: { clientId: caller.clientId } };
+  } else if (caller.role === 'OPERATION' || caller.role === 'MANAGER') {
+    const assignments = await (prisma.assignedCompound as any).findMany({
+      where: { guardId: caller.id },
+      select: { compoundId: true },
+    });
+    const compoundIds: string[] = assignments.map((a: any) => a.compoundId);
+    if (compoundIds.length === 0) return emptyUnitsResult(page, limit);
+    unitWhere = { compoundId: { in: compoundIds } };
+  } else {
+    return emptyUnitsResult(page, limit);
+  }
+
+  // 2. Layer the search filter on top of scope. Matches "compound - unit"
+  //    by OR-ing unit.name and compound.name (covers both halves of the label).
+  if (search) {
+    unitWhere = {
+      AND: [
+        unitWhere,
+        {
+          OR: [
+            { name: { contains: search, mode: 'insensitive' } },
+            { compound: { name: { contains: search, mode: 'insensitive' } } },
+          ],
+        },
+      ],
+    };
+  }
+
+  // 3. Fetch every in-scope unit so zero-request units still appear.
+  const units = await prisma.unit.findMany({
+    where: unitWhere,
+    select: { slug: true, name: true, compound: { select: { name: true } } },
+  });
+
+  if (units.length === 0) return emptyUnitsResult(page, limit);
+
+  // 4. Single groupBy across the full set of in-scope unit slugs (no N+1).
+  //    `period` narrows the SRS records counted; the unit list stays full so
+  //    units with zero requests in the period still show up.
+  const slugs = units.map((u) => u.slug);
+  const since = periodSince(period);
+  const srsWhere: any = { unit: { in: slugs } };
+  if (since) srsWhere.datetime = { gte: since };
+
+  const grouped = await prisma.srs.groupBy({
+    by: ['unit', 'status'],
+    _count: { _all: true },
+    where: srsWhere,
+  });
+
+  // 5. Seed every unit with zeroed counts, then merge group results.
+  const rowBySlug = new Map<string, SrsUnitRow>();
+  for (const u of units) {
+    rowBySlug.set(u.slug, {
+      name: `${u.compound.name} - ${u.name}`,
+      slug: u.slug,
+      value: 0,
+      Open: 0,
+      Closed: 0,
+      'Work Completed': 0,
+      Cancelled: 0,
+    });
+  }
+
+  for (const item of grouped) {
+    if (!item.unit) continue;
+    const row = rowBySlug.get(item.unit);
+    if (!row) continue;
+    const count = (item._count as { _all: number })._all;
+    row.value += count;
+    if (item.status === 'Open') row.Open += count;
+    else if (item.status === 'Closed') row.Closed += count;
+    else if (item.status === 'Work Completed') row['Work Completed'] += count;
+    else if (item.status === 'Cancelled') row.Cancelled += count;
+  }
+
+  // 6. Sort by total then paginate the filtered, sorted set.
+  const sorted = Array.from(rowBySlug.values()).sort((a, b) =>
+    sort === 'asc' ? a.value - b.value : b.value - a.value,
+  );
+
+  const total = sorted.length;
+  const skip = (page - 1) * limit;
+  const data = sorted.slice(skip, skip + limit);
+
+  return {
+    data,
+    pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+  };
+}
+
 export async function getSrsStatus(
   prisma: PrismaClient,
   scopedWhere: Record<string, any>,

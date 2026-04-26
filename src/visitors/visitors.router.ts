@@ -2,7 +2,13 @@ import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { PrismaClient } from '../../prisma/generated/client';
 import { AuthRequest, guard } from '../middleware/auth.middleware';
-import { createVisit, getVisitById, getVisitorStats, listVisits } from './visitors.service';
+import {
+  createVisit,
+  getVisitById,
+  getVisitorStats,
+  listVisits,
+  listVisitsByUnit,
+} from './visitors.service';
 
 const createVisitSchema = z.object({
   residentFullName:    z.string().min(1),
@@ -23,6 +29,14 @@ const listQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(10),
   unit:  z.string().min(1).optional(),
   sort:  z.enum(['asc', 'desc']).default('desc'),
+});
+
+const unitsQuerySchema = z.object({
+  page:   z.coerce.number().int().min(1).default(1),
+  limit:  z.coerce.number().int().min(1).max(100).default(10),
+  sort:   z.enum(['asc', 'desc']).default('desc'),
+  period: z.enum(['all', 'last7days', 'today']).default('all'),
+  search: z.string().trim().min(1).optional(),
 });
 
 
@@ -55,6 +69,28 @@ export function createVisitorsRouter(prisma: PrismaClient) {
         role: req.user!.role,
         clientId: req.user!.clientId,
       }));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // GET /api/v1/visitors/units?page=1&limit=10&sort=desc&period=all&search=tower
+  // Must be registered BEFORE /:id so the dynamic param doesn't capture it.
+  router.get('/units', guard('CLIENT', 'SECURITY', 'MANAGER'), async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      const parsed = unitsQuerySchema.safeParse(req.query);
+      if (!parsed.success) {
+        res.status(400).json({
+          message: 'Invalid query parameters',
+          errors: parsed.error.issues.map((e) => ({ field: e.path.join('.'), message: e.message })),
+        });
+        return;
+      }
+      res.json(await listVisitsByUnit(prisma, {
+        id: req.user!.id,
+        role: req.user!.role,
+        clientId: req.user!.clientId,
+      }, parsed.data));
     } catch (err) {
       next(err);
     }

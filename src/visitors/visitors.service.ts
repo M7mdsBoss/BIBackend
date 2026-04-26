@@ -338,3 +338,129 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
     },
   };
 }
+
+// ── Paginated visits per unit ────────────────────────────────────────────────
+// Mirror of SRS units analytics: zero-seeded list of every in-scope unit with
+// visit counts, then sort by total and paginate. Search is case-insensitive on
+// the full "Compound - Unit" label (OR-ed across unit.name and compound.name).
+export type VisitsByUnitPeriod = 'all' | 'last7days' | 'today';
+
+export interface ListVisitsByUnitQuery {
+  page: number;
+  limit: number;
+  sort: 'asc' | 'desc';
+  period: VisitsByUnitPeriod;
+  search?: string;
+}
+
+type VisitsUnitRow = {
+  name: string;
+  slug: string;
+  value: number;
+};
+
+function emptyVisitsUnitsResult(page: number, limit: number) {
+  return {
+    data: [] as VisitsUnitRow[],
+    pagination: { page, limit, total: 0, totalPages: 0 },
+  };
+}
+
+function visitsPeriodRange(period: VisitsByUnitPeriod): { gte: Date; lt?: Date } | null {
+  if (period === 'today') return { gte: startOfToday(), lt: startOfTomorrow() };
+  if (period === 'last7days') return { gte: sevenDaysAgo() };
+  return null;
+}
+
+export async function listVisitsByUnit(
+  prisma: PrismaClient,
+  caller: CallerContext,
+  query: ListVisitsByUnitQuery,
+) {
+  const { page, limit, sort, period, search } = query;
+
+  // 1. Unit scope by role. ADMIN / OPERATION are blocked at the route level so
+  //    we only handle CLIENT / SECURITY / MANAGER here.
+  let unitWhere: any;
+  if (caller.role === 'CLIENT') {
+    if (!caller.clientId) return emptyVisitsUnitsResult(page, limit);
+    unitWhere = { compound: { clientId: caller.clientId } };
+  } else if (caller.role === 'SECURITY' || caller.role === 'MANAGER') {
+    const assignments = await (prisma.assignedCompound as any).findMany({
+      where: { guardId: caller.id },
+      select: { compoundId: true },
+    });
+    const compoundIds: string[] = assignments.map((a: any) => a.compoundId);
+    if (compoundIds.length === 0) return emptyVisitsUnitsResult(page, limit);
+    unitWhere = { compoundId: { in: compoundIds } };
+  } else {
+    return emptyVisitsUnitsResult(page, limit);
+  }
+
+  // 2. Layer search filter on top of scope.
+  if (search) {
+    unitWhere = {
+      AND: [
+        unitWhere,
+        {
+          OR: [
+            { name: { contains: search, mode: 'insensitive' } },
+            { compound: { name: { contains: search, mode: 'insensitive' } } },
+          ],
+        },
+      ],
+    };
+  }
+
+  // 3. Fetch every in-scope unit so zero-visit units still appear.
+  const units = await prisma.unit.findMany({
+    where: unitWhere,
+    select: { slug: true, name: true, compound: { select: { name: true } } },
+  });
+
+  if (units.length === 0) return emptyVisitsUnitsResult(page, limit);
+
+  // 4. Group visits by unit in a single query, restricted to those slugs and
+  //    the chosen period (visitDate window).
+  const slugs = units.map((u) => u.slug);
+  const range = visitsPeriodRange(period);
+  const visitWhere: any = { residentUnit: { in: slugs } };
+  if (range) visitWhere.visitDate = range;
+
+  const grouped = await prisma.visit.groupBy({
+    by: ['residentUnit'],
+    _count: { _all: true },
+    where: visitWhere,
+  });
+
+  // 5. Seed every unit with a zero total, then fill in group counts.
+  const rowBySlug = new Map<string, VisitsUnitRow>();
+  for (const u of units) {
+    rowBySlug.set(u.slug, {
+      name: `${u.compound.name} - ${u.name}`,
+      slug: u.slug,
+      value: 0,
+    });
+  }
+
+  for (const item of grouped) {
+    if (!item.residentUnit) continue;
+    const row = rowBySlug.get(item.residentUnit);
+    if (!row) continue;
+    row.value += (item._count as { _all: number })._all;
+  }
+
+  // 6. Sort by total then paginate.
+  const sorted = Array.from(rowBySlug.values()).sort((a, b) =>
+    sort === 'asc' ? a.value - b.value : b.value - a.value,
+  );
+
+  const total = sorted.length;
+  const skip = (page - 1) * limit;
+  const data = sorted.slice(skip, skip + limit);
+
+  return {
+    data,
+    pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+  };
+}
