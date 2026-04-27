@@ -219,6 +219,56 @@ function sevenDaysAgo(): Date {
   return d;
 }
 
+// Baseline: compounds the caller is allowed to see, regardless of whether
+// they have visits yet. Used to seed compound stats with zero entries so
+// newly-created compounds still appear on the dashboard.
+async function resolveVisitCompoundBaseline(
+  prisma: PrismaClient,
+  caller: CallerContext,
+): Promise<Map<string, string>> {
+  let compoundWhere: any | null = null;
+
+  if (caller.role === 'CLIENT') {
+    if (!caller.clientId) return new Map();
+    compoundWhere = { clientId: caller.clientId };
+  } else if (caller.role === 'SECURITY' || caller.role === 'MANAGER') {
+    const assignments = await (prisma.assignedCompound as any).findMany({
+      where: { guardId: caller.id },
+      select: { compoundId: true },
+    });
+    const ids: string[] = assignments.map((a: any) => a.compoundId);
+    if (ids.length === 0) return new Map();
+    compoundWhere = { id: { in: ids } };
+  }
+  // ADMIN / OPERATION → compoundWhere stays null (no filter, see all)
+
+  const compounds = await prisma.compound.findMany({
+    where: compoundWhere ?? undefined,
+    select: { slug: true, name: true },
+  });
+  return new Map(compounds.map((c) => [c.slug, c.name]));
+}
+
+function buildPerCompound(
+  groupRows: Array<{ compound: string | null; _count: { _all: number } }>,
+  labelBySlug: Map<string, string>,
+): Array<{ compound: string; count: number }> {
+  const counts = new Map<string, number>();
+  labelBySlug.forEach((_name, slug) => counts.set(slug, 0));
+  let unassigned = 0;
+  for (const r of groupRows) {
+    const count = r._count._all;
+    if (!r.compound) { unassigned += count; continue; }
+    counts.set(r.compound, (counts.get(r.compound) ?? 0) + count);
+  }
+  const out = Array.from(counts, ([slug, count]) => ({
+    compound: labelBySlug.get(slug) ?? slug,
+    count,
+  })).sort((a, b) => b.count - a.count);
+  if (unassigned > 0) out.push({ compound: 'Unassigned', count: unassigned });
+  return out;
+}
+
 export async function getVisitorStats(prisma: PrismaClient, caller: CallerContext) {
   const todayStart  = startOfToday();
   const todayEnd    = startOfTomorrow();
@@ -231,6 +281,7 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
   const todayWhere = { ...scopedWhere, visitDate: { gte: todayStart, lt: todayEnd } };
 
   const [
+    compoundLabelBySlug,
     total,
     perCompound,
     perUnit,
@@ -241,6 +292,7 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
     todayPerCompound,
     todayPerUnit,
   ] = await Promise.all([
+    resolveVisitCompoundBaseline(prisma, caller),
     prisma.visit.count({ where: allTime }),
     prisma.visit.groupBy({ by: ['compound'], _count: { _all: true }, where: allTime,  orderBy: { _count: { compound: 'desc' } } }),
     prisma.visit.groupBy({ by: ['residentUnit'], _count: { _all: true }, where: allTime,  orderBy: { _count: { residentUnit: 'desc' } } }),
@@ -252,53 +304,151 @@ export async function getVisitorStats(prisma: PrismaClient, caller: CallerContex
     prisma.visit.groupBy({ by: ['residentUnit'], _count: { _all: true }, where: todayWhere, orderBy: { _count: { residentUnit: 'desc' } } }),
   ]);
 
-  const compoundSlugs = new Set<string>();
+  // Unit labels: resolved only for units that actually appear in groupBy
+  // results (no zero-seeding for units).
   const unitSlugs = new Set<string>();
-  for (const r of [...perCompound, ...last7DaysPerCompound, ...todayPerCompound]) {
-    if (r.compound) compoundSlugs.add(r.compound);
-  }
   for (const r of [...perUnit, ...last7DaysPerUnit, ...todayPerUnit]) {
     if (r.residentUnit) unitSlugs.add(r.residentUnit);
   }
-
-  const [compoundRows, unitRows] = await Promise.all([
-    compoundSlugs.size
-      ? prisma.compound.findMany({
-          where: { slug: { in: [...compoundSlugs] } },
-          select: { slug: true, name: true },
-        })
-      : Promise.resolve([]),
-    unitSlugs.size
-      ? prisma.unit.findMany({
-          where: { slug: { in: [...unitSlugs] } },
-          select: { slug: true, name: true, compound: { select: { name: true } } },
-        })
-      : Promise.resolve([]),
-  ]);
-
-  const compoundNameBySlug = new Map(compoundRows.map((c) => [c.slug, c.name]));
+  const unitRows = unitSlugs.size
+    ? await prisma.unit.findMany({
+        where: { slug: { in: Array.from(unitSlugs) } },
+        select: { slug: true, name: true, compound: { select: { name: true } } },
+      })
+    : [];
   const unitLabelBySlug = new Map(
     unitRows.map((u) => [u.slug, `${u.compound.name} - ${u.name}`]),
   );
-
-  const compoundLabel = (slug: string | null) =>
-    (slug && compoundNameBySlug.get(slug)) || slug || 'Unassigned';
   const unitLabel = (slug: string | null) =>
     (slug && unitLabelBySlug.get(slug)) || slug || 'Unassigned';
 
   return {
     total,
-    perCompound: perCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+    perCompound: buildPerCompound(perCompound, compoundLabelBySlug),
     perUnit:     perUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     last7Days: {
       total: last7DaysTotal,
-      perCompound: last7DaysPerCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+      perCompound: buildPerCompound(last7DaysPerCompound, compoundLabelBySlug),
       perUnit:     last7DaysPerUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     },
     today: {
       total: todayTotal,
-      perCompound: todayPerCompound.map((r) => ({ compound: compoundLabel(r.compound), count: r._count._all })),
+      perCompound: buildPerCompound(todayPerCompound, compoundLabelBySlug),
       perUnit:     todayPerUnit.map((r) => ({ unit: unitLabel(r.residentUnit), count: r._count._all })),
     },
+  };
+}
+
+// ── Paginated visits per unit ────────────────────────────────────────────────
+// Group visits first, then resolve labels only for unit slugs that actually
+// appear in the result set. Units with zero visits in the period are skipped —
+// faster than hauling the whole unit table for every call. Search is
+// case-insensitive on unit.name OR compound.name.
+export type VisitsByUnitPeriod = 'all' | 'last7days' | 'today';
+
+export interface ListVisitsByUnitQuery {
+  page: number;
+  limit: number;
+  sort: 'asc' | 'desc';
+  period: VisitsByUnitPeriod;
+  search?: string;
+}
+
+type VisitsUnitRow = {
+  name: string;
+  slug: string;
+  value: number;
+};
+
+function emptyVisitsUnitsResult(page: number, limit: number) {
+  return {
+    data: [] as VisitsUnitRow[],
+    pagination: { page, limit, total: 0, totalPages: 0 },
+  };
+}
+
+function visitsPeriodRange(period: VisitsByUnitPeriod): { gte: Date; lt?: Date } | null {
+  if (period === 'today') return { gte: startOfToday(), lt: startOfTomorrow() };
+  if (period === 'last7days') return { gte: sevenDaysAgo() };
+  return null;
+}
+
+export async function listVisitsByUnit(
+  prisma: PrismaClient,
+  caller: CallerContext,
+  query: ListVisitsByUnitQuery,
+) {
+  const { page, limit, sort, period, search } = query;
+
+  // 1. Scope visits by the caller's role (CLIENT → clientId,
+  //    SECURITY/MANAGER → assigned compound slugs, others blocked at route).
+  const scopedWhere = await resolveVisitWhere(prisma, caller);
+
+  const range = visitsPeriodRange(period);
+  const visitWhere: any = { ...scopedWhere };
+  if (range) visitWhere.visitDate = range;
+
+  // 2. Group first — only units with at least one visit in the period survive.
+  const grouped = await prisma.visit.groupBy({
+    by: ['residentUnit'],
+    _count: { _all: true },
+    where: visitWhere,
+  });
+
+  if (grouped.length === 0) return emptyVisitsUnitsResult(page, limit);
+
+  // 3. Resolve labels only for slugs that appear, with the optional search
+  //    filter pushed to the DB (slugs without a matching label are dropped —
+  //    handles both orphaned slugs and search misses in one pass).
+  const slugsWithData = Array.from(
+    new Set(grouped.map((g) => g.residentUnit).filter((s): s is string => !!s)),
+  );
+
+  const labels = await prisma.unit.findMany({
+    where: {
+      slug: { in: slugsWithData },
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' as const } },
+              { compound: { name: { contains: search, mode: 'insensitive' as const } } },
+            ],
+          }
+        : {}),
+    },
+    select: { slug: true, name: true, compound: { select: { name: true } } },
+  });
+
+  if (labels.length === 0) return emptyVisitsUnitsResult(page, limit);
+
+  // 4. Build rows from labels, then merge group counts in.
+  const rowBySlug = new Map<string, VisitsUnitRow>();
+  for (const u of labels) {
+    rowBySlug.set(u.slug, {
+      name: `${u.compound.name} - ${u.name}`,
+      slug: u.slug,
+      value: 0,
+    });
+  }
+
+  for (const item of grouped) {
+    if (!item.residentUnit) continue;
+    const row = rowBySlug.get(item.residentUnit);
+    if (!row) continue; // dropped by label filter
+    row.value += (item._count as { _all: number })._all;
+  }
+
+  // 5. Sort by total then paginate.
+  const sorted = Array.from(rowBySlug.values()).sort((a, b) =>
+    sort === 'asc' ? a.value - b.value : b.value - a.value,
+  );
+
+  const total = sorted.length;
+  const skip = (page - 1) * limit;
+  const data = sorted.slice(skip, skip + limit);
+
+  return {
+    data,
+    pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
   };
 }

@@ -48,7 +48,6 @@ export type SrsMinAggregateOutputType = {
   category: string | null
   subcategory: string | null
   breifdescription: string | null
-  timetoenter: Date | null
   datetime: Date | null
   status: string | null
   yardi_wo_code: string | null
@@ -56,6 +55,7 @@ export type SrsMinAggregateOutputType = {
   is_closed: boolean | null
   updated_at: Date | null
   clientId: string | null
+  timetoenter: Date | null
 }
 
 export type SrsMaxAggregateOutputType = {
@@ -72,7 +72,6 @@ export type SrsMaxAggregateOutputType = {
   category: string | null
   subcategory: string | null
   breifdescription: string | null
-  timetoenter: Date | null
   datetime: Date | null
   status: string | null
   yardi_wo_code: string | null
@@ -80,6 +79,7 @@ export type SrsMaxAggregateOutputType = {
   is_closed: boolean | null
   updated_at: Date | null
   clientId: string | null
+  timetoenter: Date | null
 }
 
 export type SrsCountAggregateOutputType = {
@@ -96,7 +96,6 @@ export type SrsCountAggregateOutputType = {
   category: number
   subcategory: number
   breifdescription: number
-  timetoenter: number
   datetime: number
   status: number
   yardi_wo_code: number
@@ -104,6 +103,7 @@ export type SrsCountAggregateOutputType = {
   is_closed: number
   updated_at: number
   clientId: number
+  timetoenter: number
   _all: number
 }
 
@@ -130,7 +130,6 @@ export type SrsMinAggregateInputType = {
   category?: true
   subcategory?: true
   breifdescription?: true
-  timetoenter?: true
   datetime?: true
   status?: true
   yardi_wo_code?: true
@@ -138,6 +137,7 @@ export type SrsMinAggregateInputType = {
   is_closed?: true
   updated_at?: true
   clientId?: true
+  timetoenter?: true
 }
 
 export type SrsMaxAggregateInputType = {
@@ -154,7 +154,6 @@ export type SrsMaxAggregateInputType = {
   category?: true
   subcategory?: true
   breifdescription?: true
-  timetoenter?: true
   datetime?: true
   status?: true
   yardi_wo_code?: true
@@ -162,6 +161,7 @@ export type SrsMaxAggregateInputType = {
   is_closed?: true
   updated_at?: true
   clientId?: true
+  timetoenter?: true
 }
 
 export type SrsCountAggregateInputType = {
@@ -178,7 +178,6 @@ export type SrsCountAggregateInputType = {
   category?: true
   subcategory?: true
   breifdescription?: true
-  timetoenter?: true
   datetime?: true
   status?: true
   yardi_wo_code?: true
@@ -186,6 +185,7 @@ export type SrsCountAggregateInputType = {
   is_closed?: true
   updated_at?: true
   clientId?: true
+  timetoenter?: true
   _all?: true
 }
 
@@ -289,7 +289,6 @@ export type SrsGroupByOutputType = {
   category: string | null
   subcategory: string | null
   breifdescription: string | null
-  timetoenter: Date | null
   datetime: Date | null
   status: string | null
   yardi_wo_code: string | null
@@ -297,6 +296,7 @@ export type SrsGroupByOutputType = {
   is_closed: boolean | null
   updated_at: Date | null
   clientId: string | null
+  timetoenter: Date | null
   _count: SrsCountAggregateOutputType | null
   _avg: SrsAvgAggregateOutputType | null
   _sum: SrsSumAggregateOutputType | null
@@ -336,7 +336,6 @@ export type srsWhereInput = {
   category?: Prisma.StringNullableFilter<"srs"> | string | null
   subcategory?: Prisma.StringNullableFilter<"srs"> | string | null
   breifdescription?: Prisma.StringNullableFilter<"srs"> | string | null
-  timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableFilter<"srs"> | string | null
   yardi_wo_code?: Prisma.StringNullableFilter<"srs"> | string | null
@@ -344,6 +343,7 @@ export type srsWhereInput = {
   is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   clientId?: Prisma.StringNullableFilter<"srs"> | string | null
+  timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
   unitRef?: Prisma.XOR<Prisma.UnitNullableScalarRelationFilter, Prisma.UnitWhereInput> | null
@@ -363,7 +363,6 @@ export type srsOrderByWithRelationInput = {
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   subcategory?: Prisma.SortOrderInput | Prisma.SortOrder
   breifdescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  timetoenter?: Prisma.SortOrderInput | Prisma.SortOrder
   datetime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   yardi_wo_code?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -371,6 +370,7 @@ export type srsOrderByWithRelationInput = {
   is_closed?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  timetoenter?: Prisma.SortOrderInput | Prisma.SortOrder
   clientRef?: Prisma.ClientOrderByWithRelationInput
   compoundRef?: Prisma.CompoundOrderByWithRelationInput
   unitRef?: Prisma.UnitOrderByWithRelationInput
@@ -393,7 +393,6 @@ export type srsWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.StringNullableFilter<"srs"> | string | null
   subcategory?: Prisma.StringNullableFilter<"srs"> | string | null
   breifdescription?: Prisma.StringNullableFilter<"srs"> | string | null
-  timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableFilter<"srs"> | string | null
   yardi_wo_code?: Prisma.StringNullableFilter<"srs"> | string | null
@@ -401,6 +400,7 @@ export type srsWhereUniqueInput = Prisma.AtLeast<{
   is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   clientId?: Prisma.StringNullableFilter<"srs"> | string | null
+  timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   clientRef?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   compoundRef?: Prisma.XOR<Prisma.CompoundNullableScalarRelationFilter, Prisma.CompoundWhereInput> | null
   unitRef?: Prisma.XOR<Prisma.UnitNullableScalarRelationFilter, Prisma.UnitWhereInput> | null
@@ -420,7 +420,6 @@ export type srsOrderByWithAggregationInput = {
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   subcategory?: Prisma.SortOrderInput | Prisma.SortOrder
   breifdescription?: Prisma.SortOrderInput | Prisma.SortOrder
-  timetoenter?: Prisma.SortOrderInput | Prisma.SortOrder
   datetime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   yardi_wo_code?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -428,6 +427,7 @@ export type srsOrderByWithAggregationInput = {
   is_closed?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
+  timetoenter?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.srsCountOrderByAggregateInput
   _avg?: Prisma.srsAvgOrderByAggregateInput
   _max?: Prisma.srsMaxOrderByAggregateInput
@@ -452,7 +452,6 @@ export type srsScalarWhereWithAggregatesInput = {
   category?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   subcategory?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   breifdescription?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
-  timetoenter?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
   yardi_wo_code?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
@@ -460,6 +459,7 @@ export type srsScalarWhereWithAggregatesInput = {
   is_closed?: Prisma.BoolNullableWithAggregatesFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
   clientId?: Prisma.StringNullableWithAggregatesFilter<"srs"> | string | null
+  timetoenter?: Prisma.DateTimeNullableWithAggregatesFilter<"srs"> | Date | string | null
 }
 
 export type srsCreateInput = {
@@ -473,13 +473,13 @@ export type srsCreateInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  timetoenter?: Date | string | null
   clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
   compoundRef?: Prisma.CompoundCreateNestedOneWithoutSrsRecordsInput
   unitRef?: Prisma.UnitCreateNestedOneWithoutSrsRecordsInput
@@ -499,7 +499,6 @@ export type srsUncheckedCreateInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
@@ -507,6 +506,7 @@ export type srsUncheckedCreateInput = {
   is_closed?: boolean | null
   updated_at?: Date | string | null
   clientId?: string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsUpdateInput = {
@@ -520,13 +520,13 @@ export type srsUpdateInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
   compoundRef?: Prisma.CompoundUpdateOneWithoutSrsRecordsNestedInput
   unitRef?: Prisma.UnitUpdateOneWithoutSrsRecordsNestedInput
@@ -546,7 +546,6 @@ export type srsUncheckedUpdateInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -554,6 +553,7 @@ export type srsUncheckedUpdateInput = {
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsCreateManyInput = {
@@ -570,7 +570,6 @@ export type srsCreateManyInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
@@ -578,6 +577,7 @@ export type srsCreateManyInput = {
   is_closed?: boolean | null
   updated_at?: Date | string | null
   clientId?: string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsUpdateManyMutationInput = {
@@ -591,13 +591,13 @@ export type srsUpdateManyMutationInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsUncheckedUpdateManyInput = {
@@ -614,7 +614,6 @@ export type srsUncheckedUpdateManyInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -622,6 +621,7 @@ export type srsUncheckedUpdateManyInput = {
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SrsListRelationFilter = {
@@ -648,7 +648,6 @@ export type srsCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   subcategory?: Prisma.SortOrder
   breifdescription?: Prisma.SortOrder
-  timetoenter?: Prisma.SortOrder
   datetime?: Prisma.SortOrder
   status?: Prisma.SortOrder
   yardi_wo_code?: Prisma.SortOrder
@@ -656,6 +655,7 @@ export type srsCountOrderByAggregateInput = {
   is_closed?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  timetoenter?: Prisma.SortOrder
 }
 
 export type srsAvgOrderByAggregateInput = {
@@ -676,7 +676,6 @@ export type srsMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   subcategory?: Prisma.SortOrder
   breifdescription?: Prisma.SortOrder
-  timetoenter?: Prisma.SortOrder
   datetime?: Prisma.SortOrder
   status?: Prisma.SortOrder
   yardi_wo_code?: Prisma.SortOrder
@@ -684,6 +683,7 @@ export type srsMaxOrderByAggregateInput = {
   is_closed?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  timetoenter?: Prisma.SortOrder
 }
 
 export type srsMinOrderByAggregateInput = {
@@ -700,7 +700,6 @@ export type srsMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   subcategory?: Prisma.SortOrder
   breifdescription?: Prisma.SortOrder
-  timetoenter?: Prisma.SortOrder
   datetime?: Prisma.SortOrder
   status?: Prisma.SortOrder
   yardi_wo_code?: Prisma.SortOrder
@@ -708,6 +707,7 @@ export type srsMinOrderByAggregateInput = {
   is_closed?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  timetoenter?: Prisma.SortOrder
 }
 
 export type srsSumOrderByAggregateInput = {
@@ -851,13 +851,13 @@ export type srsCreateWithoutClientRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  timetoenter?: Date | string | null
   compoundRef?: Prisma.CompoundCreateNestedOneWithoutSrsRecordsInput
   unitRef?: Prisma.UnitCreateNestedOneWithoutSrsRecordsInput
 }
@@ -876,13 +876,13 @@ export type srsUncheckedCreateWithoutClientRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsCreateOrConnectWithoutClientRefInput = {
@@ -928,7 +928,6 @@ export type srsScalarWhereInput = {
   category?: Prisma.StringNullableFilter<"srs"> | string | null
   subcategory?: Prisma.StringNullableFilter<"srs"> | string | null
   breifdescription?: Prisma.StringNullableFilter<"srs"> | string | null
-  timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   datetime?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   status?: Prisma.StringNullableFilter<"srs"> | string | null
   yardi_wo_code?: Prisma.StringNullableFilter<"srs"> | string | null
@@ -936,6 +935,7 @@ export type srsScalarWhereInput = {
   is_closed?: Prisma.BoolNullableFilter<"srs"> | boolean | null
   updated_at?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
   clientId?: Prisma.StringNullableFilter<"srs"> | string | null
+  timetoenter?: Prisma.DateTimeNullableFilter<"srs"> | Date | string | null
 }
 
 export type srsCreateWithoutCompoundRefInput = {
@@ -949,13 +949,13 @@ export type srsCreateWithoutCompoundRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  timetoenter?: Date | string | null
   clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
   unitRef?: Prisma.UnitCreateNestedOneWithoutSrsRecordsInput
 }
@@ -973,7 +973,6 @@ export type srsUncheckedCreateWithoutCompoundRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
@@ -981,6 +980,7 @@ export type srsUncheckedCreateWithoutCompoundRefInput = {
   is_closed?: boolean | null
   updated_at?: Date | string | null
   clientId?: string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsCreateOrConnectWithoutCompoundRefInput = {
@@ -1020,13 +1020,13 @@ export type srsCreateWithoutUnitRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  timetoenter?: Date | string | null
   clientRef?: Prisma.ClientCreateNestedOneWithoutSrsRecordsInput
   compoundRef?: Prisma.CompoundCreateNestedOneWithoutSrsRecordsInput
 }
@@ -1044,7 +1044,6 @@ export type srsUncheckedCreateWithoutUnitRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
@@ -1052,6 +1051,7 @@ export type srsUncheckedCreateWithoutUnitRefInput = {
   is_closed?: boolean | null
   updated_at?: Date | string | null
   clientId?: string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsCreateOrConnectWithoutUnitRefInput = {
@@ -1094,13 +1094,13 @@ export type srsCreateManyClientRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
   closed_at?: Date | string | null
   is_closed?: boolean | null
   updated_at?: Date | string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsUpdateWithoutClientRefInput = {
@@ -1114,13 +1114,13 @@ export type srsUpdateWithoutClientRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   compoundRef?: Prisma.CompoundUpdateOneWithoutSrsRecordsNestedInput
   unitRef?: Prisma.UnitUpdateOneWithoutSrsRecordsNestedInput
 }
@@ -1139,13 +1139,13 @@ export type srsUncheckedUpdateWithoutClientRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsUncheckedUpdateManyWithoutClientRefInput = {
@@ -1162,13 +1162,13 @@ export type srsUncheckedUpdateManyWithoutClientRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsCreateManyCompoundRefInput = {
@@ -1184,7 +1184,6 @@ export type srsCreateManyCompoundRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
@@ -1192,6 +1191,7 @@ export type srsCreateManyCompoundRefInput = {
   is_closed?: boolean | null
   updated_at?: Date | string | null
   clientId?: string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsUpdateWithoutCompoundRefInput = {
@@ -1205,13 +1205,13 @@ export type srsUpdateWithoutCompoundRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
   unitRef?: Prisma.UnitUpdateOneWithoutSrsRecordsNestedInput
 }
@@ -1229,7 +1229,6 @@ export type srsUncheckedUpdateWithoutCompoundRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1237,6 +1236,7 @@ export type srsUncheckedUpdateWithoutCompoundRefInput = {
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsUncheckedUpdateManyWithoutCompoundRefInput = {
@@ -1252,7 +1252,6 @@ export type srsUncheckedUpdateManyWithoutCompoundRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1260,6 +1259,7 @@ export type srsUncheckedUpdateManyWithoutCompoundRefInput = {
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsCreateManyUnitRefInput = {
@@ -1275,7 +1275,6 @@ export type srsCreateManyUnitRefInput = {
   category?: string | null
   subcategory?: string | null
   breifdescription?: string | null
-  timetoenter?: Date | string | null
   datetime?: Date | string | null
   status?: string | null
   yardi_wo_code?: string | null
@@ -1283,6 +1282,7 @@ export type srsCreateManyUnitRefInput = {
   is_closed?: boolean | null
   updated_at?: Date | string | null
   clientId?: string | null
+  timetoenter?: Date | string | null
 }
 
 export type srsUpdateWithoutUnitRefInput = {
@@ -1296,13 +1296,13 @@ export type srsUpdateWithoutUnitRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   closed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientRef?: Prisma.ClientUpdateOneWithoutSrsRecordsNestedInput
   compoundRef?: Prisma.CompoundUpdateOneWithoutSrsRecordsNestedInput
 }
@@ -1320,7 +1320,6 @@ export type srsUncheckedUpdateWithoutUnitRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1328,6 +1327,7 @@ export type srsUncheckedUpdateWithoutUnitRefInput = {
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type srsUncheckedUpdateManyWithoutUnitRefInput = {
@@ -1343,7 +1343,6 @@ export type srsUncheckedUpdateManyWithoutUnitRefInput = {
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   breifdescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   datetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   yardi_wo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1351,6 +1350,7 @@ export type srsUncheckedUpdateManyWithoutUnitRefInput = {
   is_closed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timetoenter?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1369,7 +1369,6 @@ export type srsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   category?: boolean
   subcategory?: boolean
   breifdescription?: boolean
-  timetoenter?: boolean
   datetime?: boolean
   status?: boolean
   yardi_wo_code?: boolean
@@ -1377,6 +1376,7 @@ export type srsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   is_closed?: boolean
   updated_at?: boolean
   clientId?: boolean
+  timetoenter?: boolean
   clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
@@ -1396,7 +1396,6 @@ export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   category?: boolean
   subcategory?: boolean
   breifdescription?: boolean
-  timetoenter?: boolean
   datetime?: boolean
   status?: boolean
   yardi_wo_code?: boolean
@@ -1404,6 +1403,7 @@ export type srsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   is_closed?: boolean
   updated_at?: boolean
   clientId?: boolean
+  timetoenter?: boolean
   clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
@@ -1423,7 +1423,6 @@ export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   category?: boolean
   subcategory?: boolean
   breifdescription?: boolean
-  timetoenter?: boolean
   datetime?: boolean
   status?: boolean
   yardi_wo_code?: boolean
@@ -1431,6 +1430,7 @@ export type srsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   is_closed?: boolean
   updated_at?: boolean
   clientId?: boolean
+  timetoenter?: boolean
   clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
   unitRef?: boolean | Prisma.srs$unitRefArgs<ExtArgs>
@@ -1450,7 +1450,6 @@ export type srsSelectScalar = {
   category?: boolean
   subcategory?: boolean
   breifdescription?: boolean
-  timetoenter?: boolean
   datetime?: boolean
   status?: boolean
   yardi_wo_code?: boolean
@@ -1458,9 +1457,10 @@ export type srsSelectScalar = {
   is_closed?: boolean
   updated_at?: boolean
   clientId?: boolean
+  timetoenter?: boolean
 }
 
-export type srsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "resname" | "resphone" | "resemail" | "compound" | "unit" | "propertycode" | "priority" | "leasename" | "leasecode" | "category" | "subcategory" | "breifdescription" | "timetoenter" | "datetime" | "status" | "yardi_wo_code" | "closed_at" | "is_closed" | "updated_at" | "clientId", ExtArgs["result"]["srs"]>
+export type srsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "resname" | "resphone" | "resemail" | "compound" | "unit" | "propertycode" | "priority" | "leasename" | "leasecode" | "category" | "subcategory" | "breifdescription" | "datetime" | "status" | "yardi_wo_code" | "closed_at" | "is_closed" | "updated_at" | "clientId" | "timetoenter", ExtArgs["result"]["srs"]>
 export type srsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clientRef?: boolean | Prisma.srs$clientRefArgs<ExtArgs>
   compoundRef?: boolean | Prisma.srs$compoundRefArgs<ExtArgs>
@@ -1498,7 +1498,6 @@ export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     category: string | null
     subcategory: string | null
     breifdescription: string | null
-    timetoenter: Date | null
     datetime: Date | null
     status: string | null
     yardi_wo_code: string | null
@@ -1506,6 +1505,7 @@ export type $srsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     is_closed: boolean | null
     updated_at: Date | null
     clientId: string | null
+    timetoenter: Date | null
   }, ExtArgs["result"]["srs"]>
   composites: {}
 }
@@ -1945,7 +1945,6 @@ export interface srsFieldRefs {
   readonly category: Prisma.FieldRef<"srs", 'String'>
   readonly subcategory: Prisma.FieldRef<"srs", 'String'>
   readonly breifdescription: Prisma.FieldRef<"srs", 'String'>
-  readonly timetoenter: Prisma.FieldRef<"srs", 'DateTime'>
   readonly datetime: Prisma.FieldRef<"srs", 'DateTime'>
   readonly status: Prisma.FieldRef<"srs", 'String'>
   readonly yardi_wo_code: Prisma.FieldRef<"srs", 'String'>
@@ -1953,6 +1952,7 @@ export interface srsFieldRefs {
   readonly is_closed: Prisma.FieldRef<"srs", 'Boolean'>
   readonly updated_at: Prisma.FieldRef<"srs", 'DateTime'>
   readonly clientId: Prisma.FieldRef<"srs", 'String'>
+  readonly timetoenter: Prisma.FieldRef<"srs", 'DateTime'>
 }
     
 

@@ -73,7 +73,9 @@ export const ModelName = {
   srs: 'srs',
   resident_phones: 'resident_phones',
   residents: 'residents',
-  sync_log: 'sync_log'
+  sync_log: 'sync_log',
+  Instruction: 'Instruction',
+  api_audit_log: 'api_audit_log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,14 +424,14 @@ export const SrsScalarFieldEnum = {
   category: 'category',
   subcategory: 'subcategory',
   breifdescription: 'breifdescription',
-  timetoenter: 'timetoenter',
   datetime: 'datetime',
   status: 'status',
   yardi_wo_code: 'yardi_wo_code',
   closed_at: 'closed_at',
   is_closed: 'is_closed',
   updated_at: 'updated_at',
-  clientId: 'clientId'
+  clientId: 'clientId',
+  timetoenter: 'timetoenter'
 } as const
 
 export type SrsScalarFieldEnum = (typeof SrsScalarFieldEnum)[keyof typeof SrsScalarFieldEnum]
@@ -464,7 +466,12 @@ export const ResidentsScalarFieldEnum = {
   roommate_code: 'roommate_code',
   is_active: 'is_active',
   synced_at: 'synced_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  compound: 'compound',
+  property_id: 'property_id',
+  unit_id: 'unit_id',
+  notice_date: 'notice_date',
+  leasing_agent: 'leasing_agent'
 } as const
 
 export type ResidentsScalarFieldEnum = (typeof ResidentsScalarFieldEnum)[keyof typeof ResidentsScalarFieldEnum]
@@ -481,6 +488,32 @@ export const Sync_logScalarFieldEnum = {
 } as const
 
 export type Sync_logScalarFieldEnum = (typeof Sync_logScalarFieldEnum)[keyof typeof Sync_logScalarFieldEnum]
+
+
+export const InstructionScalarFieldEnum = {
+  id: 'id',
+  instruction: 'instruction',
+  createdAt: 'createdAt',
+  clientId: 'clientId'
+} as const
+
+export type InstructionScalarFieldEnum = (typeof InstructionScalarFieldEnum)[keyof typeof InstructionScalarFieldEnum]
+
+
+export const Api_audit_logScalarFieldEnum = {
+  id: 'id',
+  endpoint: 'endpoint',
+  method: 'method',
+  ip_address: 'ip_address',
+  status_code: 'status_code',
+  duration_ms: 'duration_ms',
+  timestamp: 'timestamp',
+  request_body: 'request_body',
+  response_body: 'response_body',
+  headers: 'headers'
+} as const
+
+export type Api_audit_logScalarFieldEnum = (typeof Api_audit_logScalarFieldEnum)[keyof typeof Api_audit_logScalarFieldEnum]
 
 
 export const SortOrder = {

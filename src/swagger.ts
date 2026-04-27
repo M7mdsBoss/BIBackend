@@ -56,6 +56,7 @@ export const swaggerSpec = {
     { name: 'Visitors',             description: 'Visit records' },
     { name: 'Subscription Request', description: 'Pre-registration subscription requests' },
     { name: 'Analytics',            description: 'SRS analytics' },
+    { name: 'Instruction',          description: 'Client-scoped instructions CRUD' },
     { name: 'QR Code',              description: 'QR code generation' },
     { name: 'PDF',                  description: 'PDF downloads' },
     { name: 'Contact',              description: 'Contact / inquiry form' },
@@ -316,6 +317,38 @@ export const swaggerSpec = {
           allTime:   { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
           last7Days: { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
           today:     { type: 'array', items: { $ref: '#/components/schemas/SrsRow' } },
+        },
+      },
+      VisitsUnitRow: {
+        type: 'object',
+        properties: {
+          name:  { type: 'string', example: 'Green Valley - Tower A 101', description: 'Combined "Compound - Unit" label' },
+          slug:  { type: 'string', example: 'UNIT_tower_a_101' },
+          value: { type: 'integer', example: 12, description: 'Total visits in the selected period' },
+        },
+      },
+      SrsUnitRow: {
+        allOf: [
+          { $ref: '#/components/schemas/SrsRow' },
+          {
+            type: 'object',
+            properties: {
+              slug: { type: 'string', example: 'UNIT_tower_a_101' },
+              name: { type: 'string', example: 'Green Valley - Tower A 101', description: 'Combined "Compound - Unit" label' },
+            },
+          },
+        ],
+      },
+
+      // ── Instruction ──────────────────────────────────────────────────────────
+      Instruction: {
+        type: 'object',
+        properties: {
+          id:          { type: 'string', format: 'uuid' },
+          instruction: { type: 'string', example: 'Always check visitor ID before allowing entry.' },
+          clientId:    { type: 'string', format: 'uuid', description: 'Owning Client — scoped automatically from JWT' },
+          createdAt:   { type: 'string', format: 'date-time' },
+          updatedAt:   { type: 'string', format: 'date-time' },
         },
       },
     },
@@ -1177,6 +1210,44 @@ export const swaggerSpec = {
         },
       },
     },
+    '/api/v1/visitors/units': {
+      get: {
+        tags: ['Visitors'],
+        summary: `Paginated visit stats per unit, sorted by total. ${authNote}`,
+        description:
+          'Returns units that have at least one visit in the selected period, with their total visit count, sorted by total and paginated. ' +
+          'Units with zero visits in the period are omitted (for performance). ' +
+          'Search is case-insensitive and matches either the unit name or the parent compound name. ' +
+          'Scoped by role: CLIENT sees their Client\'s visits; SECURITY/MANAGER see visits for their assigned compounds.',
+        security: bearerAuth,
+        parameters: [
+          { in: 'query', name: 'page',   schema: { type: 'integer', default: 1, minimum: 1 } },
+          { in: 'query', name: 'limit',  schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
+          { in: 'query', name: 'sort',   schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' }, description: 'Sort by total visits' },
+          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to visitDate' },
+          { in: 'query', name: 'search', schema: { type: 'string' }, description: 'Case-insensitive substring match on unit name or compound name' },
+        ],
+        responses: {
+          200: {
+            description: 'Paginated unit visit stats',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data:       { type: 'array', items: { $ref: '#/components/schemas/VisitsUnitRow' } },
+                    pagination: { $ref: '#/components/schemas/Pagination' },
+                  },
+                },
+              },
+            },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, SECURITY, or MANAGER role required' },
+        },
+      },
+    },
     '/api/v1/visitors/{id}': {
       get: {
         tags: ['Visitors'],
@@ -1360,6 +1431,44 @@ export const swaggerSpec = {
         },
       },
     },
+    '/api/v1/analytics/requests/units': {
+      get: {
+        tags: ['Analytics'],
+        summary: `Paginated SRS stats per unit, sorted by total. ${clientNote}`,
+        description:
+          'Returns units that have at least one SRS in the selected period, with their status breakdown, sorted by total and paginated. ' +
+          'Units with zero requests in the period are omitted (for performance). ' +
+          'Search is case-insensitive and matches either the unit name or the parent compound name (covers any half of the "Compound - Unit" label). ' +
+          'Scoped by role: CLIENT sees their Client\'s SRS; OPERATION/MANAGER see SRS for their assigned compounds.',
+        security: bearerAuth,
+        parameters: [
+          { in: 'query', name: 'page',   schema: { type: 'integer', default: 1, minimum: 1 } },
+          { in: 'query', name: 'limit',  schema: { type: 'integer', default: 10, minimum: 1, maximum: 100 } },
+          { in: 'query', name: 'sort',   schema: { type: 'string', enum: ['asc', 'desc'], default: 'desc' }, description: 'Sort by total request count' },
+          { in: 'query', name: 'period', schema: { type: 'string', enum: ['all', 'last7days', 'today'], default: 'all' }, description: 'Time window applied to SRS records' },
+          { in: 'query', name: 'search', schema: { type: 'string' }, description: 'Case-insensitive substring match on unit name or compound name' },
+        ],
+        responses: {
+          200: {
+            description: 'Paginated unit stats',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data:       { type: 'array', items: { $ref: '#/components/schemas/SrsUnitRow' } },
+                    pagination: { $ref: '#/components/schemas/Pagination' },
+                  },
+                },
+              },
+            },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
+        },
+      },
+    },
     '/api/v1/analytics/requests/list': {
       get: {
         tags: ['Analytics'],
@@ -1376,6 +1485,130 @@ export const swaggerSpec = {
           400: { description: 'Invalid query parameters' },
           401: { description: 'Unauthorized' },
           403: { description: 'Forbidden – CLIENT, OPERATION, or MANAGER role required' },
+        },
+      },
+    },
+
+    // ── Instruction ───────────────────────────────────────────────────────────
+    '/api/v1/instruction': {
+      post: {
+        tags: ['Instruction'],
+        summary: `Create an instruction under the authenticated Client. ${clientNote}`,
+        description: 'The `clientId` is taken from the JWT — the caller can only create instructions for their own Client.',
+        security: bearerAuth,
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['instruction'],
+                properties: {
+                  instruction: { type: 'string', example: 'Always check visitor ID before allowing entry.' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: 'Instruction created',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Instruction' } } },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+        },
+      },
+      get: {
+        tags: ['Instruction'],
+        summary: `List all instructions belonging to the authenticated Client. ${clientNote}`,
+        security: bearerAuth,
+        responses: {
+          200: {
+            description: 'Array of instructions (newest first)',
+            content: {
+              'application/json': {
+                schema: { type: 'array', items: { $ref: '#/components/schemas/Instruction' } },
+              },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+        },
+      },
+    },
+    '/api/v1/instruction/{id}': {
+      get: {
+        tags: ['Instruction'],
+        summary: `Get an instruction by ID (must belong to the authenticated Client). ${clientNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: {
+            description: 'Instruction',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Instruction' } } },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+          404: { description: 'Instruction not found (or belongs to another Client)' },
+        },
+      },
+      patch: {
+        tags: ['Instruction'],
+        summary: `Update an instruction (must belong to the authenticated Client). ${clientNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  instruction: { type: 'string', example: 'Updated instruction text.' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: 'Updated instruction',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Instruction' } } },
+          },
+          400: ValidationError,
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+          404: { description: 'Instruction not found (or belongs to another Client)' },
+        },
+      },
+      delete: {
+        tags: ['Instruction'],
+        summary: `Delete an instruction (must belong to the authenticated Client). ${clientNote}`,
+        security: bearerAuth,
+        parameters: [
+          { in: 'path', name: 'id', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        responses: {
+          200: {
+            description: 'Instruction deleted',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: { message: { type: 'string', example: 'instruction-deleted' } },
+                },
+              },
+            },
+          },
+          401: { description: 'Unauthorized' },
+          403: { description: 'Forbidden – CLIENT role required or client not onboarded' },
+          404: { description: 'Instruction not found (or belongs to another Client)' },
         },
       },
     },

@@ -154,3 +154,13 @@ export type residents = Prisma.residentsModel
  * 
  */
 export type sync_log = Prisma.sync_logModel
+/**
+ * Model Instruction
+ * 
+ */
+export type Instruction = Prisma.InstructionModel
+/**
+ * Model api_audit_log
+ * This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+ */
+export type api_audit_log = Prisma.api_audit_logModel

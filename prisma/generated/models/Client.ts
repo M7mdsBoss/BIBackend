@@ -224,6 +224,7 @@ export type ClientWhereInput = {
   website?: Prisma.StringNullableFilter<"Client"> | string | null
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   compounds?: Prisma.CompoundListRelationFilter
+  instructions?: Prisma.InstructionListRelationFilter
   members?: Prisma.UserListRelationFilter
   visits?: Prisma.VisitListRelationFilter
   srsRecords?: Prisma.SrsListRelationFilter
@@ -242,6 +243,7 @@ export type ClientOrderByWithRelationInput = {
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   admin?: Prisma.UserOrderByWithRelationInput
   compounds?: Prisma.CompoundOrderByRelationAggregateInput
+  instructions?: Prisma.InstructionOrderByRelationAggregateInput
   members?: Prisma.UserOrderByRelationAggregateInput
   visits?: Prisma.VisitOrderByRelationAggregateInput
   srsRecords?: Prisma.srsOrderByRelationAggregateInput
@@ -263,6 +265,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   website?: Prisma.StringNullableFilter<"Client"> | string | null
   admin?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   compounds?: Prisma.CompoundListRelationFilter
+  instructions?: Prisma.InstructionListRelationFilter
   members?: Prisma.UserListRelationFilter
   visits?: Prisma.VisitListRelationFilter
   srsRecords?: Prisma.SrsListRelationFilter
@@ -312,6 +315,7 @@ export type ClientCreateInput = {
   website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
@@ -329,6 +333,7 @@ export type ClientUncheckedCreateInput = {
   note?: string | null
   website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionUncheckedCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
@@ -346,6 +351,7 @@ export type ClientUpdateInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
@@ -363,6 +369,7 @@ export type ClientUncheckedUpdateInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUncheckedUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
@@ -561,6 +568,20 @@ export type ClientUpdateOneWithoutSrsRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutSrsRecordsInput, Prisma.ClientUpdateWithoutSrsRecordsInput>, Prisma.ClientUncheckedUpdateWithoutSrsRecordsInput>
 }
 
+export type ClientCreateNestedOneWithoutInstructionsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutInstructionsInput, Prisma.ClientUncheckedCreateWithoutInstructionsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutInstructionsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneRequiredWithoutInstructionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutInstructionsInput, Prisma.ClientUncheckedCreateWithoutInstructionsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutInstructionsInput
+  upsert?: Prisma.ClientUpsertWithoutInstructionsInput
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutInstructionsInput, Prisma.ClientUpdateWithoutInstructionsInput>, Prisma.ClientUncheckedUpdateWithoutInstructionsInput>
+}
+
 export type ClientCreateWithoutAdminInput = {
   id: string
   clientName: string
@@ -572,6 +593,7 @@ export type ClientCreateWithoutAdminInput = {
   note?: string | null
   website?: string | null
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
@@ -588,6 +610,7 @@ export type ClientUncheckedCreateWithoutAdminInput = {
   note?: string | null
   website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionUncheckedCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
@@ -610,6 +633,7 @@ export type ClientCreateWithoutMembersInput = {
   website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionCreateNestedManyWithoutClientRefInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
@@ -626,6 +650,7 @@ export type ClientUncheckedCreateWithoutMembersInput = {
   note?: string | null
   website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionUncheckedCreateNestedManyWithoutClientRefInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
@@ -657,6 +682,7 @@ export type ClientUpdateWithoutAdminInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
@@ -673,6 +699,7 @@ export type ClientUncheckedUpdateWithoutAdminInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUncheckedUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
@@ -701,6 +728,7 @@ export type ClientUpdateWithoutMembersInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUpdateManyWithoutClientRefNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
@@ -717,6 +745,7 @@ export type ClientUncheckedUpdateWithoutMembersInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUncheckedUpdateManyWithoutClientRefNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
@@ -732,6 +761,7 @@ export type ClientCreateWithoutCompoundsInput = {
   note?: string | null
   website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
+  instructions?: Prisma.InstructionCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
@@ -748,6 +778,7 @@ export type ClientUncheckedCreateWithoutCompoundsInput = {
   domainName?: string | null
   note?: string | null
   website?: string | null
+  instructions?: Prisma.InstructionUncheckedCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
   srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
@@ -780,6 +811,7 @@ export type ClientUpdateWithoutCompoundsInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
+  instructions?: Prisma.InstructionUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
@@ -796,6 +828,7 @@ export type ClientUncheckedUpdateWithoutCompoundsInput = {
   domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instructions?: Prisma.InstructionUncheckedUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
   srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
@@ -813,6 +846,7 @@ export type ClientCreateWithoutVisitsInput = {
   website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
   srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
 }
@@ -829,6 +863,7 @@ export type ClientUncheckedCreateWithoutVisitsInput = {
   note?: string | null
   website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionUncheckedCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
 }
@@ -861,6 +896,7 @@ export type ClientUpdateWithoutVisitsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
   srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
 }
@@ -877,6 +913,7 @@ export type ClientUncheckedUpdateWithoutVisitsInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUncheckedUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
@@ -893,6 +930,7 @@ export type ClientCreateWithoutSrsRecordsInput = {
   website?: string | null
   admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
   compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
 }
@@ -909,6 +947,7 @@ export type ClientUncheckedCreateWithoutSrsRecordsInput = {
   note?: string | null
   website?: string | null
   compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  instructions?: Prisma.InstructionUncheckedCreateNestedManyWithoutClientRefInput
   members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
   visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
 }
@@ -941,6 +980,7 @@ export type ClientUpdateWithoutSrsRecordsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
   compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
 }
@@ -957,8 +997,93 @@ export type ClientUncheckedUpdateWithoutSrsRecordsInput = {
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  instructions?: Prisma.InstructionUncheckedUpdateManyWithoutClientRefNestedInput
   members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
   visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
+}
+
+export type ClientCreateWithoutInstructionsInput = {
+  id: string
+  clientName: string
+  createdAt?: Date | string
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
+  admin?: Prisma.UserCreateNestedOneWithoutClientAsAdminInput
+  compounds?: Prisma.CompoundCreateNestedManyWithoutClientInput
+  members?: Prisma.UserCreateNestedManyWithoutClientInput
+  visits?: Prisma.VisitCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsCreateNestedManyWithoutClientRefInput
+}
+
+export type ClientUncheckedCreateWithoutInstructionsInput = {
+  id: string
+  clientName: string
+  createdAt?: Date | string
+  adminId?: string | null
+  address?: string | null
+  contact?: string | null
+  crNb?: string | null
+  domainName?: string | null
+  note?: string | null
+  website?: string | null
+  compounds?: Prisma.CompoundUncheckedCreateNestedManyWithoutClientInput
+  members?: Prisma.UserUncheckedCreateNestedManyWithoutClientInput
+  visits?: Prisma.VisitUncheckedCreateNestedManyWithoutClientRefInput
+  srsRecords?: Prisma.srsUncheckedCreateNestedManyWithoutClientRefInput
+}
+
+export type ClientCreateOrConnectWithoutInstructionsInput = {
+  where: Prisma.ClientWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientCreateWithoutInstructionsInput, Prisma.ClientUncheckedCreateWithoutInstructionsInput>
+}
+
+export type ClientUpsertWithoutInstructionsInput = {
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutInstructionsInput, Prisma.ClientUncheckedUpdateWithoutInstructionsInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutInstructionsInput, Prisma.ClientUncheckedCreateWithoutInstructionsInput>
+  where?: Prisma.ClientWhereInput
+}
+
+export type ClientUpdateToOneWithWhereWithoutInstructionsInput = {
+  where?: Prisma.ClientWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutInstructionsInput, Prisma.ClientUncheckedUpdateWithoutInstructionsInput>
+}
+
+export type ClientUpdateWithoutInstructionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientName?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  admin?: Prisma.UserUpdateOneWithoutClientAsAdminNestedInput
+  compounds?: Prisma.CompoundUpdateManyWithoutClientNestedInput
+  members?: Prisma.UserUpdateManyWithoutClientNestedInput
+  visits?: Prisma.VisitUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUpdateManyWithoutClientRefNestedInput
+}
+
+export type ClientUncheckedUpdateWithoutInstructionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientName?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  crNb?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compounds?: Prisma.CompoundUncheckedUpdateManyWithoutClientNestedInput
+  members?: Prisma.UserUncheckedUpdateManyWithoutClientNestedInput
+  visits?: Prisma.VisitUncheckedUpdateManyWithoutClientRefNestedInput
+  srsRecords?: Prisma.srsUncheckedUpdateManyWithoutClientRefNestedInput
 }
 
 
@@ -968,6 +1093,7 @@ export type ClientUncheckedUpdateWithoutSrsRecordsInput = {
 
 export type ClientCountOutputType = {
   compounds: number
+  instructions: number
   members: number
   visits: number
   srsRecords: number
@@ -975,6 +1101,7 @@ export type ClientCountOutputType = {
 
 export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   compounds?: boolean | ClientCountOutputTypeCountCompoundsArgs
+  instructions?: boolean | ClientCountOutputTypeCountInstructionsArgs
   members?: boolean | ClientCountOutputTypeCountMembersArgs
   visits?: boolean | ClientCountOutputTypeCountVisitsArgs
   srsRecords?: boolean | ClientCountOutputTypeCountSrsRecordsArgs
@@ -995,6 +1122,13 @@ export type ClientCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
  */
 export type ClientCountOutputTypeCountCompoundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CompoundWhereInput
+}
+
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountInstructionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InstructionWhereInput
 }
 
 /**
@@ -1032,6 +1166,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   website?: boolean
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
   compounds?: boolean | Prisma.Client$compoundsArgs<ExtArgs>
+  instructions?: boolean | Prisma.Client$instructionsArgs<ExtArgs>
   members?: boolean | Prisma.Client$membersArgs<ExtArgs>
   visits?: boolean | Prisma.Client$visitsArgs<ExtArgs>
   srsRecords?: boolean | Prisma.Client$srsRecordsArgs<ExtArgs>
@@ -1083,6 +1218,7 @@ export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admin?: boolean | Prisma.Client$adminArgs<ExtArgs>
   compounds?: boolean | Prisma.Client$compoundsArgs<ExtArgs>
+  instructions?: boolean | Prisma.Client$instructionsArgs<ExtArgs>
   members?: boolean | Prisma.Client$membersArgs<ExtArgs>
   visits?: boolean | Prisma.Client$visitsArgs<ExtArgs>
   srsRecords?: boolean | Prisma.Client$srsRecordsArgs<ExtArgs>
@@ -1100,6 +1236,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     admin: Prisma.$UserPayload<ExtArgs> | null
     compounds: Prisma.$CompoundPayload<ExtArgs>[]
+    instructions: Prisma.$InstructionPayload<ExtArgs>[]
     members: Prisma.$UserPayload<ExtArgs>[]
     visits: Prisma.$VisitPayload<ExtArgs>[]
     srsRecords: Prisma.$srsPayload<ExtArgs>[]
@@ -1511,6 +1648,7 @@ export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   admin<T extends Prisma.Client$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$adminArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   compounds<T extends Prisma.Client$compoundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$compoundsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompoundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  instructions<T extends Prisma.Client$instructionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$instructionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstructionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   members<T extends Prisma.Client$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   visits<T extends Prisma.Client$visitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$visitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VisitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   srsRecords<T extends Prisma.Client$srsRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$srsRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$srsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1989,6 +2127,30 @@ export type Client$compoundsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.CompoundScalarFieldEnum | Prisma.CompoundScalarFieldEnum[]
+}
+
+/**
+ * Client.instructions
+ */
+export type Client$instructionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Instruction
+   */
+  select?: Prisma.InstructionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Instruction
+   */
+  omit?: Prisma.InstructionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructionInclude<ExtArgs> | null
+  where?: Prisma.InstructionWhereInput
+  orderBy?: Prisma.InstructionOrderByWithRelationInput | Prisma.InstructionOrderByWithRelationInput[]
+  cursor?: Prisma.InstructionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InstructionScalarFieldEnum | Prisma.InstructionScalarFieldEnum[]
 }
 
 /**

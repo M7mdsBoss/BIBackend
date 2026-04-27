@@ -8,21 +8,22 @@ datasource db {
 }
 
 model Client {
-  id         String     @id
-  clientName String
-  createdAt  DateTime   @default(now())
-  adminId    String?    @unique
-  address    String?
-  contact    String?
-  crNb       String?
-  domainName String?
-  note       String?
-  website    String?
-  admin      User?      @relation("ClientAdmin", fields: [adminId], references: [id])
-  compounds  Compound[]
-  members    User[]     @relation("ClientMembers")
-  visits     Visit[]    @relation("ClientVisit")
-  srsRecords srs[]      @relation("ClientSrs")
+  id           String        @id
+  clientName   String
+  createdAt    DateTime      @default(now())
+  adminId      String?       @unique
+  address      String?
+  contact      String?
+  crNb         String?
+  domainName   String?
+  note         String?
+  website      String?
+  admin        User?         @relation("ClientAdmin", fields: [adminId], references: [id])
+  compounds    Compound[]
+  instructions Instruction[] @relation("ClientInstruction")
+  members      User[]        @relation("ClientMembers")
+  visits       Visit[]       @relation("ClientVisit")
+  srsRecords   srs[]         @relation("ClientSrs")
 }
 
 model User {
@@ -306,25 +307,25 @@ model n8n_vectors_v2 {
 model srs {
   id               Int       @id @default(autoincrement())
   resname          String?   @db.VarChar(100)
-  resphone         String?   @db.VarChar(20)
+  resphone         String?   @db.VarChar(100)
   resemail         String?   @db.VarChar(100)
   compound         String?   @db.VarChar(100)
   unit             String?   @db.VarChar(50)
   propertycode     String?   @db.VarChar(50)
-  priority         String?   @db.VarChar(20)
+  priority         String?   @db.VarChar(100)
   leasename        String?   @db.VarChar(100)
   leasecode        String?   @db.VarChar(50)
   category         String?   @db.VarChar(100)
   subcategory      String?   @db.VarChar(100)
   breifdescription String?
-  timetoenter      DateTime? @db.Time(6)
   datetime         DateTime? @default(now()) @db.Timestamp(6)
-  status           String?   @default("Open") @db.VarChar(20)
+  status           String?   @default("Open") @db.VarChar(100)
   yardi_wo_code    String?   @db.VarChar(50)
   closed_at        DateTime? @db.Timestamp(6)
   is_closed        Boolean?  @default(false)
   updated_at       DateTime? @db.Timestamp(6)
   clientId         String?
+  timetoenter      DateTime? @db.Timestamp(6)
   clientRef        Client?   @relation("ClientSrs", fields: [clientId], references: [id])
   compoundRef      Compound? @relation("CompoundSrs", fields: [compound], references: [slug])
   unitRef          Unit?     @relation("UnitSrs", fields: [unit], references: [slug])
@@ -364,6 +365,11 @@ model residents {
   is_active       Boolean?          @default(true)
   synced_at       DateTime?         @default(now()) @db.Timestamp(6)
   updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  compound        String?           @db.VarChar(150)
+  property_id     Int?
+  unit_id         Int?
+  notice_date     DateTime?         @db.Date
+  leasing_agent   String?           @db.VarChar(100)
   resident_phones resident_phones[]
 
   @@index([is_active], map: "idx_residents_is_active")
@@ -377,6 +383,33 @@ model sync_log {
   records_synced      Int?
   records_deactivated Int?
   error_message       String?
+}
+
+model Instruction {
+  id          String   @id
+  instruction String
+  createdAt   DateTime @default(now())
+  clientId    String
+  clientRef   Client   @relation("ClientInstruction", fields: [clientId], references: [id])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model api_audit_log {
+  id            Int       @id @default(autoincrement())
+  endpoint      String    @db.VarChar(255)
+  method        String    @db.VarChar(10)
+  ip_address    String?   @db.VarChar(45)
+  status_code   Int?
+  duration_ms   Int?
+  timestamp     DateTime? @default(now()) @db.Timestamp(6)
+  request_body  String?
+  response_body String?
+  headers       Json?
+
+  @@index([endpoint], map: "idx_audit_endpoint")
+  @@index([ip_address], map: "idx_audit_ip")
+  @@index([status_code], map: "idx_audit_status")
+  @@index([timestamp(sort: Desc)], map: "idx_audit_timestamp")
 }
 
 enum UserRole {
