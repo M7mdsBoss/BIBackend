@@ -8,8 +8,7 @@ import { PUBLIC_URL } from "../helper/const/base";
 //   residentUnit: string;
 //   residentPhone: string;
 //   visitorFullName: string;
-//   visitorCarType?: string;
-//   visitorLicensePlate?: string;
+//   visitorId: string;
 //   visitDate: Date;
 //   visitTime: string;
 //   compound: string;
@@ -58,8 +57,7 @@ import { PUBLIC_URL } from "../helper/const/base";
 //         residentUnit: dto.residentUnit,
 //         residentPhone: dto.residentPhone,
 //         visitorFullName: dto.visitorFullName,
-//         visitorCarType: dto.visitorCarType,
-//         visitorLicensePlate: dto.visitorLicensePlate,
+//         visitorId: dto.visitorId,
 //         visitDate: dto.visitDate,
 //         visitTime: dto.visitTime,
 //         compound: dto.compound,

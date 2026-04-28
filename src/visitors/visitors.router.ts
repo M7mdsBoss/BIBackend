@@ -15,8 +15,7 @@ const createVisitSchema = z.object({
   residentUnit:        z.string().min(1),   // Unit.slug  → UNIT_*
   residentPhone:       z.string().min(1),
   visitorFullName:     z.string().min(1),
-  visitorCarType:      z.string().optional(),
-  visitorLicensePlate: z.string().optional(),
+  visitorId:           z.string().min(1),
   visitDate:           z.coerce.date(),
   visitTime:           z.string().min(1),
   compound:            z.string().min(1),   // Compound.slug → COMP_*

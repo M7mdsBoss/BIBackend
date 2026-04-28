@@ -115,8 +115,7 @@ model Visit {
   residentUnit        String
   residentPhone       String
   visitorFullName     String
-  visitorCarType      String?
-  visitorLicensePlate String?
+  visitorId           String
   visitDate           DateTime
   visitTime           String
   pdfUrl              String?

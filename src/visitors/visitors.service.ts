@@ -8,8 +8,7 @@ export interface CreateVisitDto {
   residentUnit: string;
   residentPhone: string;
   visitorFullName: string;
-  visitorCarType?: string;
-  visitorLicensePlate?: string;
+  visitorId: string;
   visitDate: Date;
   visitTime: string;
   compound: string;
@@ -106,8 +105,7 @@ export async function createVisit(
         residentUnit: dto.residentUnit,
         residentPhone: dto.residentPhone,
         visitorFullName: dto.visitorFullName,
-        visitorCarType: dto.visitorCarType,
-        visitorLicensePlate: dto.visitorLicensePlate,
+        visitorId: dto.visitorId,
         visitDate: dto.visitDate,
         visitTime: dto.visitTime,
         compound: dto.compound,

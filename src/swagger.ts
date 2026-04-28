@@ -239,8 +239,7 @@ export const swaggerSpec = {
           residentUnit:        { type: 'string', example: 'UNIT_tower_a_101', description: 'Unit slug' },
           residentPhone:       { type: 'string', example: '+966501234567' },
           visitorFullName:     { type: 'string', example: 'Mohammed Ali' },
-          visitorCarType:      { type: 'string', example: 'Toyota Camry' },
-          visitorLicensePlate: { type: 'string', example: 'ABC 1234' },
+          visitorId:           { type: 'string', example: '1234567890', description: 'Visitor national ID (free-form string, not a foreign key)' },
           visitDate:           { type: 'string', format: 'date-time' },
           visitTime:           { type: 'string', example: '14:30' },
           compound:            { type: 'string', example: 'COMP_green_valley', description: 'Compound slug', nullable: true },
@@ -1117,7 +1116,7 @@ export const swaggerSpec = {
                 type: 'object',
                 required: [
                   'residentFullName', 'residentUnit', 'residentPhone',
-                  'visitorFullName', 'visitorCarType', 'visitorLicensePlate',
+                  'visitorFullName', 'visitorId',
                   'visitDate', 'visitTime', 'compound',
                 ],
                 properties: {
@@ -1125,8 +1124,7 @@ export const swaggerSpec = {
                   residentUnit:        { type: 'string', example: 'UNIT_tower_a_101', description: 'Must match an existing Unit slug' },
                   residentPhone:       { type: 'string', example: '+966501234567' },
                   visitorFullName:     { type: 'string', example: 'Mohammed Ali' },
-                  visitorCarType:      { type: 'string', example: 'Toyota Camry' },
-                  visitorLicensePlate: { type: 'string', example: 'ABC 1234' },
+                  visitorId:           { type: 'string', example: '1234567890', description: 'Visitor national ID (free-form string, not a foreign key)' },
                   visitDate:           { type: 'string', format: 'date-time' },
                   visitTime:           { type: 'string', example: '14:30' },
                   compound:            { type: 'string', example: 'COMP_green_valley', description: 'Must match an existing Compound slug' },

@@ -164,8 +164,7 @@ export async function generateVisitPDF(visit: {
   residentUnit: string;
   residentPhone: string;
   visitorFullName: string;
-  visitorCarType?: string;
-  visitorLicensePlate?: string;
+  visitorId: string;
   visitDate: Date;
   visitTime: string;
   createdAt: Date;
@@ -259,12 +258,7 @@ export async function generateVisitPDF(visit: {
               visit.visitorFullName || "—",
               "اسم الزائر",
             ),
-            fieldRow("Car Type", visit.visitorCarType || "—", "نوع السيارة"),
-            fieldRow(
-              "License Plate",
-              visit.visitorLicensePlate || "—",
-              "رقم لوحة السيارة",
-            ),
+            fieldRow("National ID", visit.visitorId || "—", "رقم الهوية"),
             fieldRow("Visit Date", visitDateStr, "تاريخ الزيارة"),
             fieldRow("Visit Time", visit.visitTime || "—", "وقت الزيارة"),
           ],
