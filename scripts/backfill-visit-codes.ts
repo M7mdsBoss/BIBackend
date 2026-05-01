@@ -1,11 +1,21 @@
 import { PrismaClient } from '../prisma/generated/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const pool = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
-const prisma = new PrismaClient({ adapter: pool });
+const prodPool = new Pool({
+  host: process.env.DB_PROD_HOST,
+  port: parseInt(process.env.DB_PROD_PORT || "") || 5432,
+  database: process.env.DB_PROD_NAME,
+  user: process.env.DB_PROD_USER,
+  password: process.env.DB_PROD_PASSWORD,
+  ssl: false,
+});
+
+const adapter = new PrismaPg(prodPool);
+const prisma = new PrismaClient({ adapter });
 
 async function backfill() {
   const visits = await prisma.visit.findMany({
